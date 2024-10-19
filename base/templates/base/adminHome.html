@@ -1,0 +1,39 @@
+{% include 'main_3.html' %}
+{% block content %}
+<body>
+    <div class="admin-menu">
+        <h1>Admin</h1>
+        {% for lesson in lessons %}
+        <li class="list-item">
+          <a href="{% url 'lesson_detail_admin' lesson.id %}" class="lesson-link">{{ lesson.title }}</a>
+        {% endfor %}
+    </div>
+</body>
+</html>
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+.admin-menu {
+  max-width: 300px;
+  margin: auto;
+}
+
+h1 {
+  color: green;
+  text-align: center;
+}
+
+.lesson-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid #ccc 1px;
+}
+
+.lesson-item span {
+   padding-left:10px; 
+} 
+</style>
+{% endblock content %}

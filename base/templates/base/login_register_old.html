@@ -1,0 +1,295 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page == 'login' %}Login{% else %}Sign Up{% endif %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --card-hover: #252525;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .auth-box {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .auth-header p {
+            color: var(--text-secondary);
+        }
+
+        .auth-form {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--text-secondary);
+            border-radius: 4px;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--text-primary);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-google {
+            background-color: #db4437;
+            color: var(--text-primary);
+            width: 100%;
+        }
+
+        .btn-google:hover {
+            background-color: #c53929;
+        }
+
+        .btn-link {
+            background-color: transparent;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .auth-options {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .auth-options p {
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .auth-action {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .forgot-password {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            background-color: #ff4444;
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .auth-back {
+            margin-bottom: 20px;
+        }
+
+        .btn-back {
+            background-color: transparent;
+            color: var(--text-secondary);
+            padding: 0;
+        }
+
+        .btn-back:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 480px) {
+            .auth-box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-back">
+                <a href="{% url 'home' %}?next={{request.path}}" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+            {% if messages %}
+            <div class="error-message">
+                {% for message in messages %}
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if page == 'login' %}
+            <div class="auth-header">
+                <h2>Login</h2>
+                <p>Learn Coding Today!</p>
+            </div>
+            <form class="auth-form" action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}"><i class="fas fa-envelope"></i> Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}"><i class="fas fa-lock"></i> Password</label>
+                    {{ form.password }}
+                </div>
+                {{ form.turnstile }}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            <div class="auth-options">
+                <p>Or login with:</p>
+                {% load socialaccount %}
+                <form class="google-sign-in" action="{% provider_login_url 'google' %}?next={{request.path}}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-google">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                </form>
+            </div>
+            <div class="auth-action">
+                <p>Don't have an account?</p>
+                <a href="{% url 'register' %}" class="btn btn-link"><i class="fas fa-user-plus"></i> Sign Up</a>
+            </div>
+            <div class="forgot-password">
+                <a href="#" class="btn btn-link">
+                    <i class="fas fa-key"></i> Forgot Password?
+                </a>
+            </div>
+            {% else %}
+            <div class="auth-header">
+                <h2>Sign Up</h2>
+                <p>Start Your Coding Journey!</p>
+            </div>
+            <form class="auth-form" action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}"><i class="fas fa-user"></i> {{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}"><i class="fas fa-user-tag"></i> {{ form.username.label }}</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}"><i class="fas fa-envelope"></i> {{ form.email.label }}</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}"><i class="fas fa-lock"></i> {{ form.password1.label }}</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}"><i class="fas fa-lock"></i> {{ form.password2.label }}</label>
+                    {{ form.password2 }}
+                </div>
+                {{ form.turnstile }}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </form>
+            <div class="auth-options">
+                <p>Or sign up with:</p>
+                {% load socialaccount %}
+                <form class="google-sign-in" action="{% provider_login_url 'google' %}?next={{request.path}}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-google">
+                        <i class="fab fa-google"></i> Sign up with Google
+                    </button>
+                </form>
+            </div>
+            <div class="auth-action">
+                <p>Already have an account?</p>
+                <a href="{% url 'login' %}" class="btn btn-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = 'var(--accent)';
+                });
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = 'var(--text-secondary)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

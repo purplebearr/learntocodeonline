@@ -1,0 +1,488 @@
+{% include 'main_3.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Creation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff8c00;
+            --secondary-color: #ffa500;
+            --background-color: #1a1a1a;
+            --card-background: #2a2a2a;
+            --text-color: #e0e0e0;
+            --input-background: #333;
+            --input-border: #444;
+        }
+
+        body, html {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1, h2 {
+            color: var(--primary-color);
+        }
+
+        .creation-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .bottom-row {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: calc(50% - 10px);
+            max-width: 400px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .toggle-form {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-form.active {
+            transform: rotate(180deg);
+        }
+
+        form, .button-container {
+            display: none;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-background);
+            color: var(--text-color);
+        }
+
+        button[type="submit"], .btn-link {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1em;
+        }
+
+        button[type="submit"]:hover, .btn-link:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .lists-section {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .list-container {
+            flex: 1;
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            max-height: calc(100vh - 300px);
+        }
+
+        .list-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .list-container li {
+            background-color: var(--input-background);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .list-item-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .relationship-indicator {
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--primary-color);
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--card-background);
+            color: var(--text-color);
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .btn-orange {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .btn-orange:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .dropdown-content {
+            display: none;
+            background-color: var(--input-background);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+
+        .recent-activity {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .activity-item {
+            background-color: var(--input-background);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .top-row, .bottom-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                width: 100%;
+                max-width: none;
+            }
+            .lists-section {
+                flex-direction: column;
+            }
+            .list-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <style>
+        .dropdown-content.nested {
+            margin-left: 20px;
+        }
+        .lesson-page-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+
+        .page-buttons {
+            display: flex;
+            gap: 5px; /* Optional: adds a small gap between buttons */
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">        
+        <div class="creation-section">
+            <div class="top-row">
+                <div class="card">
+                    <div class="card-header" onclick="toggleForm('courseForm')">
+                        <h2><i class="fas fa-book icon"></i>Create Course</h2>
+                        <button class="toggle-form" id="courseToggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="tooltip">What's a course?
+                        <span class="tooltiptext">A course is a container for multiple lessons.</span>
+                    </div>
+                    <form id="courseForm" method="post">
+                        {% csrf_token %}
+                        {{ course_form.as_p }}
+                        <button type="submit" name="create_course">Create Course</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" onclick="toggleForm('lessonForm')">
+                        <h2><i class="fas fa-tasks icon"></i>Create Lesson</h2>
+                        <button class="toggle-form" id="lessonToggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="tooltip">What's a lesson?
+                        <span class="tooltiptext">A lesson is a container for multiple lesson pages.</span>
+                    </div>
+                    <form id="lessonForm" method="post">
+                        {% csrf_token %}
+                        {{ lesson_form.as_p }}
+                        <button type="submit" name="create_lesson">Create Lesson</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="bottom-row">
+                <div class="card">
+                    <div class="card-header" onclick="toggleForm('lessonPageForm')">
+                        <h2><i class="fas fa-file-alt icon"></i>Create Lesson Page</h2>
+                        <button class="toggle-form" id="lessonPageToggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="tooltip">What's a lesson page?
+                        <span class="tooltiptext">A lesson page is an individual content unit within a lesson.</span>
+                    </div>
+                    <div id="lessonPageForm" class="button-container">
+                        <a href="{% url 'lesson_page_create' %}" class="btn-link">Create a content page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lists-section">
+            <div class="list-container">
+                <h2><i class="fas fa-list icon"></i>Courses</h2>
+                <ul>
+                    {% for course in courses %}
+                    <li>
+                        <div class="list-item-content">
+                            <i class="fas fa-book icon"></i>
+                            <span>{{ course.title }}</span>
+                            <span class="author-info"></span>
+                        </div>
+                        <div class="list-item-buttons">
+                            <button class="btn-orange" onclick="toggleDropdown('course-{{ course.id }}')">
+                                <i class="fas fa-chevron-down"></i> Lessons
+                            </button>
+                            <button class="btn-orange">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </li>
+                    <div id="course-{{ course.id }}" class="dropdown-content">
+                        {% for lesson in course.lesson_set.all %}
+                            {% if lesson.author == request.user %}
+                                <div class="activity-item">
+                                    <div class="list-item-content">
+                                        <i class="fas fa-tasks icon"></i>
+                                        <span>{{ lesson.title }}</span>
+                                        <span class="author-info"></span>
+                                    </div>
+                                    <div class="list-item-buttons">
+                                        <button class="btn-orange" onclick="toggleDropdown('lesson-{{ lesson.id }}')">
+                                            <i class="fas fa-chevron-down"></i> Manage Pages
+                                        </button>
+                                        <button class="btn-orange btn-small">Add New Page</button>
+                                        <button class="btn-orange">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="lesson-{{ lesson.id }}" class="dropdown-content nested">
+                                    {% for page in lesson.lesson_pages.all %}
+                                        <div class="lesson-page-item">
+                                            <span>{{ page.title }}</span>
+                                            <div class="page-buttons">
+                                                <button class="btn-orange btn-small">Edit</button>
+                                                <button class="btn-orange btn-small">Delete</button>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                {% endfor %}
+                
+                <h2><i class="fas fa-list-alt icon"></i>Standalone Lessons</h2>
+                <ul>
+                    {% for lesson in lessons %}
+                        {% if not lesson.course %}
+                            <li>
+                                <div class="list-item-content">
+                                    <i class="fas fa-tasks icon"></i>
+                                    <span>{{ lesson.title }}</span>
+                                    <span class="author-info"></span>
+                                </div>
+                                <div class="list-item-buttons">
+                                    <button class="btn-orange" onclick="toggleDropdown('lesson-{{ lesson.id }}')">
+                                        <i class="fas fa-file-alt"></i> Manage Pages
+                                    </button>
+                                    <button class="btn-orange">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </li>
+                            <div id="lesson-{{ lesson.id }}" class="dropdown-content">
+                                {% for page in lesson.lesson_pages.all %}
+                                <div class="lesson-page-item">
+                                    <span>{{ page.title }}</span>
+                                    <div class="page-buttons">
+                                        <button class="btn-orange btn-small">Edit</button>
+                                        <button class="btn-orange btn-small">Delete</button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                                <button class="btn-orange btn-small">Add New Page</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="recent-activity">
+            <h2><i class="fas fa-clock icon"></i>Recent Activity</h2>
+            {% for item in recent_updates %}
+                <div class="activity-item">
+                    {% if item.model_name == 'course' %}
+                        <i class="fas fa-book icon"></i>
+                    {% elif item.model_name == 'lesson' %}
+                        <i class="fas fa-tasks icon"></i>
+                    {% elif item.model_name == 'lessonpage' %}
+                        <i class="fas fa-file-alt icon"></i>
+                    {% endif %}
+                    {{ item.model_name|capfirst }} "{{ item.title }}" was updated
+                    <span class="activity-time">{{ item.last_updated|timesince }} ago</span>
+                </div>
+            {% empty %}
+                <p>No recent activity.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function toggleForm(formId) {
+            const form = document.getElementById(formId);
+            const toggle = document.getElementById(formId === 'courseForm' ? 'courseToggle' : 
+                                                   formId === 'lessonForm' ? 'lessonToggle' : 'lessonPageToggle');
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'flex';
+                toggle.classList.add('active');
+            } else {
+                form.style.display = 'none';
+                toggle.classList.remove('active');
+            }
+        }
+
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('show');
+        }
+    </script>
+    <script>
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.style.display = 'block';
+            }
+        }
+        </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+{% include 'main_3.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard</title>
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #121212;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Header Styles */
+      header {
+        color: #ff9800;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.5em;
+      }
+
+      /* Join Classroom Button Styles */
+      .joinbutton {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #ff9800;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .joinbutton a {
+        color: #121212;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* Main Content Styles */
+      .content main {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .content .section {
+        background-color: #1e1e1e;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .content .section h2 {
+        border-bottom: 3px solid #ff9800;
+        padding-bottom: 10px;
+        color: #ff9800;
+      }
+
+      /* List Styles */
+      .content .classroom-list,
+      .content .assignment-list,
+      .content .course-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .content .classroom-list li,
+      .content .assignment-list li,
+      .content .course-card {
+        background-color: #2a2a2a;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: background-color 0.3s;
+      }
+
+      .content .classroom-list li:hover,
+      .content .assignment-list li:hover,
+      .content .course-card:hover {
+        background-color: #333;
+      }
+
+      .content .classroom-list li span,
+      .content .assignment-list li span {
+        color: #ff9800;
+      }
+
+      .content .classroom-list li a,
+      .content .assignment-list li a,
+      .content .course-card a {
+        color: white;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .content .classroom-list li a:hover,
+      .content .assignment-list li a:hover,
+      .content .course-card a:hover {
+        background-color: #ff9800;
+        color: #121212;
+      }
+
+      /* Inline Course Details */
+      .content .course-card {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .content .course-card h3,
+      .content .course-card p {
+        margin: 0;
+      }
+
+      .content .course-card h3 {
+        flex-grow: 1;
+        font-size: 1.2em;
+        color: white;
+      }
+
+      .content .course-card .course-progress {
+        color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      /* Arrow Icon for "View Course" */
+      .content .course-card a::after {
+        content: "→";
+        display: inline-block;
+        margin-left: 5px;
+      }
+
+      /* Important Section Styles */
+      .content .important-section {
+        background-color: #ffb74d;
+        padding: 20px;
+        border-radius: 5px;
+        color: #1f1f1f;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .content .important-section h2 {
+        border-bottom: 3px solid #ff9800;
+        padding-bottom: 10px;
+        color: #ff9800;
+      }
+
+      .content .important-section p {
+        margin: 0;
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+
+      .auth-bar {
+        background-color: #ff8c00; /* Orange */
+        padding: 15px; /* Reduced padding */
+        text-align: center;
+        color: white; /* Text color white */
+        font-size: 20px; /* Reduced font size */
+      }
+
+      .auth-bar a {
+        color: white; /* Link color white */
+        text-decoration: underline; /* Underline links */
+        margin: 0 3px; /* Reduced margin */
+        font-weight: bold; /* Bold links */
+      }
+
+      .auth-bar a:hover {
+        text-decoration: none; /* Remove underline on hover */
+      }
+
+      .auth-bar span {
+        color: white; /* Text color white */
+        font-size: 30px; /* Reduced font size */
+        margin-left: 5px; /* Reduced margin */
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        header {
+          padding: 15px;
+        }
+
+        .content main {
+          padding: 20px;
+        }
+
+        .content .classroom-list li,
+        .content .assignment-list li,
+        .content .course-card {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .joinbutton {
+          right: 10px;
+          bottom: 10px;
+          padding: 8px 16px;
+        }
+
+        .content .course-card h3,
+        .content .course-card p,
+        .content .course-card a {
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+
+        .content .course-card a {
+          align-self: flex-end;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 style="font-family: 'Arial Black', Gadget, sans-serif;">
+        {% if user and user.is_authenticated %}
+          Welcome, {{ user.name }}
+        {% else %}
+          Welcome, Guest
+          <div class="auth-bar">
+            Your progress is not being saved. Please <a href="{% url 'login' %}?next={{request.path}}">Log in</a> or <a href="{% url 'register' %}?next={{request.path}}">Sign up</a> to save progress.
+          </div>
+        {% endif %}
+      </h1>
+    </header>
+    <div class="joinbutton">
+      {% if user and user.is_authenticated %}
+        <a href="{% url 'joinclassroom' %}">Join a Classroom</a>
+      {% else %}
+        <a href="{% url 'login' %}?next={{request.path}}">Log in to join a Classroom</a>
+      {% endif %}
+    </div>
+    <div class="content">
+      <main>
+        <div class="section courses-section">
+          <h2>My Self-Paced Courses</h2>
+          <div class="course-list">
+            {% if courses %}
+              {% for course in courses %}
+              <div class="course-card">
+                <h3>{{ course.title }}</h3>
+                <p class="course-progress">Progress: {{ course.progress_percentage }}%</p>
+                <a href="{% url 'lessons_landing_page' %}">View</a>
+              </div>
+              {% endfor %}
+            {% else %}
+              <p> <a href="{% url 'lessons_landing_page' %}" style="color: red;">You have not started any courses. Check some out! --></a></p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="section classroom-section">
+          <h2>My Classrooms</h2>
+          <ul class="classroom-list">
+            {% if classroom_groups %}
+              {% for classroom_group in classroom_groups %}
+              <li>
+                <span>{{ classroom_group.name }}</span>
+                <a href="{% url 'classroom_detail' classroom_group.id %}">View</a>
+              </li>
+              {% endfor %}
+            {% else %}
+              <p>No classrooms available.</p>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="section assignment-section">
+          <h2>My Uncompleted Assignments</h2>
+          <ul class="assignment-list">
+            {% if uncompleted_assignments %}
+              {% for assignment in uncompleted_assignments %}
+              <li>
+                <span>{{ assignment.title }} - Due {{ assignment.due_date|date:"F d, Y H:i" }}</span>
+                <a href="{% url 'view_assignment' assignment.id %}">View</a>
+              </li>
+              {% endfor %}
+            {% else %}
+              <p>No uncompleted assignments available.</p>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="section important-section">
+          <h2>Important Assignments</h2>
+          {% if urgent_assignment %}
+          <p>You have an assignment due soon: {{ urgent_assignment.title }} <a href="#">View</a></p>
+          {% else %}
+          <p>No urgent assignments at the moment.</p>
+          {% endif %}
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
+{% endblock content %}

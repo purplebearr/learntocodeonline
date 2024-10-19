@@ -1,0 +1,12 @@
+{% include 'main_3.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Classroom Limit Reached</h1>
+    <p>We're sorry, but you've reached the maximum number of classrooms allowed (3).</p>
+    <p>You currently have {{ classroom_count }} classrooms.</p>
+    <br>
+        
+    <a href="{% url 'teacherpage' %}" class="btn btn-primary">Return to Teacher Page</a>
+</div>
+{% endblock %}

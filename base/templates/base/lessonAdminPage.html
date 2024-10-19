@@ -1,0 +1,33 @@
+{% include 'main_3.html' %} {% block content %}
+<body>
+  <h1>{{ lesson.title }} - Lesson Pages</h1>
+    {% if lesson_pages %}
+    <ul>
+      {% for lesson_page in lesson_pages %}
+      <li>
+        <h2>
+          <a
+            href="{% url 'lesson_detail' lesson_id=lesson.id %}#lesson_page_{{ lesson_page.id }}"
+            >{{ lesson_page.title }}</a
+          >
+        </h2>
+        <p>{{ lesson_page.content }}</p>
+        <!-- Add more fields as needed -->
+        <p>Order: {{ lesson_page.order }}</p>
+        <a
+          href="{% url 'delete_lesson_page' lesson_id=lesson.id lesson_page_id=lesson_page.id %}"
+          >Delete</a
+        >
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No lesson pages available for this lesson.</p>
+    {% endif %}
+    <a href="{% url 'create_lesson_page' lesson_id=lesson.id %}"
+      >Create Lesson Page</a
+    >
+  </body>
+</body>
+  {% endblock content %}
+

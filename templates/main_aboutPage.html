@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+    <title>About: 404-Found</title>
+  </head>
+</html>
+<body>
+  <header id="header">
+    {% include 'navbar_v2.html' %}
+    <header id="header_secondary">
+      <h1>404-Found Team</h1>
+      <style>
+        h1 {
+          font-size: 2.5em;
+          margin-bottom: 20px;
+          color: orange;
+        }
+      </style>
+      <h2>Our Mission</h2>
+      <p>
+        We are three high schoolers from the Bay Area who are passionate about
+        programming. Our aim is to introduce coding to a wide audience,
+        especially those who are underrepresented in STEM, in a simple and
+        humorous way. 
+      </p>
+      <div id="team-members">
+        <div class="member">
+          <img src="static/images/logoOrange.jpg" alt="Co-Founder" />
+          <h2>Shengkai Huang</h2>
+          <p>
+            Shengkai is a sophomore at Maria Carrillo High School, and he is an
+            avid programmer specialising in web and game development!
+          </p>
+        </div>
+        <div class="member">
+          <img src="static/images/lisa_pfp.jpg" alt="Co-Founder" />
+          <h2>Lisa Zheng</h2>
+          <p>
+            Lisa is a sophomore at Maria Carrillo High School and on top of
+            coding, she loves doing art and math.
+          </p>
+        </div>
+        <div class="member">
+          <img src="static/images/logoGreen.jpg" alt="Co-Founder" />
+          <h2>Alexander Yoon</h2>
+          <p>
+            Alexander is a freshman at Maria Carrillo High School, and he is a
+            devoted mathmatecian and violinist.
+          </p>
+        </div>
+      </div>
+      <div class="contact">
+        <h1>Reach us at:</h1>
+        <p>info@404foundcode.org</p>
+        <p>insta: @mchs404found</p>
+      </div>
+    </header>
+  </header>
+  <style>
+    #header {
+      background-image: url("static/images/aaabstract.png");
+      background-size: auto;
+      color: white;
+      text-align: center;
+      height: 100vh;
+    }
+    #header .cta {
+      display: inline-block;
+      background-color: #ff7f00;
+      color: white;
+      padding: 10px 20px;
+    }
+
+    .container {
+      border: 2px solid grey;
+      padding: 10px;
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .container2 {
+      position: relative;
+      top: 300px;
+    }
+
+    .header_secondary {
+      padding-top: 5%;
+    }
+
+    .startbutton {
+      position: relative;
+      top: 350px;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+    }
+
+    #team-members {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .member {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: 30%;
+      margin: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+    }
+
+    .member img {
+      width: 100%;
+      height: auto;
+    }
+
+    h2,
+    p {
+      max-width: 600px; /* Limit the width of the introduction paragraph */
+      margin: 20px auto; /* Center the introduction paragraph */
+    }
+
+    .member h2 {
+      text-align: center;
+      color: white;
+    }
+
+    .member p {
+      text-align: justify;
+      color: lightblue;
+    }
+
+    .contact {
+      padding-top: 1%;
+    }
+
+    .member img {
+      width: 100%;
+      height: auto;
+      max-width: 300px; /* Limit the width of the image */
+      max-height: 300px; /* Limit the height of the image */
+    }
+    .member:not(:last-child) {
+      margin-right: 30px; /* Add space to the right of each member except the last one */
+    }
+  </style>
+  <script src="{% static 'js/script.js' %}"></script>
+</body>

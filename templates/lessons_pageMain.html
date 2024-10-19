@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+    <title>404-Found Lessons</title>
+  </head>
+</html>
+<body>
+  <header id="header">
+    {% include 'navbar_v2.html' %}
+    <header id="header_secondary">
+        <header id="header_secondary">
+      
+            <div class="container123">
+              <di class="container2">
+                <p>Select your lesson below. Sign in to save your progress!</p>
+                <button class="start-button">START</button>  
+              </div>
+            </div>
+          </header>
+          <div class="lessonList">
+            <h1>Lesson Directory</h1>
+            <ul class="no-bullets">
+              {% for lesson, progress_status in lessons_with_progress %}
+                <li class="list-item">
+                  {{ forloop.counter }}:
+                  {% if progress_status %}
+                    <span class="arrow" style="color: green;">✔</span> <!-- Green arrow for completed -->
+                  {% elif progress_status is not None %}
+                    <span class="arrow" style="color: orange;">➔</span> <!-- Orange arrow for entered -->
+                  {% else %}
+                    <span class="arrow" style="color: red;">➔</span> <!-- Red arrow for not entered -->
+                  {% endif %}
+                  <a href="{% url 'lesson_detail' lesson.id %}" class="lesson-link">{{ lesson.title }}</a>
+              {% endfor %}
+            </ul>
+          </div>
+        </header>
+    </header>
+  </header>
+  <style>
+    #header {
+      background-image: url("static/images/aaabstract.png");
+      background-size: auto;
+      color: white;
+      text-align: center;
+      padding: 00px;
+      height: 100vh;
+    }
+    #header .cta {
+      display: inline-block;
+      background-color: #ff7f00;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+    }
+
+    .container {
+      border: 2px solid grey;
+      padding: 10px;
+    }
+
+    .container2 {
+    max-width: 5000px;
+    margin: auto;             /* This will horizontally center the container */
+    text-align: center;
+    padding-top: 1%;
+    background: transparent;
+    padding-bottom: 1%;
+    position: relative;       /* Set position to relative for top property to work */
+    top: 110px;               /* Adjust this value to move the container vertically */
+    }
+    .startbutton {
+      position: relative;
+      top: 350px;
+    }
+
+    .container2 {
+      max-width: 5000px;
+      margin: auto;
+      text-align: center;
+      padding-top: 1%;
+      background: transparent;
+      padding-bottom: 1%;
+    }
+
+    .start-button{
+      width: 150px;       /* Set width */
+      height: 50px;       /* Set height */
+      padding: 10px 30px; /* Set padding */
+      font-size: 16px;    /* Set font size */
+      background-color: orange; /* Blue background color */
+      color: #ffffff;     /* White text color */
+      border: none;       /* Remove border */
+      border-radius: 5px; /* Add rounded corners */
+      cursor: pointer;    /* Add pointer cursor */
+      position:relative; top: 25px;
+    }
+
+    .lessonList ul {
+    padding-left: 0; /* Remove default padding */
+    padding-top: 13%;
+    }
+
+    .lessonList ul li {
+    width: 100%;     /* Take full width of the container */
+    text-align: left; /* Left-align individual list items */
+    margin-bottom: 10px; /* Optional: Add some margin between items */
+    }
+
+
+    .lesson-link {
+      text-align: left;
+      font-size: 30px;
+    }
+
+    .arrow {
+      font-size: 30px;
+    }
+
+    .no-bullets {
+      list-style-type: none;
+    }
+
+    .list-item {
+      font-size: 30px;
+    }
+
+    .lessonList {
+        display: flex;
+        flex-direction: column; /* Stack the list items vertically */
+        align-items: center;    /* Center the items horizontally */
+    }
+
+    @media (max-width: 768px) {  /* Adjust the breakpoint as needed */
+  .container2 {
+    top: 50px;  /* Adjust the top value for smaller screens */
+  }
+  
+  .lessonList ul li {
+    padding-left: 20px;  /* Add some left padding to avoid overlap */
+    padding-right: 20px; /* Add some right padding */
+  }
+
+  /* Shrink the font size of lesson links on smaller screens */
+  .lesson-link {
+    font-size: 20px;  /* Adjust the font size as per your requirement */
+  }
+}
+  </style>
+  <script src="{% static 'js/script.js' %}"></script>
+</body>

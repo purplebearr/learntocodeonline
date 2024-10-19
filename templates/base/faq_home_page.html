@@ -1,0 +1,12 @@
+{% include 'main_3.html' %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+    <h1>{{ page.hero_title }}</h1>
+    
+    {% if page.hero_image %}
+        {% image page.hero_image width-100 %}
+    {% endif %}
+    {{ page.body|richtext }}
+{% endblock %}

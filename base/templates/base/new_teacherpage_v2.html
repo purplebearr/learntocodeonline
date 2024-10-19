@@ -1,0 +1,509 @@
+{% include 'main_3.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --card-hover: #252525;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-card);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background-color: var(--bg-card);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            align-items: center;
+
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .tab-container {
+            display: none;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-container.active {
+            display: block;
+        }
+
+        h1, h2 {
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .class-grid, .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .class-card, .content-card {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .class-card:hover, .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .class-header {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .class-body, .content-body {
+            padding: 20px;
+        }
+
+        .class-title, .content-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .class-description, .content-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .create-classroom-btn, .create-new {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            background-color: var(--accent);
+            color: var(--text-primary);
+            font-size: 24px;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .create-classroom-btn:hover, .create-new:hover {
+            background-color: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background-color: var(--card-hover);
+        }
+
+        .activity-icon {
+            margin-right: 20px;
+            font-size: 28px;
+            color: var(--accent);
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .content-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-orange {
+            background-color: var(--accent);
+            color: var(--text-primary);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-orange:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-question {
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            border: none;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: var(--card-hover);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 15px;
+            background-color: var(--card-hover);
+            border-radius: 0 0 5px 5px;
+            margin-top: 2px;
+        }
+
+        .faq-support {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .support-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .support-link:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .logo {
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            .nav-tabs {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-item {
+                flex: 1 0 50%;
+                text-align: center;
+                padding: 10px;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            .class-grid, .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <nav class="nav-tabs">
+                <a href="#" class="nav-item active" data-tab="home">
+                    <i class="fas fa-home"></i> My Classrooms
+                </a>
+                <a href="#" class="nav-item" data-tab="history">
+                    <i class="fas fa-history"></i> History
+                </a>
+                <a href="#" class="nav-item" data-tab="content">
+                    <i class="fas fa-folder"></i> My Content
+                </a>
+                <a href="#" class="nav-item" data-tab="faq">
+                    <i class="fas fa-question-circle"></i> FAQ & Help
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <div id="home" class="tab-container active">
+                <h1>Welcome to Your Classrooms, {{ request.user.name }}</h1>
+                <div class="class-grid">
+                    {% for classroom in classrooms %}
+                    <a href="{% url 'teacherclassroomdetail' classroom.id %}" class="class-card">
+                        <div class="class-header" style="background-image: url({{ classroom.banner.url }});"></div>
+                        <div class="class-body">
+                            <h2 class="class-title">{{ classroom.name }}</h2>
+                            <p class="class-description">{{ classroom.description }}</p>
+                        </div>
+                    </a>
+                    {% empty %}
+                    <p>You don't have any classrooms.</p>
+                    {% endfor %}
+                    <a href="{% url 'createclassroom' %}" class="create-classroom-btn">
+                        <i class="fas fa-plus"></i>
+                        <span>Create New Classroom</span>
+                    </a>
+                </div>
+            </div>
+
+            <div id="history" class="tab-container">
+                <h2><i class="fas fa-clock icon"></i> Recent Activity</h2>
+                <div class="recent-activity">
+                    {% for item in recent_updates %}
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            {% if item.model_name == 'course' %}
+                            <i class="fas fa-book"></i>
+                            {% elif item.model_name == 'lesson' %}
+                            <i class="fas fa-tasks"></i>
+                            {% elif item.model_name == 'lessonpage' %}
+                            <i class="fas fa-file-alt"></i>
+                            {% endif %}
+                        </div>
+                        <div class="activity-details">
+                            <div>{{ item.model_name|capfirst }} "{{ item.title }}" was updated</div>
+                            <div class="activity-time">{{ item.last_updated|timesince }} ago</div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No recent activity.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div id="content" class="tab-container">
+                <h2>Courses</h2>
+                <div class="content-grid">
+                    <a href="{% url 'course_create' %}" class="create-new">
+                        <i class="fas fa-plus-circle"></i>
+                        <p>Create New Course</p>
+                    </a>
+                    {% for course in courses|slice:":8" %}
+                    <div class="content-card">
+                        <div class="content-body">
+                            <h2 class="content-title">{{ course.title }}</h2>
+                            <p class="content-description">{{ course.lessons.count }} lessons</p>
+                            <div class="content-actions">
+                                <a href="{% url 'course_view' course.id %}"><button class="btn-orange"><i class="fas fa-pencil"></i> Edit</button></a>
+                                <a href="{% url 'delete_course' course.id %}?next={{ request.path|urlencode }}"><button class="btn-orange"><i class="fas fa-trash"></i> Delete</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if courses.count > 8 %}
+                    <div class="content-card see-more">
+                        <button class="btn-orange">See More Courses</button>
+                    </div>
+                    {% endif %}
+                    
+                </div>
+
+                <h2>Standalone Lessons</h2>
+                <div class="content-grid">
+                    <a href="{% url 'lesson_create' %}" class="create-new">
+                        <i class="fas fa-plus-circle"></i>
+                        <p>Create New Lesson</p>
+                    </a>
+                    {% for lesson in lessons %}
+                    {% if not lesson.course %}
+                    <div class="content-card">
+                        <div class="content-body">
+                            <h2 class="content-title">{{ lesson.title }}</h2>
+                            <p class="content-description">{{ lesson.lesson_pages.count }} pages</p>
+                            <div class="content-actions">
+                                <a href="{% url 'lesson_view' lesson.id %}"><button class="btn-orange"><i class="fas fa-pencil"></i> Edit</button></a>
+                                <a href="{% url 'delete_lesson' lesson.id %}?next={{ request.path|urlencode }}"><button class="btn-orange"><i class="fas fa-trash"></i> Delete</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    
+                </div>
+
+                <h2>Standalone Lesson Pages</h2>
+                <div class="content-grid">
+                    <a href="{% url 'lesson_page_create' %}" class="create-new">
+                        <i class="fas fa-plus-circle"></i>
+                        <p>Create New Lesson Page</p>
+                    </a>
+                    {% for lesson_page in lesson_pages %}
+                    {% if not lesson_page.lesson %}
+                    <div class="content-card">
+                        <div class="content-body">
+                            <h2 class="content-title">{{ lesson_page.title }}</h2>
+                            <p class="content-description">{{ lesson_page.content|truncatewords:20|safe }}</p>
+                            <div class="content-actions">
+                                <a href="{% url 'lesson_page_edit' lesson_page.id %}"><button class="btn-orange"><i class="fas fa-pencil"></i> Edit</button></a>
+                                <a href="{% url 'delete_lessonpage' lesson_page.id %}?next={{ request.path|urlencode }}"><button class="btn-orange"><i class="fas fa-trash"></i> Delete</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    
+                </div>
+            </div>
+
+            <div id="faq" class="tab-container">
+                <div class="faq-section">
+                    <h2 class="faq-title">Frequently Asked Questions</h2>
+                    <div class="faq-item">
+                        <button class="faq-question">How do I make a classroom? <span class="faq-icon">+</span></button>
+                        <div class="faq-answer">
+                            <p>Go to the "My Classroom" tab, then click the "Create New Classroom" button at the bottom of the grid.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">How do I make content? <span class="faq-icon">+</span></button>
+                        <div class="faq-answer">
+                            <p>Head over to the "My Content" tab, and select the type of content you would like to create (Course, Lesson, or Lesson Page).</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">What are the different content types? <span class="faq-icon">+</span></button>
+                        <div class="faq-answer">
+                            <p>There are three types: Course (a collection of lessons), Standalone Lesson (a single lesson), and Standalone Lesson Page (a single page of content).</p>
+                        </div>
+                    </div>
+                    <div class="faq-support">
+                        {% load wagtailcore_tags %}
+                        <p>Still have questions? Visit our <a href="{% slugurl 'faqs' %}" class="support-link">FAQ Page</a> for more information or contact our support team.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const tabContainers = document.querySelectorAll('.tab-container');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    navItems.forEach(navItem => navItem.classList.remove('active'));
+                    tabContainers.forEach(container => container.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('.faq-icon');
+                    
+                    if (answer.style.display === 'block') {
+                        answer.style.display = 'none';
+                        icon.textContent = '+';
+                    } else {
+                        answer.style.display = 'block';
+                        icon.textContent = '-';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1E1E1E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --accent-color: #FF6B00;
+            --accent-hover: #FF8C32;
+            --success-color: #4CAF50;
+            --warning-color: #FFA500;
+            --error-color: #F44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .login-banner {
+            background-color: var(--accent-color);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .login-banner a {
+            color: var(--text-primary);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .course-title {
+            color: var(--accent-color);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .course-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--accent-color);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .lesson-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .lesson-header {
+            background-color: var(--accent-color);
+            padding: 1rem;
+            position: relative;
+        }
+
+        .lesson-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-progress {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--text-primary);
+            transition: width 0.3s ease;
+        }
+
+        .lesson-content {
+            padding: 1.5rem;
+        }
+
+        .lesson-pages {
+            list-style-type: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .lesson-page {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .page-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+
+        .page-status.completed { background-color: var(--success-color); }
+        .page-status.in_progress { background-color: var(--warning-color); }
+        .page-status.not_started { background-color: var(--text-secondary); }
+
+        .page-title {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .page-title:hover {
+            color: var(--text-primary);
+        }
+
+        .lesson-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .go-btn {
+            background-color: var(--accent-color);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .go-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .expand-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .expand-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .back-btn {
+                position: static;
+                transform: none;
+                margin-bottom: 1rem;
+                display: inline-block;
+            }
+
+            .course-header {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% if not is_authenticated %}
+    <div class="login-banner">
+        <p>
+            You are currently not logged in. Please
+            <a href="{% url 'login' %}">Log in</a> or
+            <a href="{% url 'login' %}">Sign up</a> to save your progress and get the
+            most out of our lessons.
+        </p>
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <header class="course-header">
+            <button onclick="history.back()" class="back-btn">← Back to Courses</button>
+            <h1 class="course-title">{{ course.title }}</h1>
+            <p class="course-description">{{ course.description }}</p>
+        </header>
+
+        <div class="lessons-grid">
+            {% for lesson, progress_status, lesson_pages_with_progress in lessons_with_progress %}
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <h2 class="lesson-title">{{ lesson.title }}</h2>
+                    <div class="lesson-progress">
+                        <span>Progress: 75%</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lesson-content">
+                    <ul class="lesson-pages">
+                        {% for lesson_page, page_status in lesson_pages_with_progress %}
+                        <li class="lesson-page {% if forloop.counter > 3 %}hidden{% endif %}">
+                            <span class="page-status {{ page_status }}"></span>
+                            <a href="{% url 'lesson_page_detail' lesson.id lesson_page.id %}" class="page-title">
+                                {{ lesson_page.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="lesson-footer">
+                        <a href="{% url 'lesson_redirect' lesson.id %}" class="go-btn">Continue</a>
+                        {% if lesson_pages_with_progress|length > 3 %}
+                        <button class="expand-btn">Show more</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No lessons available for this course.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.expand-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const lessonContent = this.closest('.lesson-content');
+                const hiddenPages = lessonContent.querySelectorAll('.lesson-page.hidden');
+                
+                hiddenPages.forEach(page => page.classList.toggle('hidden'));
+                
+                this.textContent = this.textContent === 'Show more' ? 'Show less' : 'Show more';
+            });
+        });
+    </script>
+</body>
+</html>

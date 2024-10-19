@@ -1,0 +1,167 @@
+{% include 'main_3.html' %} {% block content %}
+<style>
+  body {
+    /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    background-color: rgba(200, 200, 200, 0.2); */
+    background-color: #222629;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  #main1234 {
+    background-color: #474b4f;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 40px auto;
+    max-width: 900px;
+    color: #fff;
+    max-width: 100%; /* Change this to 100% */
+  }
+
+  #main1234 h1 {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ff6b6b;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .mission {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  #main1234 h2 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  .volunteer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(200px, 1fr)
+    ); /* Reduce the minimum size */
+    grid-gap: 40px;
+  }
+
+  .volunteer-list li {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .volunteer-list li:hover {
+    transform: translateY(-5px);
+  }
+
+  h3 {
+    font-size: 1.6em;
+    margin: 0 0 10px 0;
+    color: #ff6b6b;
+  }
+
+  .volunteer-list p {
+    font-size: 1.1em;
+    line-height: 1.4;
+    color: #ccc;
+  }
+
+  .contact-section {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .contact-section h4 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+
+  .contact-section p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #ccc;
+  }
+
+  .contact-section a {
+    color: #ff6b6b;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .contact-section a:hover {
+    color: #007bff;
+  }
+</style>
+
+<div id="main1234">
+  <h1>Volunteer Opportunities</h1>
+  <p class="mission">
+    Join our mission to introduce coding to a wide audience, especially those
+    underrepresented in STEM, in a simple and humorous way - completely for
+    free.
+  </p>
+
+  <h2>Make a Difference</h2>
+  <ul class="volunteer-list">
+    <li>
+      <h3>Curriculum Developer</h3>
+      <p>
+        Help us design and create engaging educational content and learning
+        materials to facilitate effective coding instruction.
+      </p>
+    </li>
+    <li>
+      <h3>Marketing and Outreach Assistant</h3>
+      <p>
+        Help us develop and execute strategies to promote the organization's
+        coding programs and expand its reach within the community.
+      </p>
+    </li>
+    <li>
+      <h3>Web Developer</h3>
+      <p>
+        Help us build and maintain our organization's online platforms and
+        coding resources, ensuring accessibility and functionality for learners.
+      </p>
+    </li>
+    <li>
+      <h3>Graphic Designer</h3>
+      <p>
+        Help us design visually appealing graphics and branding materials to
+        enhance our organization's online presence and educational resources.
+      </p>
+    </li>
+    <li>
+      <h3>In-person Volunteer</h3>
+      <p>
+        Help us volunteer in person and serve our community by assisting with
+        coding workshops, events, and other initiatives.
+      </p>
+    </li>
+  </ul>
+
+  <div class="contact-section">
+    <h4>Join Our Team</h4>
+    <p>Interested in learning more or joining our mission? Reach out to us!</p>
+    <a href="mailto:management@404foundcode.org"
+      >Email: management@404foundcode.org</a
+    >
+  </div>
+</div>
+{% include 'footer.html' %} {% endblock content %}

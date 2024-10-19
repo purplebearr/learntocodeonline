@@ -1,0 +1,125 @@
+<div class="footer">
+    <hr class="footer-divider" />
+
+    <div class="footer-content">
+      <div class="footer-content-left">
+        <p class="copyright">© 2024 404FoundCode</p>
+        <p class="description-text1">
+            404FoundCode is a registered 501c3 nonprofit dedicated to providing free coding education.
+        </p>
+        <ul class="footer-links">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'termsofuse' %}">Terms</a></li>
+          <li><a href="{% url 'privacypolicy' %}">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-content-right">
+        <h1>Contact:</h1>
+        <p>Santa Rosa, CA</p>
+        <p>info@404foundcode.org</p>
+      </div>
+    </div>
+  </div>
+</body>
+<style>
+
+  /* New footer styles */
+  
+  .footer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: transparent;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  flex-shrink: 0; /* This will prevent the footer from shrinking if there's a lot of content */
+  margin-top:auto;
+}
+
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .footer-content-left {
+    padding-right: 20px;
+    text-align: left;
+    max-width: 50%;
+  }
+
+  .footer-content-right {
+    padding-bottom: 2%;
+    text-align: left;
+    width: auto;
+    max-width: 50%;
+  }
+
+  .footer ul.footer-links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 75%;
+  }
+
+  .footer li {
+    display: inline;
+    margin-right: 10px;
+  }
+
+  .footer a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+  }
+
+  .description-text1 {
+    max-width: 600px; /* Set your desired maximum width */
+    margin: 0 auto; /* Center the text horizontally */
+    font-size: 16px; /* Adjust font size as needed */
+    /* Add any other styling you'd like */
+  }
+
+  .footer-divider {
+    border-top: 1px solid #ccc; /* Grey line */
+    margin: 10px 0; /* Add some spacing above and below the line */
+  }
+
+  @media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-content-left,
+  .footer-content-right {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .footer ul.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin-bottom: 10px; /* Add some space below the links */
+  }
+
+  .footer li {
+    margin: 5px; /* Add some spacing between links */
+  }
+
+  .description-text1 {
+    text-align: center; /* Center align the description text */
+    margin-bottom: 10px; /* Add some space below the description */
+  }
+
+  .copyright {
+    margin-bottom: 10px; /* Add some space below the copyright */
+  }
+}
+</style>

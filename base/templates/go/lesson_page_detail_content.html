@@ -1,0 +1,85 @@
+<div class="content-page">
+    <!-- Back Button -->
+    <div class="nav-buttons">
+        <button onclick="history.back()" class="back-button">Back</button>
+    </div>
+
+    <!-- SVG Display -->
+    <div class="svg-container">
+        {% if lesson_page.svg_file %}
+        <img src="{{ lesson_page.svg_file.url }}" alt="SVG File" />
+        {% else %}
+        <p>No SVG file available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="page-navigation">
+        {% if previous_page %}
+        <a href="{{ previous_page.url }}" class="nav-button previous-page">Previous Page</a>
+        {% endif %}
+        {% if next_page %}
+        <a href="{{ next_page.url }}" class="nav-button next-page">Next Page</a>
+        {% endif %}
+    </div>
+</div>
+<Style>
+    .content-page {
+    background-color: #1e1e1e; /* Dark background */
+    color: #f0f0f0; /* Light text */
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.svg-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.svg-container img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ff6600; /* Orange accent border */
+    border-radius: 8px;
+}
+
+.nav-buttons {
+    text-align: left;
+}
+
+.back-button {
+    background-color: #ff6600; /* Orange background */
+    color: #f0f0f0; /* Light text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.back-button:hover {
+    background-color: #cc5200; /* Darker orange on hover */
+}
+
+.page-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.nav-button {
+    background-color: #ff6600; /* Orange background */
+    color: #f0f0f0; /* Light text */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.nav-button:hover {
+    background-color: #cc5200; /* Darker orange on hover */
+}
+
+</Style>

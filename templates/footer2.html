@@ -1,0 +1,157 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section about">
+        <h3>404FoundCode</h3>
+        <p>A registered 501c3 nonprofit dedicated to providing free coding education.</p>
+        <div class="contact">
+          <span><i class="fas fa-envelope"></i> management@404foundcode.org</span>
+        </div>
+        <div class="socials">
+          <a href="https://www.instagram.com/404foundcode/"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/company/404-found-code/"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="footer-section links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="{% url 'termsofuse' %}">Terms of Use</a></li>
+          <li><a href="{% url 'privacypolicy' %}">Privacy Policy</a></li>
+          <li><a href="{% url 'aboutPage' %}">About Us</a></li>
+          <li><a href="{% url 'donate' %}">Donate</a></li>
+          <li><a href="#">Volunteer</a></li>
+        </ul>
+      </div>
+      <div class="footer-section donate-support">
+        <h3>Donate and Support Us</h3>
+        <p>Help us continue providing free coding education to those in need.</p>
+        <a href="{% url 'donate' %}" class="btn btn-primary donate-btn">
+          <i class="fas fa-heart"></i> Donate Now
+        </a>
+        <div class="payment-icons">
+          <a href="https://www.paypal.com/donate/?hosted_button_id=KBANHEAAMUHH6" target="_blank" rel="noopener noreferrer"><i class="fab fa-cc-paypal"></i></a>
+        </div>
+        <a href="https://docs.google.com/document/d/1HGpEyiEmg7K34uDf_K4tOMJ2bdcN3DvDMO8OLpg1s5s/edit?usp=sharing" class="prospectus-link" target="_blank" rel="noopener noreferrer">View Our Prospectus <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2024 404FoundCode | All rights reserved
+    </div>
+  </div>
+</footer>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+  .footer {
+    background-color: #333;
+    color: #fff;
+    padding: 50px 0 20px;
+    margin-top: auto;
+  }
+
+  .container {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .footer-section {
+    flex-basis: 30%;
+    margin-bottom: 30px;
+  }
+
+  .footer h3 {
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .footer a {
+    color: #ddd;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer a:hover {
+    color: #fff;
+  }
+
+  .about .contact {
+    margin-top: 20px;
+  }
+
+  .about .contact span {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .about .socials {
+    margin-top: 20px;
+  }
+
+  .about .socials a {
+    margin-right: 15px;
+    font-size: 1.2em;
+  }
+
+  .links ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .links li {
+    margin-bottom: 10px;
+  }
+
+  .donate-support p {
+    margin-bottom: 15px;
+  }
+
+  .donate-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .donate-btn:hover {
+    background-color: #ff6601;
+  }
+
+  .payment-icons {
+    margin-top: 15px;
+    font-size: 1.5em;
+  }
+
+  .payment-icons i {
+    margin-right: 10px;
+  }
+
+  .prospectus-link {
+    display: block;
+    margin-top: 15px;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+  }
+
+  @media screen and (max-width: 768px) {
+    .footer-section {
+      flex-basis: 100%;
+    }
+  }
+</style>

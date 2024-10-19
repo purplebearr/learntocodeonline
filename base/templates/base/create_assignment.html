@@ -1,0 +1,225 @@
+{% include 'main_3.html' %}
+{% block content %}
+<div class="container">
+    <h2>Create Assignment for {{ classroom.name }}</h2>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+            <label for="{{ form.title.id_for_label }}">Title:</label>
+            {{ form.title }}
+            {{ form.title.errors }}
+        </div>
+        <div>
+            <label for="{{ form.description.id_for_label }}">Description:</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+        <div>
+            <label for="{{ form.assignment_type.id_for_label }}">Assignment Type:</label>
+            {{ form.assignment_type }}
+            {{ form.assignment_type.errors }}
+        </div>
+        <div id="course-field" style="display: none;">
+            <label for="{{ form.course.id_for_label }}">Course:</label>
+            {{ form.course }}
+            {{ form.course.errors }}
+        </div>
+        <div id="lesson-field" style="display: none;">
+            <label for="{{ form.lesson.id_for_label }}">Lesson:</label>
+            {{ form.lesson }}
+            {{ form.lesson.errors }}
+        </div>
+        <div id="lesson-page-field" style="display: none;">
+            <label for="{{ form.lesson_page.id_for_label }}">Lesson Page:</label>
+            {{ form.lesson_page }}
+            {{ form.lesson_page.errors }}
+        </div>
+        <div>
+            <label for="{{ form.points_worth.id_for_label }}">Points Worth:</label>
+            {{ form.points_worth }}
+            {{ form.points_worth.errors }}
+        </div>
+        <div>
+            <label for="{{ form.due_date.id_for_label }}">Due Date:</label>
+            {{ form.due_date }}
+            {{ form.due_date.errors }}
+        </div>
+        <div>
+            {{ form.turnstile }}
+        </div>
+        <button type="submit">Create Assignment</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var assignmentTypeSelect = document.getElementById('{{ form.assignment_type.id_for_label }}');
+        var courseField = document.getElementById('course-field');
+        var lessonField = document.getElementById('lesson-field');
+        var lessonPageField = document.getElementById('lesson-page-field');
+
+        function updateFields() {
+            var selectedType = assignmentTypeSelect.value;
+            courseField.style.display = selectedType === 'course' ? 'block' : 'none';
+            lessonField.style.display = selectedType === 'lesson' ? 'block' : 'none';
+            lessonPageField.style.display = selectedType === 'lesson_page' ? 'block' : 'none';
+        }
+
+        assignmentTypeSelect.addEventListener('change', updateFields);
+        updateFields();
+    });
+</script>
+<style>
+    /* styles.css */
+
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-primary: #ff6b00;
+  --accent-secondary: #ff9e00;
+  --error: #ff4444;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  color: var(--accent-primary);
+  border-bottom: 2px solid var(--accent-secondary);
+  padding-bottom: 10px;
+}
+
+form {
+  background-color: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form div {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-secondary);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+textarea,
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--accent-secondary);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 5px var(--accent-primary);
+}
+
+button {
+  background-color: var(--accent-primary);
+  color: var(--text-primary);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--accent-secondary);
+}
+
+.errorlist {
+  color: var(--error);
+  list-style-type: none;
+  padding: 0;
+  margin: 5px 0;
+}
+
+/* Checkbox styles */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Custom styles for assignment type fields */
+#course-field,
+#lesson-field,
+#lesson-page-field {
+  background-color: var(--bg-secondary);
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+/* Messages */
+.messages {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.messages li {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.messages .success {
+  background-color: #28a745;
+  color: white;
+}
+
+.messages .error {
+  background-color: var(--error);
+  color: white;
+}
+</style>
+{% endblock %}

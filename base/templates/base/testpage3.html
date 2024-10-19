@@ -1,0 +1,98 @@
+{% include 'lesson_detail_main.html' %} {% block content %}
+
+<body>
+  <div class="navbar">
+    <a href="{% url 'dashboard' %}" class="back-link">
+        <svg class="svg-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+        </svg>
+        Back
+    </a>
+    <div class="navlink">
+        {% if prev_lesson_page %}
+        <a href="{% url 'lesson_page_detail' lesson.id prev_lesson_page.id %}">Previous</a>
+        {% endif %}
+        <span>{{ lesson_page.title }}</span>
+
+        {% if next_url %}
+        <a href="{{ next_url }}" class="btn-complete">Next</a>
+        {% endif %}
+    </div>
+</div>
+  <div class="container">
+    <div class="main-content">
+      <div class="section">
+        <h2>Lesson Content</h2>
+        <p>{{ lesson_page.content|linebreaksbr }}</p>
+      </div>
+    </div>
+    <div class="compiler">
+      <h2>Workspace</h2>
+      <button id="run-button">Run</button>
+      <div class="editor-output-container">
+        <div id="editor"></div>
+        <div class="output-container">
+          <div id="output"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/python">
+    from browser import document, console
+    import sys
+
+    class PrintToDiv:
+        def write(self, data):
+            document["output"].innerHTML += f'<p class="standard">{str(data)}</p>'
+
+    class ErrorToDiv:
+        def write(self, data):
+            lines = str(data).split('\n')
+            for line in lines:
+                document["output"].innerHTML += f'<p class="error">{line}</p>'
+
+    sys.stdout = PrintToDiv()
+    sys.stderr = ErrorToDiv()
+  </script>
+  <script type="text/javascript">
+    window.onload = function () {
+      // Create a new editor instance
+      editor = ace.edit("editor");
+
+      // Set the editor language to Python
+      editor.session.setMode("ace/mode/python");
+
+      // Set some initial Python code
+      var initialCode = "{{saved_compiler_code|escapejs}}";
+      editor.setValue(initialCode);
+
+      // Attach the handleTyping function to the editor
+      //editor.on("change", handleTyping);
+      editor.setShowPrintMargin(false);
+
+      // Initialize Brython
+      brython();
+
+      document.getElementById("run-button").onclick = function () {
+        let code = editor.getValue();
+
+        // Clear the output div
+        document.getElementById("output").innerHTML = "";
+
+        // Create a new script element
+        let script = document.createElement("script");
+        script.type = "text/python";
+        script.text = code;
+
+        // Append the script element to the body
+        document.body.appendChild(script);
+
+        // Run the code with Brython
+        brython();
+      };
+    };
+
+  </script>
+</body>
+
+{% endblock content %}

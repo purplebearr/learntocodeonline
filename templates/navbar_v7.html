@@ -1,0 +1,429 @@
+{% load static %}
+
+<style>
+  /* Dark theme */
+  body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .header {
+    background-color: #222222;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Added to handle wrapping on smaller screens */
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .header__logo h1 {
+    color: #ffffff;
+    margin-left: 10px;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .header__logo:hover h1 {
+    color: orange;
+  }
+
+  .nav-links {
+    text-align: center;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-links ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-links ul li {
+    margin: 0 10px;
+    list-style-type: none;
+    position: relative;
+  }
+
+  .nav-links ul li a {
+    font-size: 20px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .nav-links ul li a::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: orange;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .nav-links ul li a:hover {
+    color: orange;
+  }
+
+  .nav-links ul li a:hover::before {
+    visibility: visible;
+    transform: scaleX(1);
+  }
+
+  .header__menu {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .header__user {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+
+  .header__user a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .header__user a:hover {
+    color: orange;
+  }
+
+  .header__user p {
+    margin-left: 10px;
+  }
+
+  .dropdown-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+    color: #ff6600;
+    font-size: 24px;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    background-color: #222222;
+    z-index: 1;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+    font-size: 16px;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+  }
+
+  .dropdown-link {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .dropdown-link:hover {
+    color: #ff6600;
+  }
+
+  .dropdown-link svg {
+    margin-right: 10px;
+    fill: #ffffff;
+    transition: fill 0.3s ease-in-out;
+  }
+
+  .dropdown-link:hover svg {
+    fill: #ff6600;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+  }
+
+  .header__logo {
+    margin-bottom: 0;
+    flex: 0 0 auto;
+  }
+
+  .header__logo h1 {
+    font-size: 1.5rem; /* Adjust as needed */
+  }
+
+  .nav-links {
+    width: 100%;
+    order: 3;
+    margin-top: 10px;
+  }
+
+  .nav-links ul {
+    flex-direction: column;
+  }
+
+  .nav-links ul li {
+    margin: 5px 0;
+  }
+
+  .header__menu {
+    flex: 0 0 auto;
+    order: 2;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .header__user {
+    margin-right: 10px;
+    justify-content: flex-end;
+    width: auto;
+  }
+
+  .header__user p {
+    display: none; /* Hide username text on small screens */
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    width: auto;
+    right: 0;
+    top: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 5px;
+  }
+
+  .dropdown-button {
+    margin-left: 5px;
+  }
+
+  /* Hamburger menu styles */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+  }
+
+  .hamburger div {
+    width: 30px;
+    height: 3px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.active div:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .hamburger.active div:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active div:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-links.show {
+    display: block;
+  }
+}
+
+/* Additional styles for very small screens */
+@media (max-width: 480px) {
+  .header__logo img {
+    width: 30px; /* Adjust logo size as needed */
+    height: auto;
+    padding-left: 20%;
+  }
+
+  .header__user .avatar img {
+    width: 30px; /* Adjust avatar size as needed */
+    height: 30px;
+  }
+}
+#donate-banner {
+    position: absolute; /* Changed to absolute */
+    top: 100%; /* Position it right below the navbar */
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-family: Arial, sans-serif;
+    z-index: 999; /* Ensure it's just below the navbar */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  #donate-banner a {
+    color: #ff9800;
+    text-decoration: underline;
+  }
+
+  #donate-banner button {
+    background-color: #ff9800;
+    color: #333;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  #donate-banner button:hover {
+    background-color: #e68900;
+  }
+</style>
+
+
+<header class="header">
+  <div class="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <a href="{% url 'home' %}" class="header__logo">
+    <img src="{% static 'images/logo.svg' %}" />
+    <h1>4FC</h1>
+  </a>
+
+  <div class="nav-links">
+    <ul>
+        <li>
+            <a href="{% if user.is_teacher %}{% url 'teacherpage' %}{% else %}{% url 'dashboard' %}{% endif %}">
+                {% if user.is_teacher %}Teacher{% else %}{% endif %} Dashboard
+            </a>
+        </li>
+        {% if user.is_teacher %}
+        <li>
+            <a href="{% url 'dashboard' %}">
+                Individual Dashboard
+            </a>
+        </li>
+        {% endif %}
+        {% load wagtailcore_tags %}
+        <li><a href="{% slugurl 'home' %}">Community</a></li>
+        <li><a href="{% url 'aboutPage' %}">About</a></li>
+    </ul>
+</div>
+
+  <nav class="header__menu">
+    <!-- Logged In -->
+    {% if request.user.is_authenticated %}
+    <div class="header__user">
+      <a href="{% url 'update-user' %}">
+        <div class="avatar avatar--medium active">
+          <img src="{{request.user.avatar.url}}" />
+        </div>
+        <p>{{request.user.username}} <span>@{{request.user.username}}</span></p>
+      </a>
+      <button class="dropdown-button">&#9660;</button>
+    </div>
+    {% else %}
+
+    <!-- Not Logged In -->
+    <a href="{% url 'login' %}">
+      <img src="{% static 'images/avatar.svg' %}" />
+      <p>Login</p>
+    </a>
+    {% endif %}
+    <div class="dropdown-menu">
+      <a href="{% url 'update-user' %}" class="dropdown-link"
+        ><svg viewBox="0 0 24 24" width="24" height="24">
+          <path
+            fill="currentColor"
+            d="M12 10.9c-.61 0-1.1.49-1.1 1.1s.49 1.1 1.1 1.1c.61 0 1.1-.49 1.1-1.1s-.49-1.1-1.1-1.1zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2.19 12.19L6 18l3.81-8.19L18 6l-3.81 8.19z"
+          ></path>
+        </svg>
+        Settings</a
+      >
+      <a href="{% url 'logout' %}" class="dropdown-link"
+        ><svg viewBox="0 0 24 24" width="24" height="24">
+          <path
+            fill="currentColor"
+            d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a9 9 0 0 0-9 9h2a7 7 0 0 1 7-7v-2z"
+          ></path>
+        </svg>
+        Logout</a
+      >
+    </div>
+  </nav>
+  <div id="donate-banner">
+    <p>Love what we do? Support us by <a href="/donate">donating</a>!</p>
+    <button id="close-banner">Dismiss</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const banner = document.getElementById('donate-banner');
+        const closeBtn = document.getElementById('close-banner');
+
+    // Check if banner has been dismissed previously
+    if (!localStorage.getItem('donateBannerDismissed')) {
+        banner.style.display = 'flex';
+    }
+
+    // Close button action
+    closeBtn.addEventListener('click', function() {
+    banner.style.display = 'none';
+    localStorage.setItem('donateBannerDismissed', 'true');
+    });
+});
+</script>
+</header>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('show');
+  });
+});
+</script>

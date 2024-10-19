@@ -1,0 +1,234 @@
+{% include 'main_3.html' %}
+{% load wagtailcore_tags %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+:root {
+    --bg-dark: #0a0a0a;
+    --bg-card: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent: #4f46e5;
+    --accent-hover: #4338ca;
+    --card-hover: #252525;
+}
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Layout */
+.snippet-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Header styles */
+.page-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    background: linear-gradient(to right, var(--accent), var(--accent-hover));
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: var(--text-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.intro {
+    background-color: var(--bg-card);
+    padding: 2rem;
+    border-radius: 0.75rem;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Snippet grid */
+.snippets-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.snippet-card {
+    background-color: var(--bg-card);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.snippet-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, var(--accent), var(--accent-hover));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.snippet-card:hover {
+    transform: translateY(-4px);
+    background-color: var(--card-hover);
+}
+
+.snippet-card:hover::before {
+    opacity: 1;
+}
+
+.snippet-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    display: block;
+}
+
+.snippet-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+}
+
+.snippet-meta {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.language-badge {
+    background-color: var(--accent);
+    color: var(--text-primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: var(--bg-card);
+    border-radius: 0.75rem;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+.empty-state-text {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .snippet-page {
+        padding: 1rem;
+    }
+    
+    .page-header {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .snippets-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="snippet-page">
+    <header class="page-header">
+        <h1 class="page-title">{{ page.title }}</h1>
+        {% if page.intro %}
+        <div class="intro">
+            {{ page.intro|richtext }}
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="snippets-container">
+        {% for snippet in snippet_pages %}
+        <article class="snippet-card">
+            <a href="{% pageurl snippet %}" class="snippet-link">
+                <h2 class="snippet-title">{{ snippet.title }}</h2>
+                {% if snippet.description %}
+                <div class="snippet-description">
+                    {{ snippet.description|richtext|truncatewords_html:30 }}
+                </div>
+                {% endif %}
+                <div class="snippet-meta">
+                    <span class="language-badge">{{ snippet.language }}</span>
+                    <span class="updated-at">Updated {{ snippet.latest_revision_created_at|date:"M j, Y" }}</span>
+                </div>
+            </a>
+        </article>
+        {% empty %}
+        <div class="empty-state">
+            <p class="empty-state-text">No code snippets available yet.</p>
+            <p class="text-secondary">Check back later for updates!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add hover effects
+    const cards = document.querySelectorAll('.snippet-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-4px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

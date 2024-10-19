@@ -1,0 +1,221 @@
+{% include 'main_3.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teach with 404 Found Code</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #2a2a2a;
+            --accent-color: orange;
+            --text-color: #ffffff;
+            --text-color-muted: #b0b0b0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 102, 0, 0.1) 0%, rgba(255, 102, 0, 0) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content a {
+            font-size: large;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: var(--text-color-muted);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #ff8533;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding: 0 40px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .service:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 102, 0, 0.1);
+        }
+
+        .service i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .service h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .service p {
+            color: var(--text-color-muted);
+        }
+
+        .warning {
+            background-color: rgba(255, 102, 0, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 40px auto;
+            max-width: 800px;
+            border-radius: 5px;
+        }
+
+        .warning h2 {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--text-color-muted);
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Empower Your Coding Classes</h1>
+                <p>Elevate your teaching with our innovative platform designed for coding educators.</p>
+                <a href="{% url 'teacherredirect' %}" class="btn btn-primary">Upgrade to a Teacher's account!</a>
+            </div>
+        </section>
+
+        <h2 class="section-title">Why Teach with 404FoundCode?</h2>
+
+        <section class="services">
+            <div class="service">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h2>Intuitive Teaching Tools</h2>
+                <p>Our user-friendly interface makes lesson creation and management a breeze, allowing you to focus on what matters most - teaching.</p>
+            </div>
+            <div class="service">
+                <i class="fas fa-book-open"></i>
+                <h2>Rich Content Library</h2>
+                <p>Access a vast collection of pre-made lessons and coding exercises, or easily create your own to suit your curriculum.</p>
+            </div>
+            <div class="service">
+                <i class="fas fa-chart-bar"></i>
+                <h2>Progress Tracking</h2>
+                <p>Monitor your students' progress with detailed analytics, helping you identify areas for improvement and celebrate achievements.</p>
+            </div>
+            <div class="service">
+                <i class="fas fa-users"></i>
+                <h2>Collaborative Learning</h2>
+                <p>Foster a sense of community with built-in tools for group projects, peer reviews, and class discussions.</p>
+            </div>
+        </section>
+
+        <div class="warning">
+            <h2>Important Information:</h2>
+            <p>Standard teacher accounts are limited to 3 classrooms with 60 students each. If you're part of a larger educational institution or organization, please contact us for a custom solution tailored to your needs.</p>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock content %}

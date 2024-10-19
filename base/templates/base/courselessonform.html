@@ -1,0 +1,15 @@
+<div class="container mt-5"></div>
+    <h2>Create a New Lesson for {{ course.title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+            {{ form.title }}
+        </div>
+        <div class="mb-3 form-check">
+            {{ form.is_private }}
+            <label class="form-check-label" for="{{ form.is_private.id_for_label }}">Private Lesson</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Lesson</button>
+    </form>
+</div>

@@ -1,0 +1,80 @@
+{% block content %}
+<html>
+  <head>
+    <title>werf</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="workspace">
+        <div class="workspace-header">Workspace</div>
+        <button class="external-run-button">Run</button>
+        <div class="compiler-embed">
+          <div class="compiler-content">
+            <div class="repl-container">
+              <py-repl id="my-repl"></py-repl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script type="text/python">
+      from js import console
+
+      def get_code():
+          repl = document.getElementById("my-repl")
+          code = repl.getPySrc()
+          console.log(code)
+    </script>
+  </body>
+</html>
+<script>
+  // Assuming you have a PyScript REPL with id 'my-repl'
+  const repl = document.querySelector("#my-repl");
+
+  // Define the getPySrc function
+  function getPySrc() {
+    return repl.getPySrc();
+  }
+
+  // Use the function when the external run button is clicked
+  const externalRunButton = document.querySelector(".external-run-button");
+  externalRunButton.addEventListener("click", () => {
+    const pyReplRunButton = document.querySelector(".py-repl-run-button");
+    if (pyReplRunButton) {
+      pyReplRunButton.click();
+    }
+    console.log(getPySrc()); // Print the user's code to the console
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Function to move the py-repl-output div to the compiler-content div
+    function moveDiv() {
+      // Select the py-repl-output div and the compiler-content div
+      const pyReplOutput = document.getElementById(
+        "my-repl-repl-output.py-repl-output"
+      );
+      const compilerContent = document.querySelector(".compiler-content");
+
+      // Check if both elements exist
+      if (pyReplOutput && compilerContent) {
+        // Append the py-repl-output div to the compiler-content div
+        compilerContent.appendChild(pyReplOutput);
+      } else {
+        // If one or both elements don't exist, check again after 500 milliseconds
+        setTimeout(moveDiv, 500);
+      }
+    }
+
+    // Call the moveDiv function
+    moveDiv();
+  });
+</script>
+<style>
+  .py-terminal {
+    visibility: hidden;
+  }
+</style>
+
+{% endblock content %}

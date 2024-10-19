@@ -1,0 +1,51 @@
+{% include 'main_3.html' %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {% for field in form %}
+    <div class="form-group">
+      {{ field.label_tag }}
+      {{ field }}
+  {% endfor %}
+  <button type="submit">Create</button>
+</form>
+<style>
+  form {
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
+
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+  }
+  label[for="id_turnstile"] {
+    display: none;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% include 'main_3.html' %}
+{% block content %}
+
+</head>
+<body>
+    <h1>Delete Lesson Page</h1>
+    <p>Are you sure you want to delete "{{ lesson_page.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+    <a href="{% url 'lesson_detail' lesson_id=lesson.id %}">Cancel</a>
+</body>
+</html>
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="#1a1a1a" />
+  
+  <!-- Simplified Code Brackets -->
+  <path d="M11 8 L6 16 L11 24" 
+        stroke="#4f46e5" 
+        stroke-width="2.5" 
+        stroke-linecap="round" 
+        fill="none" />
+  
+  <path d="M21 8 L26 16 L21 24" 
+        stroke="#4f46e5" 
+        stroke-width="2.5" 
+        stroke-linecap="round" 
+        fill="none" />
+  
+  <!-- Center Slash -->
+  <path d="M18 6 L14 26" 
+        stroke="#06b6d4" 
+        stroke-width="2.5" 
+        stroke-linecap="round" 
+        fill="none" />
+</svg>

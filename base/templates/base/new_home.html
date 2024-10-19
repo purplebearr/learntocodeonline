@@ -1,0 +1,70 @@
+{% include 'new_main.html' %} {% block content %}
+<body>
+  <div class="main-container">
+    <div class="content-wrapper">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="text-wrapper">
+            <h1 class="BoxTextBorder">
+              Unlock Your Coding Potential with Python
+            </h1>
+            <p>
+              Discover the versatile and beginner-friendly programming language
+              that opens doors to endless possibilities.
+            </p>
+            <div class="buttons">
+              <a
+                href="{% url 'dashboard' %}"
+                class="cta cta-primary"
+                >Get Started Now</a
+              >
+              <a href="{% url 'lessons_page' %}" class="cta cta-secondary"
+                >Why Python?</a
+              >
+            </div>
+          </div>
+          <img
+            src="static/images/pythonlogo5.png"
+            class="python-logo"
+            alt="Python Logo"
+          />
+        </div>
+      </section>
+
+      <section class="why-python">
+        <h2 class="section-title">Why learn Python?</h2>
+        <div class="services">
+          <div class="service">
+            <i class="fas fa-user-graduate"></i>
+            <h3>Beginner-friendly</h3>
+            <p>
+              Python's clear and concise syntax makes it easy to learn, even for
+              those with no prior programming experience.
+            </p>
+          </div>
+          <div class="service">
+            <i class="fas fa-code-branch"></i>
+            <h3>Versatile</h3>
+            <p>
+              Python can be applied in various fields, including web
+              development, data science, machine learning, and automation,
+              making it a valuable skill across different industries.
+            </p>
+          </div>
+          <div class="service">
+            <i class="fas fa-chart-line"></i>
+            <h3>In-demand</h3>
+            <p>
+              Python is consistently ranked among the most popular programming
+              languages, offering strong career prospects and job opportunities.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+    {% include 'footer.html' %}
+  </div>
+</body>
+
+{% endblock content %}

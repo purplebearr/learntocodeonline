@@ -1,0 +1,358 @@
+{% load static %}
+{% include 'main_3.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.title }} - View</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <link rel="shortcut icon" href="{% static 'images/faviconlogo.ico' %}" type="image/x-icon" />
+    <style>
+        .course-view {
+            --bg-color: #121212;
+            --secondary-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --accent-color: #ff9800;
+            --accent-hover: #ffa726;
+            --card-bg: #2a2a2a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            font-size: 18px;  /* Increased base font size */
+        }
+        body {
+            background-color: #121212;
+        }
+        .course-view .container {
+            max-width: 1200px;  /* Increased max-width */
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #121212;
+
+        }
+        .course-view header {
+            background-color: var(--secondary-bg);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .course-view h1 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 3rem;  /* Increased font size */
+            text-align: center;
+            padding: 1.5rem 0;  /* Increased padding */
+            background-color: var(--secondary-bg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .course-view h2, .course-view h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 2rem;  /* Increased font size */
+        }
+        .course-view h3 {
+            font-size: 1.5rem;  /* Slightly smaller than h2 */
+        }
+        .course-view .course-info {
+            background-color: var(--card-bg);
+            padding: 2.5rem;  /* Increased padding */
+            border-radius: 12px;  /* Increased border radius */
+            margin-bottom: 2.5rem;  /* Increased margin */
+            box-shadow: 0 6px 8px rgba(0,0,0,0.2);  /* Enhanced shadow */
+        }
+        .course-view .course-info p {
+            margin-bottom: 1rem;  /* Increased margin */
+            font-size: 1.1rem;  /* Slightly larger text */
+        }
+        .course-view .lesson-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .course-view .lesson-item {
+            background-color: var(--secondary-bg);
+            margin-bottom: 1.5rem;  /* Increased margin */
+            padding: 2rem;  /* Increased padding */
+            border-radius: 12px;  /* Increased border radius */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .course-view .lesson-pages {
+            margin-left: 2rem;  /* Increased margin */
+            margin-top: 1.5rem;  /* Increased margin */
+            display: none;
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .course-view .lesson-page-item {
+            background-color: var(--card-bg);
+            margin-bottom: 1rem;  /* Increased margin */
+            padding: 1rem;  /* Increased padding */
+            border-radius: 8px;  /* Increased border radius */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .course-view .lesson-page-item:hover {
+            background-color: var(--secondary-bg);
+        }
+        .course-view .btn {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.75rem 1.5rem;  /* Increased padding */
+            border-radius: 6px;  /* Increased border radius */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1rem;  /* Increased font size */
+            margin-right: 1rem;  /* Increased margin */
+        }
+        .course-view .btn:hover {
+            background-color: var(--accent-hover);
+        }
+        .course-view .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        .course-view .btn-secondary:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+        .course-view .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .course-view .lesson-header {
+            cursor: pointer;
+        }
+        .course-view .lesson-header .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+        .course-view .lesson-header.active .chevron-icon {
+            transform: rotate(180deg);
+        }
+        .course-view .drag-handle {
+            cursor: move;
+            padding-right: 15px;  /* Increased padding */
+            color: var(--accent-color);
+            font-size: 1.2rem;  /* Increased font size */
+        }
+        .course-view .action-menu {
+            position: relative;
+            display: inline-block;
+        }
+        .course-view .action-menu-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--card-bg);
+            min-width: 200px;  /* Increased width */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 6px;  /* Increased border radius */
+        }
+        .course-view .action-menu-content a {
+            color: var(--text-color);
+            padding: 15px 20px;  /* Increased padding */
+            text-decoration: none;
+            display: block;
+            font-size: 1.1rem;  /* Increased font size */
+        }
+        .course-view .action-menu-content a:hover {
+            background-color: var(--secondary-bg);
+        }
+        .course-view .action-menu:hover .action-menu-content {
+            display: block;
+        }
+        .course-view .icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;  /* Increased font size */
+            color: var(--accent-color);
+            padding: 10px;  /* Added padding */
+        }
+        .course-view .lesson-page-link {
+            text-decoration: none;
+            color: var(--text-color);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="course-view">
+        <h1>{{ course.title }}</h1>
+
+        <main class="container">
+            <section class="course-info">
+                <h2>Course Details</h2>
+                <p><strong>Description:</strong> {{ course.description }}</p>
+                <p><strong>Last Updated:</strong> {{ course.last_updated|date:"F d, Y H:i" }}</p>
+                <div>
+                    <a href="{% url 'user_course_view' course.id %}" class="btn">View Course</a>
+                    <a href="{% url 'course_edit' course.id %}" class="btn btn-secondary">Edit Course</a>
+                    <a href="{% url 'delete_course' course.id %}?next={{ request.path|urlencode }}" class="btn btn-secondary">Delete Course</a>
+                </div>
+            </section>
+            
+            <section>
+                <div class="flex-between">
+                    <h2>Lessons</h2>
+                    <a href="{% url 'lesson_create_for_course' course.id %}" class="btn btn-secondary">Add Lesson</a>
+                </div>
+                <ul id="lesson-list" class="lesson-list">
+                    {% for lesson in lessons %}
+                        <li class="lesson-item" data-lesson-id="{{ lesson.id }}">
+                            <div class="flex-between lesson-header" onclick="toggleLessonPages(this)">
+                                <h3>
+                                    <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                    {{ lesson.title }} <i class="fas fa-chevron-down chevron-icon"></i>
+                                </h3>
+                                <div class="action-menu">
+                                    <button class="icon-button"><i class="fas fa-ellipsis-v"></i></button>
+                                    <div class="action-menu-content">
+                                        <a href="{% url 'lesson_edit' lesson.id %}"><i class="fas fa-pencil"></i> Edit Lesson</a>
+                                        <a href="{% url 'delete_lesson' lesson.id %}?next={{ request.path|urlencode }}"><i class="fas fa-trash"></i> Delete Lesson</a>
+                                        <a href="{% url 'lesson_page_create_for_lesson' lesson.id %}"><i class="fas fa-plus"></i> Add Page</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="lesson-pages" data-lesson-id="{{ lesson.id }}">
+                                {% for page in lesson.lesson_pages.all %}
+                                    <li class="lesson-page-item" data-page-id="{{ page.id }}">
+                                        <div class="flex-between">
+                                            <span>
+                                                <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                                {{ page.title }}
+                                            </span>
+                                            <div class="action-menu">
+                                                <button class="icon-button"><i class="fas fa-ellipsis-v"></i></button>
+                                                <div class="action-menu-content">
+                                                    <a href="{% url 'user_course_lesson_page_view' course.id lesson.id page.id %}"><i class="fas fa-eye"></i> View Page</a>
+                                                    <a href="{% url 'lesson_page_edit' page.id %}?next={{ request.path|urlencode }}"><i class="fas fa-pencil"></i> Edit Page</a>
+                                                    <a href="{% url 'delete_lessonpage' page.id %}?next={{ request.path|urlencode }}"><i class="fas fa-trash"></i> Delete Page</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function toggleLessonPages(header) {
+            const lessonItem = header.closest('.lesson-item');
+            const lessonPages = lessonItem.querySelector('.lesson-pages');
+            const chevronIcon = header.querySelector('.chevron-icon');
+        
+            header.classList.toggle('active');
+            if (lessonPages.style.display === 'none' || lessonPages.style.display === '') {
+                lessonPages.style.display = 'block';
+            } else {
+                lessonPages.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const lessonList = document.getElementById('lesson-list');
+            new Sortable(lessonList, {
+                animation: 150,
+                handle: '.drag-handle',
+                onEnd: function(evt) {
+                    const lessonItems = Array.from(lessonList.querySelectorAll('.lesson-item'));
+                    const newOrder = lessonItems.map((item, index) => ({
+                        id: item.dataset.lessonId,
+                        order: index + 1
+                    }));
+                    
+                    updateLessonOrder(newOrder);
+                }
+            });
+
+            const lessonPages = document.querySelectorAll('.lesson-pages');
+            lessonPages.forEach(pageList => {
+                new Sortable(pageList, {
+                    animation: 150,
+                    handle: '.drag-handle',
+                    group: 'lesson-pages',
+                    onEnd: function(evt) {
+                        const pageItems = Array.from(evt.to.querySelectorAll('.lesson-page-item'));
+                        const newOrder = pageItems.map((item, index) => ({
+                            id: item.dataset.pageId,
+                            order: index + 1,
+                            lessonId: evt.to.dataset.lessonId
+                        }));
+                        
+                        updateLessonPageOrder(newOrder);
+                    }
+                });
+            });
+        });
+
+        function updateLessonOrder(newOrder) {
+            fetch('{% url "update_lesson_order" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(newOrder)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Lesson order updated successfully');
+                } else {
+                    console.error('Failed to update lesson order');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function updateLessonPageOrder(newOrder) {
+            fetch('{% url "update_lesson_page_order" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(newOrder)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Lesson page order updated successfully');
+                } else {
+                    console.error('Failed to update lesson page order');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,533 @@
+{% include 'main_3.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            color: #ff6600;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #ff6600;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            padding: 3rem;
+            border-radius: 10px;
+            max-width: 1200px;
+            width: 90%;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-image {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .hero-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .scroll-arrow {
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow svg {
+            width: 40px;
+            height: 40px;
+            fill: #ff6600;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        @media (max-width: 968px) {
+            .hero-content {
+                flex-direction: column;
+                padding: 2rem;
+            }
+
+            .hero-image {
+                max-width: 100%;
+                order: -1;
+            }
+
+            .hero-content h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+            }
+
+            .hero-image {
+                max-width: 100%;
+                order: -1;
+            }
+        }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            flex-basis: calc(25% - 1rem);
+        }
+
+        .stat h3 {
+            font-size: 2.5rem;
+            color: #ff6600;
+        }
+
+        .supported-by-section {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .supported-by-logo img {
+            max-width: 400px;
+            transition: filter 0.3s ease;
+        }
+
+        .supported-by-logo img:hover {
+            filter: grayscale(0%) brightness(100%);
+        }
+
+        @media (max-width: 768px) {
+            .stat {
+                flex-basis: calc(50% - 1rem);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .circular-progress {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#ff6600 0deg, #2a2a2a 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem auto;
+            position: relative;
+        }
+
+        .circular-progress::before {
+            content: "";
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background-color: #121212;
+            border-radius: 50%;
+        }
+
+        .progress-value {
+            position: relative;
+            font-size: 2rem;
+            color: #ff6600;
+        }
+
+        .demographics {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .demographic-item {
+            text-align: center;
+            margin: 1rem;
+        }
+        .support-mission {
+            background-color: #1a1a1a;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .support-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .support-content p {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .support-button {
+            display: inline-block;
+            background-color: #ff6600;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .support-button:hover {
+            background-color: #e55b00;
+        }
+
+        .news-article {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .news-article .image-link {
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .news-article img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: opacity 0.3s ease;
+        }
+
+        .news-article .image-link:hover img {
+            opacity: 0.8;
+        }
+
+        .news-article h3 {
+            margin-bottom: 0.4rem;
+            font-size: 1.9rem; /* Reduced font size */
+        }
+
+        .news-article p {
+            margin-bottom: 0.75rem;
+            font-size: 1.5rem; /* Reduced font size */
+        }
+
+        .news-article a {
+            color: #ff6600;
+            text-decoration: none;
+            font-size: 1.4rem; /* Reduced font size */
+        }
+
+        .news-article a:hover {
+            text-decoration: underline;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+      <div class="container">
+        <section id="hero" class="hero-section fade-in">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Our Dream is Global Learning Transformation</h2>
+                    <p>
+                        404 Found Code is an online coding education platform that makes coding
+                        education accessible to everyone. We are a 501c3 nonprofit dedicated to
+                        providing free coding education, believing that coding is a powerful
+                        tool for problem-solving, creativity, and self-expression.
+                    </p>
+                </div>
+                <div class="hero-image">
+                    <img src="static/images/picsvg_download.svg" alt="Coding Education">
+                </div>
+            </div>
+            <div class="scroll-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                </svg>
+            </div>
+        </section>
+
+        <section id="impact" class="section fade-in">
+            <h2>Our Impact</h2>
+            <div class="stats">
+                <div class="stat">
+                    <h3>150+</h3>
+                    <p>Active Students</p>
+                </div>
+                <div class="stat">
+                    <h3>10+</h3>
+                    <p>Opportunities Provided</p>
+                </div>
+                <div class="stat">
+                    <h3>8+</h3>
+                    <p>Hours of Free Content Created</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="demographics" class="section fade-in">
+            <h2>Demographics</h2>
+            <div class="demographics">
+                <div class="demographic-item">
+                    <div class="circular-progress" data-percentage="35">
+                        <span class="progress-value">35%</span>
+                    </div>
+                    <p>Female students</p>
+                </div>
+                <div class="demographic-item">
+                    <div class="circular-progress" data-percentage="60">
+                        <span class="progress-value">60%</span>
+                    </div>
+                    <p>Underrepresented groups</p>
+                </div>
+                <div class="demographic-item">
+                    <div class="circular-progress" data-percentage="90">
+                        <span class="progress-value">90%</span>
+                    </div>
+                    <p>Ages 9-16 </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="section fade-in">
+            <h2>404 Found Code in the News</h2>
+            <div class="news-article">
+                <a href="https://www.pressdemocrat.com/article/news/maria-carrillo-high-school-404-found-code/" class="image-link">
+                    <img src="https://imengine.prod.srp.navigacloud.com/?uuid=509c8858-51a2-5740-86de-8f211a7e48e5&type=primary&q=75&width=1024" alt="404 Found Code in the News">
+                </a>
+                <h3>Maria Carrillo High School coders created a nonprofit to teach coding to young Sonoma County students at no cost</h3>
+                <p>The program, started by Maria Carrillo High School students, includes an eight-week curriculum to learn the basics of coding. They use it to teach young learners at no cost through a Sonoma County Library partnership.</p>
+                <p>Source: Press Democrat</p>
+                <a href="https://www.pressdemocrat.com/article/news/maria-carrillo-high-school-404-found-code/">Read More</a>
+            </div>
+            <p>Stay tuned for our latest media coverage and press releases.</p>
+        </section>
+
+        <section id="goals" class="section fade-in">
+            <h2>Our Goals and Metrics</h2>
+            <p>We are committed to expanding our reach and impact. Our current goals include:</p>
+            <ul>
+                <li>Increasing our student base by 50% in the next year</li>
+                <li>Developing 5 new course modules</li>
+                <li>Partnering with 3 new organizations to broaden our outreach</li>
+            </ul>
+        </section>
+
+        <section id="commitment" class="section fade-in">
+            <h2>Our Commitment to Worldwide Education</h2>
+            <p>At 404 Found Code, we believe that quality coding education should be accessible to everyone, regardless of their location or background. We are constantly working to break down barriers and bring coding skills to learners around the globe.</p>
+        </section>
+        <section class="support-mission">
+            <div class="support-content">
+                <p>Your support helps us continue providing free coding education to everyone. Join us in our mission to make programming accessible to all!</p>
+                <a href="/donate" class="support-button">Support Us! <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <section id="supporters" class="section fade-in" style="border-bottom: none;">
+            <h2>Our Valued Supporters</h2>
+            <p class="supporters-intro">We're grateful for the support of these amazing organizations that help make our mission possible:</p>
+            <div class="supporters-grid">
+                <div class="supporter-card">
+                    <h3></h3>
+                    <p></p>
+                    <img src="https://cdn.worldvectorlogo.com/logos/digitalocean-2.svg" alt="DigitalOcean logo" class="supporter-logo">
+                </div>
+                <div class="supporter-card">
+                    <h3></h3>
+                    <p></p>
+                    <img src="https://cdn.worldvectorlogo.com/logos/linode.svg" alt="Linode logo" class="supporter-logo">
+                    <img src="https://cdn.worldvectorlogo.com/logos/akamai-4.svg" alt="Linode logo" class="supporter-logo">
+
+                </div>
+            </div>
+        </div>
+            
+        </section>
+        <style>
+            .supporters-intro {
+                text-align: center;
+                max-width: 800px;
+                margin: 0 auto 2rem;
+            }
+            
+            .supporters-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+            }
+            
+            .supporter-card {
+                background-color: #2a2a2a;
+                border-radius: 10px;
+                padding: 1.5rem;
+                text-align: center;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            
+            .supporter-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(255, 102, 0, 0.1);
+            }
+            
+            .supporter-logo {
+                height: 60px;
+                margin-bottom: 1rem;
+            }
+            
+            .supporter-card h3 {
+                color: #ff6600;
+                margin-bottom: 0.5rem;
+            }
+            
+            .supporter-card p {
+                font-size: 1.5rem;
+                color: #f0f0f0;
+            }
+        
+            @media (max-width: 768px) {
+                .supporters-grid {
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                }
+            }
+        </style>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => observer.observe(el));
+
+            const circularProgressBars = document.querySelectorAll('.circular-progress');
+            circularProgressBars.forEach(bar => {
+                const percentage = bar.getAttribute('data-percentage');
+                setTimeout(() => {
+                    bar.style.background = `conic-gradient(#ff6600 ${percentage * 3.6}deg, #2a2a2a 0deg)`;
+                }, 500);
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          // ... (previous JavaScript code remains the same) ...
+
+          // Smooth scroll for the arrow
+          document.querySelector('.scroll-arrow').addEventListener('click', () => {
+              const nextSection = document.querySelector('#impact');
+              nextSection.scrollIntoView({ behavior: 'smooth' });
+          });
+      });
+  </script>
+</body>
+</html>

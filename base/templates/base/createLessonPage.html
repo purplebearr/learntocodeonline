@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Lesson Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .form-input, .form-textarea, .form-select {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-color: #4a5568;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: #ed8936;
+        }
+        .btn-orange {
+            background-color: #ed8936;
+            color: #ffffff;
+        }
+        .btn-orange:hover {
+            background-color: #dd6b20;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #4a5568;
+            color: #e2e8f0;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-orange-500">{{ lesson.title }}</h1>
+        
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-orange-500">Create Lesson Page</h2>
+            <form method="post" enctype="multipart/form-data" class="space-y-4">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-4">
+                        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-300 mb-2">
+                            {{ field.label }}
+                            <span class="tooltip ml-1">
+                                ❔
+                                <span class="tooltiptext">
+                                    {{ field.help_text|default:"No help text available" }}
+                                    {% if field.field.required %}
+                                        <br><span class="text-orange-500">Required</span>
+                                    {% else %}
+                                        <br><span class="text-gray-400">Optional</span>
+                                    {% endif %}
+                                </span>
+                            </span>
+                        </label>
+                        {{ field|add_class:"form-input w-full rounded-md" }}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <p class="text-red-500 text-xs italic">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn-orange py-2 px-4 rounded-md hover:bg-orange-600 transition duration-300">Create Lesson Page</button>
+            </form>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-orange-500">Lesson Pages</h2>
+            <ul class="space-y-2">
+                {% for page in lesson_pages %}
+                    <li class="flex justify-between items-center">
+                        <span>{{ page.title }} (Order: {{ page.order }})</span>
+                        {% if page.isContentPage %}
+                            <span class="text-orange-500">Content Page</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Add custom file input styling
+        const fileInputs = document.querySelectorAll('input[type="file"]');
+        fileInputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+                const fileName = e.target.files[0].name;
+                const label = e.target.nextElementSibling;
+                label.textContent = fileName;
+            });
+        });
+    </script>
+</body>
+</html>

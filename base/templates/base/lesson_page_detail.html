@@ -1,0 +1,18 @@
+{% include 'main_3.html' %} {% block content %}
+<h1>{{ lesson_page.title }}</h1>
+<p>{{ lesson_page.content }}</p>
+
+{% if request.user.is_authenticated %}
+<form method="post">
+  {% csrf_token %}
+  <input type="submit" value="Finish Lesson Page" />
+</form>
+{% endif %} {% if prev_lesson_page %}
+<a href="{% url 'lesson_page_detail' lesson_page_id=prev_lesson_page.id %}"
+  >Previous Lesson Page</a
+>
+{% endif %} {% if next_lesson_page %}
+<a href="{% url 'lesson_page_detail' lesson_page_id=next_lesson_page.id %}"
+  >Next Lesson Page</a
+>
+{% endif %} {% endblock content%}

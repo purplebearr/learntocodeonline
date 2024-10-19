@@ -1,0 +1,299 @@
+{% include 'main_3.html' %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <style>
+        /* Base Theme */
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --card-hover: #252525;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Styles */
+        .tutorial-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tutorial-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), var(--accent-hover));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        /* Introduction Section */
+        .tutorial-introduction {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tutorial-introduction:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.1);
+        }
+
+        /* Content Blocks */
+        .content-block {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .content-block:hover {
+            background-color: var(--card-hover);
+        }
+
+        /* Typography */
+        h2, h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--bg-dark) !important;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        code {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Syntax Highlighting */
+        .token.comment { color: #6a9955; }
+        .token.string { color: #ce9178; }
+        .token.number { color: #b5cea8; }
+        .token.keyword { color: #569cd6; }
+        .token.function { color: #dcdcaa; }
+        .token.class-name { color: #4ec9b0; }
+        .token.operator { color: #d4d4d4; }
+        .token.punctuation { color: #d4d4d4; }
+        .token.property { color: #9cdcfe; }
+        .token.tag { color: #569cd6; }
+        .token.attr-name { color: #9cdcfe; }
+        .token.attr-value { color: #ce9178; }
+
+        /* Images */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Links */
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+        }
+
+        /* Rich Text Content */
+        .rich-text {
+            color: var(--text-secondary);
+        }
+
+        .rich-text h2,
+        .rich-text h3 {
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .rich-text ul,
+        .rich-text ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .rich-text li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code Block Header */
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .language-tag {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-block {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .content-block:nth-child(1) { animation-delay: 0.1s; }
+        .content-block:nth-child(2) { animation-delay: 0.2s; }
+        .content-block:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .tutorial-title {
+                font-size: 2rem;
+            }
+
+            .content-block {
+                padding: 1.5rem;
+            }
+
+            pre {
+                padding: 1rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="tutorial-header">
+            <h1 class="tutorial-title">{{ page.title }}</h1>
+        </header>
+
+        {% if page.introduction %}
+        <div class="tutorial-introduction">
+            <h2>Introduction</h2>
+            <div class="rich-text">
+                {{ page.introduction|richtext }}
+            </div>
+        </div>
+        {% endif %}
+
+        <main class="tutorial-content">
+            {% for block in page.content %}
+                <section class="content-block">
+                    {% if block.block_type == 'text' %}
+                        <div class="rich-text">
+                            {{ block.value|richtext }}
+                        </div>
+                    {% elif block.block_type == 'code' %}
+                        <div class="code-header">
+                            <span class="language-tag">{{ block.value.language }}</span>
+                        </div>
+                        <pre><code>{{ block.value.code }}</code></pre>
+                    {% elif block.block_type == 'image' %}
+                        {% image block.value width-800 as img %}
+                        <img src="{{ img.url }}" alt="{{ img.alt }}" width="{{ img.width }}" height="{{ img.height }}" loading="lazy">
+                    {% endif %}
+                </section>
+            {% endfor %}
+        </main>
+    </div>
+
+    <script>
+        // Simple syntax highlighting
+        document.querySelectorAll('pre code').forEach(block => {
+            const code = block.textContent;
+            block.innerHTML = code.replace(
+                /\b(class|def|import|from|return|if|else|for|while|try|except|true|false|null|None|async|await|function|var|let|const|new)\b/g,
+                '<span class="token keyword">$1</span>'
+            ).replace(
+                /(["'])(?:(?=(\\?))\2.)*?\1/g,
+                '<span class="token string">$&</span>'
+            ).replace(
+                /\b(\d+)\b/g,
+                '<span class="token number">$1</span>'
+            ).replace(
+                /(#.+)$/gm,
+                '<span class="token comment">$1</span>'
+            );
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

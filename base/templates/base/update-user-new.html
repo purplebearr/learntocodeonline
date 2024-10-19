@@ -1,0 +1,297 @@
+{% include 'main_3.html' %}
+{% block content %}
+<style>
+    :root {
+        --bg-dark: #0a0a0a;
+        --bg-card: #1a1a1a;
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0a0;
+        --accent: #4f46e5;
+        --accent-hover: #4338ca;
+        --card-hover: #252525;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-dark);
+        color: var(--text-primary);
+    }
+
+    .container {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 280px;
+        background-color: var(--bg-card);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-pic {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        margin-bottom: 2rem;
+        background-color: var(--card-hover);
+        background-size: cover;
+        background-position: center;
+        cursor: pointer;
+        border: 4px solid var(--accent);
+        transition: transform 0.3s ease;
+    }
+
+    .profile-pic:hover {
+        transform: scale(1.05);
+    }
+
+    .menu-item {
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .menu-item:hover, .menu-item.active {
+        background-color: var(--accent);
+        color: var(--text-primary);
+    }
+
+    .content {
+        flex-grow: 1;
+        padding: 2rem;
+        overflow-y: auto;
+        background-color: var(--bg-dark);
+    }
+
+    h1, h2 {
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        background-color: var(--bg-card);
+        border: 1px solid var(--accent);
+        color: var(--text-primary);
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+
+    button {
+        background-color: var(--accent);
+        color: var(--text-primary);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    button:hover {
+        background-color: var(--accent-hover);
+    }
+
+    .danger {
+        background-color: #dc2626;
+    }
+
+    .danger:hover {
+        background-color: #b91c1c;
+    }
+
+    .section {
+        margin-bottom: 2rem;
+        background-color: var(--bg-card);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-arrow {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        cursor: pointer;
+        color: var(--accent);
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+    }
+
+    .back-arrow:hover {
+        color: var(--accent-hover);
+    }
+
+    .back-arrow svg {
+        margin-right: 0.5rem;
+    }
+
+    .profile-info {
+        background-color: var(--card-hover);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .profile-info p {
+        margin: 0.75rem 0;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .profile-info strong {
+        color: var(--accent);
+        width: 120px;
+        display: inline-block;
+        margin-right: 1rem;
+    }
+
+    .profile-avatar {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin: 1.5rem auto;
+        display: block;
+        object-fit: cover;
+        border: 4px solid var(--accent);
+    }
+
+    .teacher-status {
+        background-color: var(--accent);
+        color: var(--text-primary);
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        display: inline-block;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+        }
+
+        .sidebar {
+            width: 100%;
+            padding: 1rem;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+        }
+
+        .content {
+            padding: 1rem;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="sidebar">
+        <div class="profile-pic" style="background-image: url('{{ user.avatar.url }}');"></div>
+        <div class="menu-item active" data-target="view">View Profile</div>
+        <div class="menu-item" data-target="profile">Profile Settings</div>
+        <div class="menu-item" data-target="account">Account Settings</div>
+    </div>
+    <div class="content">
+        <div class="back-arrow" onclick="goBack()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back
+        </div>
+        <div id="view" class="section">
+            <h1>View Profile</h1>
+            <img src="{{ user.avatar.url }}" alt="Profile Picture" class="profile-avatar">
+            <div class="profile-info">
+                <p><strong>Name:</strong> {{ user.name }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Bio:</strong> {{ user.bio|default:"No bio provided" }}</p>
+                <p>
+                    <strong>Teacher Status:</strong> 
+                    <span class="teacher-status">
+                        {% if user.is_teacher %}Teacher
+                        {% elif user.is_super_teacher %}Super Teacher
+                        {% else %}Student{% endif %}
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div id="profile" class="section" style="display: none;">
+            <h1>Profile Settings</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ profile_form.as_p }}
+                <button type="submit" name="profile_update">Save Profile</button>
+            </form>
+        </div>
+        <div id="account" class="section" style="display: none;">
+            <h1>Account Settings</h1>
+            <h2>Change Password</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ password_form.as_p }}
+                <button type="submit" name="password_change">Change Password</button>
+            </form>
+            
+            <h2>Change Email Address</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ email_form.as_p }}
+                <button type="submit" name="email_change">Change Email</button>
+            </form>
+            
+            <h2>Delete Account</h2>
+            <p>Warning: This action cannot be undone.</p>
+            <form method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                {% csrf_token %}
+                {{ delete_form.as_p }}
+                <button type="submit" name="delete_account" class="danger">Delete Account</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuItems = document.querySelectorAll('.menu-item');
+        const sections = document.querySelectorAll('.section');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const target = item.getAttribute('data-target');
+                
+                menuItems.forEach(mi => mi.classList.remove('active'));
+                item.classList.add('active');
+
+                sections.forEach(section => {
+                    section.style.display = section.id === target ? 'block' : 'none';
+                });
+            });
+        });
+    });
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}

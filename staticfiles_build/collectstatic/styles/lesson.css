@@ -1,0 +1,219 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "header header header"
+      "aside main .";
+    gap: 20px;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  header {
+    grid-area: header;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+  }
+
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  nav li {
+    margin: 0 10px;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .lesson-title {
+    font-weight: bold;
+  }
+
+  .prev-lesson,
+  .next-lesson {
+    font-size: 20px;
+  }
+
+  main {
+    grid-area: main;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 20px;
+  }
+
+  .lesson-content {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .workspace {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    overflow: auto;
+  }
+
+  .workspace-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .compiler-embed {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+  }
+
+  .resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    cursor: nwse-resize;
+  }
+
+  aside {
+    grid-area: aside;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .support-video-container,
+  .tips-section {
+    margin-bottom: 20px;
+  }
+
+  .support-video-container iframe,
+  .compiler-embed iframe {
+    width: 100%;
+    height: 400px;
+  }
+
+  .tips-section h2 {
+    margin-top: 0;
+  }
+
+  .resize-handle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+
+  .resize-handle-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 3px;
+    cursor: row-resize;
+  }
+
+  .complete-lesson-form {
+    margin: 0;
+  }
+
+  .back-button123 {
+    position: absolute;
+    left: 0;
+  }
+
+  nav {
+    position: relative;
+  }
+
+  .repl-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .repl-output {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    visibility: hidden;
+  }
+
+  py-repl {
+    flex: 0 0 auto;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    output-mode: div;
+  }
+  py-terminal {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+  }
+
+  py-terminal-docked {
+    visibility: visible;
+  }
+
+  .repl-container {
+    width: 50%;
+    display: inline;
+  }
+
+  html:has(py-terminal[docked]:not(py-terminal[docked].py-terminal-hidden)) {
+    padding-bottom: 0vh;
+  }
+
+  #py-internal-0-repl-output.py-repl-output {
+    visibility: visible;
+    display: inline;
+  }
+
+  .output-repl-external {
+    width: 50%;
+    border-radius: 1px;
+    border-color: black;
+  }
+
+  .compiler-content {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #outputarea {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .py-repl-run-button {
+    visibility: hidden;
+  }
+
+  .py-error {
+    visibility: hidden;
+    height: 0px;
+    width: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }

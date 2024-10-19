@@ -1,0 +1,141 @@
+{% include 'main_3.html' %} {% block content %}
+<section class="lessons">
+  {% for lesson in lessons %}
+  <div class="lesson">
+    <h3>{{ lesson.title }}</h3>
+    <p>Learn to print stuff!</p>
+    <button class="button">Start ></button>
+  </div>
+  {% endfor %}
+</section>
+<style>
+  :root {
+    --primary-color: #000000; /* Black */
+    --secondary-color: #007bff; /* Blue */
+    --accent-color: #28a745; /* Green */
+    --background-color: #f8f9fa; /* Light gray */
+    --text-color: #343a40; /* Dark gray */
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("static/images/aaabstract.png");
+  }
+
+  .header123 p {
+    font-size: 32px;
+    color: orange;
+  }
+  .getstartedbutton1 {
+    display: block;
+    width: 200px;
+    height: 50px;
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .getstartedbutton {
+    display: block;
+    width: 200px;
+    height: 50px;
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .header123,
+  .center {
+    padding-top: 0.5%;
+    text-align: center;
+  }
+
+  .service,
+  .lesson {
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--primary-color);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border: 1px solid var(--primary-color);
+    overflow: auto;
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
+    border-radius: 10%;
+    border-width: 2px;
+    background: grey;
+    border-color: white;
+  }
+
+  .services,
+  .lessons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 20px;
+    grid-column-gap: 40px;
+    justify-items: center;
+    padding: 20px;
+    margin: 0 auto;
+    width: 50%;
+    background-color: transparent;
+  }
+
+  .service h2,
+  .lesson h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+  }
+
+  .service p,
+  .lesson p {
+    margin-bottom: 15px;
+    color: var(--text-color);
+  }
+
+  .button,
+  .getstartedbutton {
+    background-color: orange;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .lesson h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .orange-line {
+    width: 50%;
+    height: 2px;
+    background-color: var(--accent-color);
+    margin: 0 auto;
+  }
+</style>
+{% endblock content %}

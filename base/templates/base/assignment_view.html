@@ -1,0 +1,150 @@
+{% include 'main_3.html' %}
+{% block extra_head %}
+<head>
+    <title>{{assignment.title}}</title>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+        font-family: 'Roboto', Arial, sans-serif;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    h1, h5 {
+        color: #ff9800;
+        transition: color 0.3s ease;
+    }
+    h1:hover, h5:hover {
+        color: #ffa726;
+    }
+    .card {
+        background-color: #1e1e1e;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
+    .card-title {
+        color: #ff9800;
+        font-size: 1.2em;
+        margin-bottom: 15px;
+    }
+    .list-group {
+        list-style-type: none;
+        padding: 0;
+    }
+    .list-group-item {
+        background-color: #1e1e1e;
+        border-bottom: 1px solid #333;
+        padding: 10px 0;
+        color: #e0e0e0;
+        transition: background-color 0.3s ease;
+    }
+    .list-group-item:hover {
+        background-color: #2a2a2a;
+    }
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+    .btn {
+        background-color: #ff9800;
+        border-color: #ff9800;
+        color: #121212;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        margin-right: 10px;
+    }
+    .btn:hover {
+        background-color: #ffa726;
+        border-color: #ffa726;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(255, 152, 0, 0.4);
+    }
+    .btn-back {
+        background-color: orange;
+        border-color: orange;
+    }
+    .btn-back:hover {
+        background-color: orange;
+        border-color: orange;
+    }
+    strong {
+        color: #ff9800;
+    }
+    .completed {
+        color: #4caf50;
+    }
+    .not-completed {
+        color: #f44336;
+    }
+    .icon {
+        margin-right: 10px;
+        transition: transform 0.3s ease;
+    }
+    .list-group-item:hover .icon {
+        transform: scale(1.2);
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container fade-in">
+    <a href="#" class="btn btn-back" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</a>
+    
+    <h1><i class="fas fa-tasks icon"></i>{{ assignment.title }}</h1>
+    
+    <div class="card">
+        <h5 class="card-title"><i class="fas fa-info-circle icon"></i>Assignment Details</h5>
+        <p>{{ assignment.description }}</p>
+        <ul class="list-group">
+            <li class="list-group-item"><i class="fas fa-clipboard-list icon"></i><strong>Type:</strong> {{ assignment.get_assignment_type_display }}</li>
+            <li class="list-group-item"><i class="fas fa-star icon"></i><strong>Points:</strong> {{ assignment.points_worth|default:"Not specified" }}</li>
+            <li class="list-group-item"><i class="fas fa-calendar-alt icon"></i><strong>Due Date:</strong> {{ assignment.due_date|date:"F d, Y H:i" |default:"Not specified" }}</li>
+            <li class="list-group-item"><i class="fas fa-user icon"></i><strong>Assigned By:</strong> {{ assignment.assigned_by.username }}</li>
+            <li class="list-group-item"><i class="fas fa-clock icon"></i><strong>Assigned On:</strong> {{ assignment.assigned_at|date:"F d, Y" }}</li>
+            <li class="list-group-item">
+                <i class="fas fa-check-circle icon"></i><strong>Status:</strong> 
+                {% if is_completed %}
+                    <span class="completed">Completed</span>
+                {% else %}
+                    <span class="not-completed">Not Completed</span>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <h5><i class="fas fa-play-circle icon"></i>Go to Assignment Content</h5>
+        {% if assignment.assignment_type == 'course' %}
+            <a href="{% url 'user_course_view' assignment.course.id %}" class="btn"><i class="fas fa-book-open"></i> Start Course</a>
+        {% elif assignment.assignment_type == 'lesson' %}
+            <a href="{% url 'user_lesson_view' assignment.lesson.id %}" class="btn"><i class="fas fa-chalkboard-teacher"></i> Start Lesson</a>
+        {% elif assignment.assignment_type == 'lesson_page' %}
+            <a href="{% url 'user_lesson_page_view' assignment.lesson_page.id %}" class="btn"><i class="fas fa-file-alt"></i> Start Page</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

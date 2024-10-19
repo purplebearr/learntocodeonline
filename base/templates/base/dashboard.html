@@ -1,0 +1,201 @@
+{% include 'main_3.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard</title>
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #121212;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Arial Black", Gadget, sans-serif;
+      }
+
+      /* Header Styles */
+      header {
+        color: #ff9800;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.5em;
+      }
+
+      /* Navigation Styles */
+      nav {
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav a {
+        color: #ff9800;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      nav a:hover {
+        background-color: #ff9800;
+        color: #121212;
+      }
+
+      /* Main Content Styles */
+      main {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section {
+        background-color: #1e1e1e;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .section h2 {
+        border-bottom: 3px solid #ff9800;
+        padding-bottom: 10px;
+        color: #ff9800;
+      }
+
+      /* List Styles */
+      .classroom-list,
+      .assignment-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .classroom-list li,
+      .assignment-list li {
+        background-color: #2a2a2a;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.3s;
+      }
+
+      .classroom-list li:hover,
+      .assignment-list li:hover {
+        background-color: #333;
+      }
+
+      .classroom-list li span,
+      .assignment-list li span {
+        flex-grow: 1;
+        color: #ff9800;
+      }
+
+      .classroom-list li a,
+      .assignment-list li a {
+        color: #ff9800;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .classroom-list li a:hover,
+      .assignment-list li a:hover {
+        background-color: #ff9800;
+        color: #121212;
+      }
+
+      /* Important Section Styles */
+      .important-section {
+        background-color: #ffb74d;
+        padding: 20px;
+        border-radius: 5px;
+        color: #1f1f1f;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .important-section p {
+        margin: 0;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        header {
+          padding: 15px;
+        }
+
+        nav a {
+          margin-right: 10px;
+          padding: 8px;
+        }
+
+        main {
+          padding: 20px;
+        }
+
+        .classroom-list li,
+        .assignment-list li {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Student Dashboard</h1>
+    </header>
+    <nav>
+      <a href="{% url 'joinclassroom' %}">Join a Classroom</a>
+    </nav>
+    <main>
+      <div class="section classroom-section">
+        <h2>Your Classrooms</h2>
+        <ul class="classroom-list">
+          {% for classroom_group in classroom_groups %}
+          <li>
+            <span>{{ classroom_group.name }}</span>
+            <a href="{% url 'classroom_detail' classroom_group.id %}">View</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="section assignment-section">
+        <h2>Your Assignments</h2>
+        <ul class="assignment-list">
+          {% for lesson_page in lesson_pages %}
+          <li>
+            <span>{{ lesson_page.title }} - Due [PLACEHOLDER]</span>
+            <a href="#">View</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="section important-section">
+        <h2>Important Assignments</h2>
+        {% if urgent_assignment %}
+        <p>You have an assignment due soon: {{ urgent_assignment.title }}</p>
+        {% else %}
+        <p>No urgent assignments at the moment.</p>
+        {% endif %}
+      </div>
+    </main>
+  </body>
+</html>
+{% endblock content %}

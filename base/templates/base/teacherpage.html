@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --card-hover: #252525;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .banner {
+            background-color: var(--bg-card);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .profile-picture {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .username {
+            font-size: 1.2rem;
+        }
+
+        .dashboard-content {
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: var(--text-primary);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .stats-box {
+            background-color: var(--bg-card);
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            margin-right: 20px;
+            text-align: center;
+        }
+
+        .stats-box:last-child {
+            margin-right: 0;
+        }
+
+        .icon-stats {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .main-content {
+            flex: 2;
+            margin-right: 20px;
+        }
+
+        .to-do {
+            flex: 1;
+            background-color: var(--bg-card);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--text-secondary);
+        }
+
+        th {
+            background-color: var(--bg-card);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .floating-action-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: var(--text-primary);
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .floating-action-button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .main-content {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .stats-container {
+                flex-direction: column;
+            }
+
+            .stats-box {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="https://via.placeholder.com/50" alt="Profile Picture" class="profile-picture">
+        <div class="username">Welcome, John Doe</div>
+    </div>
+    <div class="dashboard-content">
+        <div class="dashboard-header">
+            <div>
+                <h2><i class="fas fa-tachometer-alt"></i> My Dashboard</h2>
+            </div>
+            <button class="btn"><i class="fas fa-plus"></i> Create Content</button>
+        </div>
+        <div class="stats-container">
+            <div class="stats-box">
+                <div class="icon-stats"><i class="fas fa-chalkboard"></i></div>
+                <h3>Classes</h3>
+                <p>5</p>
+            </div>
+            <div class="stats-box">
+                <div class="icon-stats"><i class="fas fa-user-graduate"></i></div>
+                <h3>Students</h3>
+                <p>120</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="main-content">
+                <div class="classrooms">
+                    <h3><i class="fas fa-school"></i> Classrooms</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Code</th>
+                                <th>Assignments</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Math 101</td>
+                                <td>MATH101</td>
+                                <td>3 Current</td>
+                                <td class="action-buttons">
+                                    <button class="btn"><i class="fas fa-door-open"></i> Go to</button>
+                                    <button class="btn"><i class="fas fa-plus-circle"></i> Add Assignment</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Science 202</td>
+                                <td>SCI202</td>
+                                <td>2 Current</td>
+                                <td class="action-buttons">
+                                    <button class="btn"><i class="fas fa-door-open"></i> Go to</button>
+                                    <button class="btn"><i class="fas fa-plus-circle"></i> Add Assignment</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="to-do">
+                <h3><i class="fas fa-tasks"></i> To Do</h3>
+                <ul>
+                    <li>
+                        <p><strong><i class="fas fa-file-alt"></i> Assignment:</strong> Math Quiz</p>
+                        <p><strong><i class="fas fa-chalkboard-teacher"></i> Class:</strong> Math 101</p>
+                        <p><strong><i class="far fa-clock"></i> Due:</strong> Tomorrow</p>
+                        <button class="btn"><i class="fas fa-check-square"></i> Mark as Done</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="floating-action-button" title="Create Classroom">
+        <a href="#" style="color: white;">
+            <i class="fas fa-plus"></i>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const createContentBtn = document.querySelector('.dashboard-header .btn');
+            createContentBtn.addEventListener('click', function() {
+                alert('Create Content functionality coming soon!');
+            });
+
+            const goToButtons = document.querySelectorAll('.action-buttons .btn:first-child');
+            goToButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const className = this.closest('tr').querySelector('td:first-child').textContent;
+                    alert(`Navigating to ${className}`);
+                });
+            });
+
+            const addAssignmentButtons = document.querySelectorAll('.action-buttons .btn:last-child');
+            addAssignmentButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const className = this.closest('tr').querySelector('td:first-child').textContent;
+                    alert(`Adding assignment to ${className}`);
+                });
+            });
+
+            const markAsDoneBtn = document.querySelector('.to-do .btn');
+            markAsDoneBtn.addEventListener('click', function() {
+                alert('Task marked as done!');
+                this.closest('li').style.opacity = '0.5';
+            });
+
+            const createClassroomBtn = document.querySelector('.floating-action-button');
+            createClassroomBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Create Classroom functionality coming soon!');
+            });
+        });
+    </script>
+</body>
+</html>

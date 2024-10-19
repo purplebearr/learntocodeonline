@@ -1,0 +1,459 @@
+{% include 'main_3.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{request.user.name}}'s Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'styles/new_teacherpage.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-item active" data-page="home">
+                <i class="fas fa-home"></i> Home
+            </div>
+            <div class="sidebar-item" data-page="community">
+                <i class="fas fa-users"></i> Community Feeds
+            </div>
+            <div class="sidebar-item" data-page="history">
+                <i class="fas fa-history"></i> History
+            </div>
+            <div class="sidebar-item" data-page="classrooms">
+                <i class="fas fa-chalkboard"></i> My classrooms
+            </div>
+            <div class="sidebar-item" data-page="content">
+                <i class="fas fa-folder"></i> My content
+            </div>
+            <div class="sidebar-spacer"></div>
+            <div class="sidebar-item" data-page="faq">
+                <i class="fas fa-question-circle"></i> FAQ & Help Center
+            </div>
+        </div>
+        <div class="main-content">
+            <div id="home" class="content-page active">
+                <div class="home-header">
+                    <h1>Welcome back, {{request.user.name}}!</h1>
+                    <p>Here's what's happening in your classroom</p>
+                </div>
+                <div class="quick-actions">
+                    <div class="quick-action-card" id="manageClassroomsCard">
+                        <i class="fas fa-chalkboard"></i>
+                        <h3>Manage Classrooms</h3>
+                        <p>Organize and oversee your virtual classrooms</p>
+                    </div>
+                    <div class="quick-action-card" id="createAssignmentCard">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Create Assignment</h3>
+                        <p>Design and assign new tasks to your students</p>
+                    </div>
+                    <div class="quick-action-card">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>View Analytics</h3>
+                        <p>Track student progress and performance</p>
+                    </div>
+                </div>
+                <div class="recent-activity">
+                    <h2><i class="fas fa-clock icon"></i> Recent Activity</h2>
+                    {% for item in recent_updates %}
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                {% if item.model_name == 'course' %}
+                                    <i class="fas fa-book"></i>
+                                {% elif item.model_name == 'lesson' %}
+                                    <i class="fas fa-tasks"></i>
+                                {% elif item.model_name == 'lessonpage' %}
+                                    <i class="fas fa-file-alt"></i>
+                                {% endif %}
+                            </div>
+                            <div class="activity-details">
+                                <div>{{ item.model_name|capfirst }} "{{ item.title }}" was updated</div>
+                                <div class="activity-time">{{ item.last_updated|timesince }} ago</div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>No recent activity.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="classrooms" class="content-page">
+                <div class="stats-container">
+                    <div class="stats-box">
+                        <div class="icon-stats"><i class="fas fa-chalkboard"></i></div>
+                        <h3>Classes</h3>
+                        <p>{{ classrooms.count }}</p>
+                    </div>
+                    <div class="stats-box">
+                        <div class="icon-stats"><i class="fas fa-user-graduate"></i></div>
+                        <h3>Students</h3>
+                        <p>{{ classrooms.ClassroomMembership.count }}</p>
+                    </div>
+                </div>
+                <div class="classrooms">
+                    <h3><i class="fas fa-school"></i> Classrooms</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Code</th>
+                                <th>Assignments</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for classroom in classrooms %}
+                            <tr>
+                                <td>{{ classroom.name }}</td>
+                                <td>{{ classroom.code }}</td>
+                                <td>{{ classroom.assignments.count }} Current</td>
+                                <td class="action-buttons">
+                                    <a href="{% url 'teacherclassroomdetail' classroom.id %}"><button class="btn"><i class="fas fa-door-open"></i> Go to</button></a>
+                                    <a href="{% url 'create_assignment' classroom.id %}"><button class="btn"><i class="fas fa-plus-circle"></i> Add Assignment</button></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="floating-action-button" title="Create Classroom">
+                    <a href="{% url 'createclassroom' %}" style="color: white;">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            
+        </body>
+            </div>
+            <div id="content" class="content-page">
+                <div class="main-content">        
+                    <div class="creation-section">
+                        <div class="top-row">
+                            <div class="card">
+                                <div class="card-header" onclick="toggleForm('courseForm')">
+                                    <h2><i class="fas fa-book icon"></i>Create Course</h2>
+                                    <button class="toggle-form" id="courseToggle">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                                <div class="tooltip">What's a course?
+                                    <span class="tooltiptext">A course is a container for multiple lessons.</span>
+                                </div>
+                                <form id="courseForm" method="post">
+                                    {% csrf_token %}
+                                    {{ course_form.as_p }}
+                                    <button type="submit" name="create_course">Create Course</button>
+                                </form>
+                            </div>
+            
+                            <div class="card">
+                                <div class="card-header" onclick="toggleForm('lessonForm')">
+                                    <h2><i class="fas fa-tasks icon"></i>Create Lesson</h2>
+                                    <button class="toggle-form" id="lessonToggle">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                                <div class="tooltip">What's a lesson?
+                                    <span class="tooltiptext">A lesson is a container for multiple lesson pages.</span>
+                                </div>
+                                <form id="lessonForm" method="post">
+                                    {% csrf_token %}
+                                    {{ lesson_form.as_p }}
+                                    <button type="submit" name="create_lesson">Create Lesson</button>
+                                </form>
+                            </div>
+                        </div>
+            
+                        <div class="bottom-row">
+                            <div class="card">
+                                <div class="card-header" onclick="toggleForm('lessonPageForm')">
+                                    <h2><i class="fas fa-file-alt icon"></i>Create Lesson Page</h2>
+                                    <button class="toggle-form" id="lessonPageToggle">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                                <div class="tooltip">What's a lesson page?
+                                    <span class="tooltiptext">A lesson page is an individual content unit within a lesson.</span>
+                                </div>
+                                <div id="lessonPageForm" class="button-container">
+                                    <a href="{% url 'lesson_page_create' %}" class="btn-link">Create a content page</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="lists-section">
+                        <div class="list-container">
+                            <h2><i class="fas fa-list icon"></i>Courses</h2>
+                            <ul>
+                                {% for course in courses %}
+                                <li>
+                                    <div class="list-item-content">
+                                        <i class="fas fa-book icon"></i>
+                                        <span>{{ course.title }}</span>
+                                        <span class="author-info"></span>
+                                    </div>
+                                    <div class="list-item-buttons">
+                                        <button class="btn-orange" onclick="toggleDropdown('course-{{ course.id }}')">
+                                            <i class="fas fa-chevron-down"></i> Lessons
+                                        </button>
+                                        <button class="btn-orange">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </li>
+                                <div id="course-{{ course.id }}" class="dropdown-content">
+                                    {% for lesson in course.lesson_set.all %}
+                                        {% if lesson.author == request.user %}
+                                            <div class="activity-item">
+                                                <div class="list-item-content">
+                                                    <i class="fas fa-tasks icon"></i>
+                                                    <span>{{ lesson.title }}</span>
+                                                    <span class="author-info"></span>
+                                                </div>
+                                                <div class="list-item-buttons">
+                                                    <button class="btn-orange" onclick="toggleDropdown('lesson-{{ lesson.id }}')">
+                                                        <i class="fas fa-chevron-down"></i> Manage Pages
+                                                    </button>
+                                                    <button class="btn-orange btn-small">Add New Page</button>
+                                                    <button class="btn-orange">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="lesson-{{ lesson.id }}" class="dropdown-content nested">
+                                                {% for page in lesson.lesson_pages.all %}
+                                                    <div class="lesson-page-item">
+                                                        <span>{{ page.title }}</span>
+                                                        <div class="page-buttons">
+                                                            <button class="btn-orange btn-small">Edit</button>
+                                                            <button class="btn-orange btn-small">Delete</button>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                
+                            {% endfor %}
+                            
+                            <h2><i class="fas fa-list-alt icon"></i>Standalone Lessons</h2>
+                            <ul>
+                                {% for lesson in lessons %}
+                                    {% if not lesson.course %}
+                                        <li>
+                                            <div class="list-item-content">
+                                                <i class="fas fa-tasks icon"></i>
+                                                <span>{{ lesson.title }}</span>
+                                                <span class="author-info"></span>
+                                            </div>
+                                            <div class="list-item-buttons">
+                                                <button class="btn-orange" onclick="toggleDropdown('lesson-{{ lesson.id }}')">
+                                                    <i class="fas fa-file-alt"></i> Manage Pages
+                                                </button>
+                                                <button class="btn-orange">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <div id="lesson-{{ lesson.id }}" class="dropdown-content">
+                                            {% for page in lesson.lesson_pages.all %}
+                                            <div class="lesson-page-item">
+                                                <span>{{ page.title }}</span>
+                                                <div class="page-buttons">
+                                                    <button class="btn-orange btn-small">Edit</button>
+                                                    <button class="btn-orange btn-small">Delete</button>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                            <button class="btn-orange btn-small">Add New Page</button>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+            <div id="faq" class="content-page">
+                <h1>FAQ & Help Center</h1>
+                <p>Find answers to common questions and get help here.</p>
+            </div>
+            <div id="history" class="content-page">
+                <h2><i class="fas fa-clock icon"></i> Recent Activity</h2>
+                {% for item in recent_updates %}
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            {% if item.model_name == 'course' %}
+                                <i class="fas fa-book"></i>
+                            {% elif item.model_name == 'lesson' %}
+                                <i class="fas fa-tasks"></i>
+                            {% elif item.model_name == 'lessonpage' %}
+                                <i class="fas fa-file-alt"></i>
+                            {% endif %}
+                        </div>
+                        <div class="activity-details">
+                            <div>{{ item.model_name|capfirst }} "{{ item.title }}" was updated</div>
+                            <div class="activity-time">{{ item.last_updated|timesince }} ago</div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No recent activity.</p>
+                {% endfor %}
+            </div>
+            <div id="community" class="content-page">
+                <h1>Community Feeds - Coming Soon!</h1>
+                <div class="community-feed">
+                    <div class="community-post">
+                        <div class="community-post-header">
+                            <span class="community-post-author">John Doe</span>
+                            <span class="community-post-time">2 hours ago</span>
+                        </div>
+                        <p>Exciting new features coming to our platform soon! Stay tuned for updates.</p>
+                    </div>
+                    <div class="community-post">
+                        <div class="community-post-header">
+                            <span class="community-post-author">Jane Smith</span>
+                            <span class="community-post-time">Yesterday</span>
+                        </div>
+                        <p>Just finished creating a new math course. Can't wait to share it with my students!</p>
+                    </div>
+                </div>
+            </div>
+            <div id="faq" class="content-page">
+                <h1>FAQ & Help Center</h1>
+                <div class="faq-section">
+                    <div class="faq-item">
+                        <div class="faq-question">How do I create a new classroom?</div>
+                        <div class="faq-answer">To create a new classroom, click on the "+" button in the bottom right corner of the My Classrooms page. Follow the prompts to set up your new virtual classroom.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How can I invite students to my classroom?</div>
+                        
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            const contentPages = document.querySelectorAll('.content-page');
+
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const pageId = this.getAttribute('data-page');
+                    
+                    // Hide all content pages
+                    contentPages.forEach(page => page.classList.remove('active'));
+                    
+                    // Show the selected content page
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Update active state in sidebar
+                    sidebarItems.forEach(sidebarItem => sidebarItem.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+        function toggleForm(formId) {
+            const form = document.getElementById(formId);
+            form.classList.toggle('active');
+            const toggle = form.previousElementSibling.querySelector('.toggle-form i');
+            toggle.classList.toggle('fa-chevron-down');
+            toggle.classList.toggle('fa-chevron-up');
+        }
+
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle('active');
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const courseSelect = document.querySelector('.course-select');
+            const lessonForm = document.getElementById('lessonForm');
+            const courseWarning = document.getElementById('courseWarning');
+        
+            if (courseSelect && lessonForm) {
+                lessonForm.addEventListener('submit', function(e) {
+                    if (courseSelect.value) {
+                        // If a course is selected, everything is fine
+                        courseWarning.style.display = 'none';
+                    } else {
+                        // If no course is selected, show a confirmation dialog
+                        if (!confirm('No course selected. Create as a standalone lesson?')) {
+                            e.preventDefault(); // Prevent form submission
+                            courseWarning.style.display = 'block';
+                        } else {
+                            courseWarning.style.display = 'none';
+                        }
+                    }
+                });
+        
+                // Update placeholder text when no option is selected
+                courseSelect.addEventListener('change', function() {
+                    if (!this.value) {
+                        this.firstElementChild.textContent = 'Select a course (optional for standalone lessons)';
+                    }
+                });
+            }
+        });
+        </script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const manageClassroomsCard = document.getElementById('manageClassroomsCard');
+            const createAssignmentCard = document.getElementById('createAssignmentCard');
+            const classroomsTab = document.querySelector('.sidebar-item[data-page="classrooms"]');
+
+            manageClassroomsCard.addEventListener('click', function() {
+                classroomsTab.click(); // Simulate click on the "My classrooms" tab
+            });
+
+            createAssignmentCard.addEventListener('click', function() {
+                classroomsTab.click(); // Simulate click on the "My classrooms" tab
+            });
+});
+
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebarItems = document.querySelectorAll('.sidebar-item');
+                const contentPages = document.querySelectorAll('.content-page');
+            
+                function activateTab(tabId) {
+                    // Hide all content pages
+                    contentPages.forEach(page => page.classList.remove('active'));
+                    
+                    // Show the selected content page
+                    const selectedPage = document.getElementById(tabId);
+                    if (selectedPage) {
+                        selectedPage.classList.add('active');
+                    }
+                    
+                    // Update active state in sidebar
+                    sidebarItems.forEach(sidebarItem => {
+                        sidebarItem.classList.remove('active');
+                        if (sidebarItem.getAttribute('data-page') === tabId) {
+                            sidebarItem.classList.add('active');
+                        }
+                    });
+                }
+            
+                // Get the active tab from the URL parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const activeTab = urlParams.get('active_tab') || 'home';
+            
+                // Activate the correct tab
+                activateTab(activeTab);
+            
+                // Add click event listeners to sidebar items
+                sidebarItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        const pageId = this.getAttribute('data-page');
+                        activateTab(pageId);
+                    });
+                });
+            });
+            </script>
+</body>
+</html>

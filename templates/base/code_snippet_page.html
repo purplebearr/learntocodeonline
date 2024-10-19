@@ -1,0 +1,237 @@
+{% include 'main_3.html' %}
+{% load wagtailcore_tags static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+{% endblock %}
+
+{% block content %}
+<head>
+    <title>{{page.title}}</title>
+</head>
+<div class="code-snippet-page">
+    <div class="code-snippet-container">
+        <div class="header-section">
+            <h1 class="title">{{ page.title }}</h1>
+            <div class="language-badge">{{ page.language }}</div>
+        </div>
+        
+        <div class="description-section">
+            {{ page.description|richtext }}
+        </div>
+
+        <div class="code-section">
+            <div class="code-header">
+                <span class="file-name">code.{{ page.language }}</span>
+                <button id="copyButton" class="copy-button" onclick="copyCode()">
+                    <span class="copy-icon">📋</span>
+                    <span class="button-text">Copy</span>
+                </button>
+            </div>
+            <div class="code-content">
+                <pre><code class="language-{{ page.language }}">{{ page.code_snippet }}</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --bg-dark: #0a0a0a;
+    --bg-card: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent: #4f46e5;
+    --accent-hover: #4338ca;
+    --card-hover: #252525;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.code-snippet-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem;
+}
+
+.code-snippet-container {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.language-badge {
+    background-color: var(--accent);
+    color: var(--text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.description-section {
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.code-section {
+    background-color: var(--bg-dark);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.file-name {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.copy-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.copy-button:hover {
+    background-color: var(--card-hover);
+    color: var(--text-primary);
+}
+
+.copy-button.copied {
+    background-color: var(--accent);
+    color: var(--text-primary);
+    border-color: var(--accent);
+}
+
+.code-content {
+    padding: 2rem;
+    overflow-x: auto;
+}
+
+.code-content pre {
+    margin: 0;
+}
+
+.code-content code {
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Custom scrollbar */
+.code-content::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.code-content::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+.code-content::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 6px;
+    border: 3px solid var(--bg-dark);
+}
+
+@media (max-width: 768px) {
+    .code-snippet-page {
+        padding: 1.5rem;
+    }
+
+    .code-snippet-container {
+        padding: 2rem;
+    }
+
+    .header-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .code-content code {
+        font-size: 1rem;
+    }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    hljs.highlightAll();
+});
+
+function copyCode() {
+    const codeElement = document.querySelector('.code-content code');
+    const button = document.getElementById('copyButton');
+    const buttonText = button.querySelector('.button-text');
+    
+    // Create a temporary textarea to handle the copy
+    const textarea = document.createElement('textarea');
+    textarea.value = codeElement.textContent;
+    document.body.appendChild(textarea);
+    textarea.select();
+    
+    try {
+        document.execCommand('copy');
+        buttonText.textContent = 'Copied!';
+        button.classList.add('copied');
+        
+        setTimeout(() => {
+            buttonText.textContent = 'Copy';
+            button.classList.remove('copied');
+        }, 2000);
+    } catch (err) {
+        console.error('Failed to copy:', err);
+        buttonText.textContent = 'Failed!';
+    }
+    
+    document.body.removeChild(textarea);
+}
+</script>
+{% endblock %}

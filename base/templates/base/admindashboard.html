@@ -1,0 +1,54 @@
+{% include 'main_3.html' %} {% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Classroom Dashboard</title>
+    <style>
+      /* Add some basic styling */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+      .classroom-group {
+        margin-bottom: 20px;
+      }
+      .classroom-group h2 {
+        background-color: #f2f2f2;
+        padding: 10px;
+      }
+      .classroom-list {
+        list-style-type: none;
+        padding: 0;
+      }
+      .classroom-list li {
+        margin-bottom: 5px;
+      }
+      .classroom-list a {
+        color: #4caf50;
+        text-decoration: none;
+      }
+      .classroom-list a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Classroom Dashboard</h1>
+
+    {% for classroom_group in classroom_groups %}
+    <div class="classroom-group">
+      <h2>{{ classroom_group.name }}</h2>
+      <ul class="classroom-list">
+        {% for lesson in lessons %}
+        <li><a href="#">{{ lesson.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </body>
+</html>
+{% endblock content %}

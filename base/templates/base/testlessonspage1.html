@@ -1,0 +1,90 @@
+{% include 'main_3.html' %} {% block content %}
+<body>
+  <div class="container2">
+    <div class="lessonList">
+      <h1 class="directory-title">Lesson Directory</h1>
+      <ul class="no-bullets">
+        {% for lesson, progress in lessons_with_progress %}
+        <li class="list-item">
+          <a class="lesson-link" href="{% url 'lesson_redirect' lesson.id %}"
+            >{{ lesson.title }}</a
+          >
+          {% if progress %}
+          <span style="color: green">✔</span>
+          <!-- This is a checkmark -->
+          {% else %}
+          <span style="color: red">❌</span>
+          <!-- This is an X -->
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</body>
+
+<style>
+  body {
+    background-image: url("static/images/aaabstract.png");
+  }
+
+  .container2 {
+    max-width: 5000px;
+    margin: auto;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    position: relative;
+    top: 110px;
+  }
+
+  .lessonList ul {
+    padding-left: 0;
+  }
+
+  .lessonList ul li {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+
+  .lesson-link {
+    text-align: left;
+    font-size: 30px;
+  }
+
+  .no-bullets {
+    list-style-type: none;
+  }
+
+  .list-item {
+    font-size: 30px;
+  }
+
+  .lessonList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .directory-title {
+    font-size: 50px; /* Adjust this value to change the size of the directory title */
+  }
+
+  @media (max-width: 768px) {
+    .container2 {
+      top: 50px;
+    }
+
+    .lessonList ul li {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .lesson-link {
+      font-size: 20px;
+    }
+  }
+</style>
+
+{% endblock content %}

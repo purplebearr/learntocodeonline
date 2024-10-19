@@ -1,0 +1,77 @@
+{% include 'main_3.html' %}
+{% block content %}
+<body class="form-body">
+    <h2>Create Course</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Create Course</button>
+    </form>
+</body>
+<style>
+    body.form-body {
+    background-color: #1e1e1e; /* Dark background color */
+    color: #ffffff; /* White text color */
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    color: #ff9900; /* Orange accent color */
+    text-align: center;
+    margin-top: 20px;
+    font-size: xx-large;
+}
+
+
+form {
+    background-color: #2c2c2c; /* Slightly lighter dark color for form background */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 auto;
+    width: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+form input[type="text"],
+form input[type="password"],
+form select,
+form textarea {
+    background-color: #1e1e1e; /* Match body background */
+    color: #ffffff;
+    border: 1px solid #ff9900; /* Orange border */
+    border-radius: 4px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+form input[type="text"]::placeholder,
+form input[type="password"]::placeholder,
+form select::placeholder,
+form textarea::placeholder {
+    color: #ff9900; /* Orange placeholder text */
+}
+
+form button[type="submit"] {
+    background-color: #ff9900; /* Orange background for button */
+    color: #1e1e1e; /* Dark text color */
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #cc7a00; /* Darker orange on hover */
+}
+
+footer {
+    color: #ff9900; /* Orange footer text */
+    text-align: center;
+    padding: 10px;
+}
+
+</style>
+{% endblock %}

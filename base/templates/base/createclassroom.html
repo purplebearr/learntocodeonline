@@ -1,0 +1,67 @@
+{% include 'main_3.html' %}
+<head>
+  <title>Create Classroom</title>
+</head>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% for field in form %}
+  <div class="form-group">
+    {{ field.label_tag }}
+    {{ field }}
+    {% if field.errors %}
+      <div class="error-message">
+        {% for error in field.errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <input type="submit" value="Create Classroom" />
+</form>
+<style>
+  form {
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  input[type="text"], 
+  textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  input[type="file"] {
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    opacity: 0.8;
+  }
+
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+  }
+
+  label[for="id_turnstile"] {
+    display: none;
+  }
+</style>

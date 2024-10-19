@@ -1,0 +1,297 @@
+{% include 'main_3.html' %} {% block content %}
+<body>
+  <div
+    class="main-container"
+    style="display: flex; flex-direction: column; min-height: 100vh"
+  >
+    <div class="content-wrapper">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Unlock Your Coding Potential with Python</h1>
+          <p>
+            Discover the versatile and beginner-friendly programming language
+            that opens doors to endless possibilities.
+          </p>
+          <a
+            href="{% url 'dashboard' %}"
+            class="btn btn-primary"
+            >Get Started Now</a
+          >
+        </div>
+      </section>
+
+      <div class="header123">
+        <p>Why learn Python?</p>
+      </div>
+
+      <section class="services">
+        <div class="service">
+          <i class="fas fa-user-graduate"></i>
+          <h2>Beginner-friendly</h2>
+          <p>
+            Python's clear and concise syntax makes it easy to learn, even for
+            those with no prior programming experience.
+          </p>
+        </div>
+        <div class="service">
+          <i class="fas fa-code-branch"></i>
+          <h2>Versatile</h2>
+          <p>
+            Python can be applied in various fields, including web development,
+            data science, machine learning, and automation, making it a valuable
+            skill across different industries.
+          </p>
+        </div>
+        <div class="service">
+          <i class="fas fa-chart-line"></i>
+          <h2>In-demand</h2>
+          <p>
+            Python is consistently ranked among the most popular programming
+            languages, offering strong career prospects and job opportunities.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+
+<style>
+  :root {
+    --primary-color: #121212;
+    --secondary-color: #007bff;
+    --accent-color: #28a745;
+    --background-color: #000000;
+    --text-color: #86c232;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .main-container {
+    flex: 1 0 auto;
+  }
+
+  .header123 p {
+    font-size: 32px;
+    color: orange;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .getstartedbutton {
+    display: block;
+    width: 200px;
+    height: 50px;
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 40px auto;
+  }
+
+  .service,
+  .lesson {
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .service:hover,
+  .lesson:hover {
+    transform: translateY(-5px);
+  }
+
+  .services {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 40px;
+    justify-items: center;
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 1200px;
+    background-color: transparent;
+    overflow: hidden;
+  }
+
+  .service h2,
+  .lesson h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+  }
+
+  .container {
+    display:flex;
+  }
+
+  .service p,
+  .lesson p {
+    margin-bottom: 15px;
+    color: var(--text-color);
+  }
+
+  .service i {
+    font-size: 48px;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+  }
+
+  .testimonials {
+    background-color: #f8f8f8;
+    padding: 40px;
+    text-align: center;
+  }
+
+  .testimonial {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  .testimonial img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+
+  .testimonial p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .testimonial .author {
+    font-weight: bold;
+  }
+
+  .hero {
+    background-image: url("hero-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 100px 20px;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .hero p {
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .btn-primary {
+    background-color: orange;
+    /* background-color: var(--accent-color); */
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background-color: #1e7e34;
+  }
+
+  footer {
+    flex-shrink: 0;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .services {
+      grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+    }
+
+    .hero p {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .service h2,
+    .lesson h3 {
+      font-size: 20px;
+    }
+
+    .service p,
+    .lesson p {
+      font-size: 16px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+    }
+
+    .hero p {
+      font-size: 16px;
+    }
+  }
+</style>
+{% endblock content %}
+<!--  Testimonials Section 
+    <section class="testimonials">
+      <h2>Success Stories</h2>
+      <div class="testimonial">
+        <img src="avatar1.jpg" alt="Avatar" />
+        <p>
+          "Learning Python has been a game-changer for my career. It opened up
+          new opportunities and allowed me to solve complex problems with ease."
+        </p>
+        <p class="author">- John Doe, Software Engineer</p>
+      </div>
+      <div class="testimonial">
+        <img src="avatar2.jpg" alt="Avatar" />
+        <p>
+          "Python's simplicity and versatility made it a joy to learn. I can now
+          automate tedious tasks and focus on more creative projects."
+        </p>
+        <p class="author">- Jane Smith, Data Analyst</p>
+      </div>
+    </section>
+
+    <a href="{% url 'lesson_redirect' 1 %}" class="getstartedbutton"
+      >Get Started!</a
+    >
+  </div> -->

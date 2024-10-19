@@ -1,0 +1,280 @@
+{% load static %}
+{% include 'main_3.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ lesson.title }} - View</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="{% static 'images/faviconlogo.ico' %}" type="image/x-icon" />
+
+    <style>
+        :root {
+            --bg-color: #121212;
+            --secondary-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --accent-color: #ff9800;
+            --accent-hover: #ffa726;
+            --card-bg: #2a2a2a;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            font-size: 18px; /* Increased base font size */
+        }
+        .container {
+            max-width: 1200px; /* Increased container width */
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            background-color: var(--secondary-bg);
+            padding: 1.5rem 0; /* Increased padding */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 2.5rem; /* Larger h1 */
+        }
+        h2 {
+            font-size: 2rem; /* Larger h2 */
+        }
+        h3 {
+            font-size: 1.5rem; /* Larger h3 */
+        }
+        h1, h2, h3 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem; /* Increased margin */
+        }
+        .lesson-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .lesson-item {
+            background-color: var(--card-bg);
+            margin-bottom: 1.5rem; /* Increased margin */
+            padding: 2rem; /* Increased padding */
+            border-radius: 12px; /* Increased border radius */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .lesson-pages {
+            margin-left: 2rem; /* Increased margin */
+            margin-top: 1.5rem; /* Increased margin */
+            display: none;
+        }
+        .lesson-pages li {
+            margin-bottom: 0.75rem; /* Increased margin */
+            padding: 1rem; /* Increased padding */
+            border-radius: 6px; /* Increased border radius */
+            background-color: var(--secondary-bg);
+        }
+        .btn {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.75rem 1.5rem; /* Increased padding */
+            border-radius: 6px; /* Increased border radius */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1rem; /* Increased font size */
+            margin-right: 0.75rem; /* Increased margin */
+        }
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        .btn-secondary:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .lesson-header {
+            cursor: pointer;
+        }
+        .lesson-header .chevron-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem; /* Increased icon size */
+        }
+        .lesson-header.active .chevron-icon {
+            transform: rotate(180deg);
+        }
+        .drag-handle {
+            cursor: move;
+            padding-right: 15px; /* Increased padding */
+            color: var(--accent-color);
+            font-size: 1.2rem; /* Increased icon size */
+        }
+        .action-menu {
+            position: relative;
+            display: inline-block;
+        }
+        .action-menu-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--card-bg);
+            min-width: 200px; /* Increased width */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 6px; /* Increased border radius */
+        }
+        .action-menu-content a {
+            color: var(--text-color);
+            padding: 16px 20px; /* Increased padding */
+            text-decoration: none;
+            display: block;
+            font-size: 1.1rem; /* Increased font size */
+        }
+        .action-menu-content a:hover {
+            background-color: var(--secondary-bg);
+        }
+        .action-menu:hover .action-menu-content {
+            display: block;
+        }
+        .icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem; /* Increased icon size */
+            color: var(--accent-color);
+            padding: 10px; /* Added padding for larger click area */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>{{ lesson.title }}</h1>
+            <a href="{% url 'lesson_edit' lesson.id %}" class="btn"><i class="fas fa-pencil" ></i> Edit Name</a>
+            <a href="{% url 'delete_lesson' lesson.id %}?next={{ request.path|urlencode }}" class="btn btn-secondary"><i class="fas fa-trash" ></i> Delete Lesson</a>
+            <a href="{% url 'user_lesson_view' lesson.id %}" class="btn btn-secondary"><i class="fas fa-eye" ></i> View Lesson</a>
+        </div>
+    </header>
+    <main class="container">
+        <section>
+            <h2>Lesson Details</h2>
+            <ul class="lesson-list">
+                <li class="lesson-item">
+                    <div class="flex-between lesson-header">
+                        <h3>{{ lesson.title }} <i class="fas fa-chevron-down chevron-icon dropdown-toggle"></i></h3>
+                        <a href="{% url 'lesson_page_create_for_lesson' lesson.id %}?next={{ request.path|urlencode }}" class="btn">Add Page</a>
+                    </div>
+                    <ul id="lesson-pages" class="lesson-pages" data-lesson-id="{{ lesson.id }}">
+                        {% for page in lesson_pages %}
+                            <li class="flex-between" data-page-id="{{ page.id }}">
+                                <span>
+                                    <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                    {{ page.title }}
+                                </span>
+                                <div class="action-menu">
+                                    <button class="icon-button"><i class="fas fa-ellipsis-v"></i></button>
+                                    <div class="action-menu-content">
+                                        <a href="{% url 'user_lesson_lesson_page_view' lesson.id page.id %}"><i class="fas fa-eye"></i> View Page</a>
+                                        <a href="{% url 'lesson_page_edit' page.id %}?next={{ request.path|urlencode }}"><i class="fas fa-pencil"></i> Edit Page</a>
+                                        <a href="{% url 'delete_lessonpage' page.id %}?next={{ request.path|urlencode }}"><i class="fas fa-trash"></i> Delete Page</a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% empty %}
+                            <li>No pages available for this lesson.</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chevrons = document.querySelectorAll('.dropdown-toggle');
+
+        chevrons.forEach(chevron => {
+            chevron.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const lessonItem = this.closest('.lesson-item');
+                const lessonPages = lessonItem.querySelector('.lesson-pages');
+                const header = this.closest('.lesson-header');
+                
+                header.classList.toggle('active');
+                if (lessonPages.style.display === 'none' || lessonPages.style.display === '') {
+                    lessonPages.style.display = 'block';
+                } else {
+                    lessonPages.style.display = 'none';
+                }
+            });
+        });
+
+        const lessonPages = document.getElementById('lesson-pages');
+        const lessonId = lessonPages.dataset.lessonId; // Add this line to get the lesson ID
+        if (lessonPages) {
+            new Sortable(lessonPages, {
+                animation: 150,
+                handle: '.drag-handle',
+                onEnd: function(evt) {
+                    const pageItems = Array.from(lessonPages.querySelectorAll('li[data-page-id]'));
+                    const newOrder = pageItems.map((item, index) => ({
+                        id: item.dataset.pageId,
+                        order: index + 1,
+                        lessonId: lessonId // Add this line to include the lesson ID
+                    }));
+                    
+                    console.log('New order:', newOrder);
+                    updateLessonPageOrder(newOrder);
+                }
+            });
+        } else {
+            console.error('Lesson pages container not found');
+        }
+    });
+    function updateLessonPageOrder(newOrder) {
+        fetch('{% url "update_lesson_page_order" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify(newOrder)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Lesson page order updated successfully');
+            } else {
+                console.error('Failed to update lesson page order');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+</body>
+</html>

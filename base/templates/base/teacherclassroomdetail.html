@@ -1,0 +1,302 @@
+{% include 'main_3.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>{{ classroom.name }} Dashboard</title>
+    <style>
+        body {
+            background-color: #121212;
+        }
+        .classroom-dashboard {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .classroom-dashboard .classroom-header {
+            background-size: cover;
+            background-position: center;
+            height: 200px;
+            position: relative;
+        }
+        .classroom-dashboard .classroom-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .classroom-dashboard .classroom-header h1 {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #ff9800;
+            font-size: 2.5rem;
+            z-index: 1;
+        }
+        .classroom-dashboard .classroom-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .classroom-dashboard .tabs {
+            display: flex;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            margin-bottom: 20px;
+        }
+        .classroom-dashboard .tablink {
+            flex-grow: 1;
+            text-align: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: none;
+            background: none;
+            font-size: 16px;
+            color: #b0b0b0;
+        }
+        .classroom-dashboard .tablink:hover {
+            background-color: #2c2c2c;
+        }
+        .classroom-dashboard .tablink.active {
+            color: #ff9800;
+            border-bottom: 2px solid #ff9800;
+        }
+        .classroom-dashboard .tab-content {
+            display: none;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+        .classroom-dashboard .tab-content.active {
+            display: block;
+        }
+        .classroom-dashboard .card {
+            background-color: #2c2c2c;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+        .classroom-dashboard .card h2 {
+            margin-top: 0;
+            color: #ff9800;
+        }
+        .classroom-dashboard .announcement {
+            border-bottom: 1px solid #3d3d3d;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .classroom-dashboard .announcement:last-child {
+            border-bottom: none;
+        }
+        .classroom-dashboard .btn {
+            background-color: #ff9800;
+            color: #121212;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .classroom-dashboard .btn:hover {
+            background-color: #ffa726;
+        }
+        .classroom-dashboard table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .classroom-dashboard th, .classroom-dashboard td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #3d3d3d;
+        }
+        .classroom-dashboard th {
+            background-color: #252525;
+            font-weight: bold;
+            color: #ff9800;
+        }
+        .classroom-dashboard a {
+            color: #ff9800;
+            text-decoration: none;
+        }
+        .classroom-dashboard a:hover {
+            text-decoration: underline;
+        }
+        .classroom-dashboard li {
+            list-style: none;
+        }
+        .classroom-dashboard .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2c2c2c;
+            color: #ff9800;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+            margin-bottom: 20px;
+        }
+        .classroom-dashboard .back-button:hover {
+            background-color: #ff9800;
+            color: #121212;
+            text-decoration: none;
+        }
+        .classroom-dashboard .floating-action-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #ff9800;
+            color: #1a1a1a;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .classroom-dashboard .floating-action-button:hover {
+            background-color: #ffa726;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="classroom-dashboard">
+        <div class="classroom-header" style="background-image: url({{ classroom.banner.url }});">
+            <h1>{{ classroom.name }} <br> <span style="color: white;">Code: {{classroom.code}}</span> </h1>
+        </div>
+        
+        <div class="classroom-content">
+            
+
+        
+        <div class="classroom-content">
+            <div class="tabs">
+                <button class="tablink active" onclick="openTab(event, 'home')">Stream</button>
+                <button class="tablink" onclick="openTab(event, 'classwork')">Classwork</button>
+                <button class="tablink" onclick="openTab(event, 'people')">People</button>
+                <button class="tablink" onclick="openTab(event, 'grades')">Grades</button>
+            </div>
+
+            <div id="home" class="tab-content active">
+                <div class="card">
+                    <h2>Announcements</h2>
+                    {% for announcement in announcements %}
+                        <div class="announcement">
+                            <h3>{{ announcement.title }}</h3>
+                            <p>{{ announcement.announcement_content }}</p>
+                            <small>Posted on: {{ announcement.posted_time|date:"M d, Y" }} by {{ announcement.user.username }}</small>
+                        </div>
+                    {% empty %}
+                        <p>No announcements yet.</p>
+                    {% endfor %}
+                    <button class="btn" onclick="location.href='{% url 'create_announcement' classroom.id %}'">Create Announcement</button>
+                </div>
+            </div>
+
+            <div id="classwork" class="tab-content">
+                <div class="card">
+                    <h2>Assignments</h2>
+                    <ul>
+                    {% for assignment in assignments %}
+                        <li>
+                            {{ assignment.title }} ({{ assignment.get_assignment_type_display }})
+                            <br>Due: {{ assignment.due_date|default:"No due date" }}
+                        </li>
+                    {% empty %}
+                        <li>No assignments created yet.</li>
+                    {% endfor %}
+                    </ul>
+                    <button class="btn" onclick="location.href='{% url 'create_assignment' classroom.id %}'">Create Assignment</button>
+                </div>
+            </div>
+
+            <div id="people" class="tab-content">
+                <div class="card">
+                    <h2>Students</h2>
+                    <ul>
+                    {% for membership in students %}
+                        <li>{{ membership.user.username }} (Joined: {{ membership.joined_at|date:"M d, Y" }})</li>
+                    {% empty %}
+                        <li>No students in this classroom yet.</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div id="grades" class="tab-content">
+                <div class="card">
+                    <h2>Student Progress</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Assignment</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for progress in student_progress %}
+                            <tr>
+                                <td>{{ progress.student.username }}</td>
+                                <td>{{ progress.assignment.title }}</td>
+                                <td>
+                                    {% if progress.course_progress %}
+                                        Course: {{ progress.course_progress.is_completed|yesno:"Completed,In Progress" }}
+                                    {% elif progress.lesson_progress %}
+                                        Lesson: {{ progress.lesson_progress.is_completed|yesno:"Completed,In Progress" }}
+                                    {% elif progress.lesson_page_progress %}
+                                        Lesson Page: {{ progress.lesson_page_progress.is_completed|yesno:"Completed,In Progress" }}
+                                    {% else %}
+                                        No progress recorded
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3">No student progress recorded yet.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="floating-action-button" title="Create Classroom">
+            <a href="{% url 'edit_classroom' classroom.id %}" style="color: white;">
+                <i class="fas fa-pencil"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        
+    </script>
+</body>
+</html>

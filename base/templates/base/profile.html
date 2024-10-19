@@ -1,0 +1,66 @@
+{% include 'main_3.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ user.name }}'s Profile</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <style>
+      body {
+        background-color: #121212;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+      }
+      .profile-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #444;
+        border-radius: 10px;
+        background-color: #1e1e1e;
+        margin-top: 5%; /* Add top margin to push container down */
+      }
+      .profile-avatar {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        border: 2px solid #ffa500;
+        margin-bottom: 20px;
+        object-fit: cover; /* Ensure the image covers the box without distortion */
+      }
+      .profile-info {
+        margin-top: 20px;
+      }
+      .profile-info h2 {
+        color: #ffa500;
+      }
+      .profile-info p {
+        font-size: 1.2em;
+      }
+      .profile-info p.bio {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="profile-container animate__animated animate__fadeIn">
+      <img
+        src="{{request.user.avatar.url}}"
+        alt="{{ user.name }}'s Avatar"
+        class="profile-avatar"
+      />
+      <div class="profile-info">
+        <h2>{{ user.name }}</h2>
+        <p class="bio">{{ user.bio }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>{% if user.is_teacher %}Teacher{% else %}Student{% endif %}</p>
+      </div>
+    </div>
+  </body>
+</html>
+{% endblock content %}

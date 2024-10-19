@@ -1,0 +1,962 @@
+:root {
+    --bg-dark: #121212;
+    --bg-darker: #1e1e1e;
+    --text-light: #ffffff;
+    --text-dim: #b3b3b3;
+    --accent-orange: #ff6b00;
+}
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+.container {
+    display: flex;
+    height: 100%;
+}
+.container {
+    max-width: 100%;
+    width: 100%;
+    margin: auto;
+}
+.sidebar {
+    width: 250px;
+    background-color: var(--bg-darker);
+    padding: 20px;
+}
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+.sidebar-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.sidebar-item:hover {
+    background-color: rgba(255, 107, 0, 0.1);
+}
+.sidebar-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+.active {
+    color: var(--accent-orange);
+}
+.submenu {
+    margin-left: 30px;
+}
+.submenu-item {
+    padding: 5px;
+    cursor: pointer;
+    color: var(--text-dim);
+}
+.submenu-item:hover {
+    color: var(--accent-orange);
+}
+.manage-section {
+    margin-bottom: 20px;
+}
+.manage-link {
+    color: var(--accent-orange);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+.manage-link:hover {
+    text-decoration: underline;
+}
+.manage-link i {
+    margin-left: 10px;
+}
+.todo-section {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+.content-page {
+    display: none;
+}
+.content-page.active {
+    display: block;
+}
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.stats-box {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 45%;
+}
+.icon-stats {
+    font-size: 2em;
+    color: var(--accent-orange);
+    margin-bottom: 10px;
+}
+.classrooms table {
+    width: 100%;
+    margin-top: 20px;
+}
+.classrooms th, .classrooms td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--text-dim);
+}
+.classrooms th {
+    background-color: var(--bg-darker);
+    color: var(--accent-orange);
+}
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+.btn {
+    background-color: var(--accent-orange);
+    color: var(--text-light);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.btn:hover {
+    opacity: 0.8;
+}
+.to-do {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.to-do ul {
+    list-style-type: none;
+    padding: 0;
+}
+.to-do li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgba(255, 107, 0, 0.1);
+    border-radius: 3px;
+}
+.floating-action-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--accent-orange);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: var(--text-light);
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+.floating-action-button:hover {
+    transform: scale(1.1);
+}
+/* New styles for the home page */
+.home-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.home-header h1 {
+    font-size: 2.5em;
+    color: var(--accent-orange);
+}
+.quick-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+.quick-action-card {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+.quick-action-card:hover {
+    transform: translateY(-5px);
+}
+.quick-action-card i {
+    font-size: 3em;
+    color: var(--accent-orange);
+    margin-bottom: 15px;
+}
+.quick-action-card h3 {
+    margin-bottom: 10px;
+}
+.recent-activity {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 10px;
+}
+.recent-activity h2 {
+    color: var(--accent-orange);
+    margin-bottom: 20px;
+}
+.activity-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--text-dim);
+}
+.activity-icon {
+    font-size: 1.5em;
+    margin-right: 15px;
+    color: var(--accent-orange);
+}
+.activity-details {
+    flex-grow: 1;
+}
+.activity-time {
+    font-size: 0.8em;
+    color: var(--text-dim);
+}
+.recent-activity {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 10px;
+}
+.recent-activity h2 {
+    color: var(--accent-orange);
+    margin-bottom: 20px;
+}
+.activity-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+.activity-icon {
+    font-size: 1.5em;
+    margin-right: 15px;
+    color: var(--accent-orange);
+}
+.activity-details {
+    flex-grow: 1;
+}
+.activity-time {
+    font-size: 0.8em;
+    color: var(--text-dim);
+}
+.sidebar-spacer {
+    flex-grow: 1;
+}
+.community-feed {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.community-post {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+.community-post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.community-post-author {
+    font-weight: bold;
+}
+.community-post-time {
+    color: var(--text-dim);
+    font-size: 0.8em;
+}
+.faq-section {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 10px;
+}
+.faq-item {
+    margin-bottom: 20px;
+}
+.faq-question {
+    font-weight: bold;
+    color: var(--accent-orange);
+    margin-bottom: 10px;
+}
+.faq-answer {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 5px;
+}
+.creation-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.top-row, .bottom-row {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--bg-darker);
+    border-radius: 10px;
+    padding: 20px;
+    flex: 1;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card h2 {
+    color: var(--accent-orange);
+    margin: 0;
+}
+
+.toggle-form {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: var(--text-dim);
+    margin-left: 10px;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+form {
+    display: none;
+}
+
+form.active {
+    display: block;
+}
+
+.btn-link {
+    display: inline-block;
+    background-color: var(--accent-orange);
+    color: var(--text-light);
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-link:hover {
+    background-color: #ff8c00;
+}
+
+.lists-section {
+    margin-top: 40px;
+}
+
+.list-container h2 {
+    color: var(--accent-orange);
+    margin-bottom: 20px;
+}
+
+.list-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-container li {
+    background-color: var(--bg-darker);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-item-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.list-item-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-orange {
+    background-color: var(--accent-orange);
+    color: var(--text-light);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-orange:hover {
+    background-color: #ff8c00;
+}
+
+.dropdown-content {
+    display: none;
+    background-color: var(--bg-dark);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.dropdown-content.active {
+    display: block;
+}
+
+.lesson-page-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--bg-darker);
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+.page-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-small {
+    font-size: 0.8em;
+    padding: 3px 8px;
+}
+
+#content {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.container-contentpage {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.creation-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.lists-section .list-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Styles */
+.card {
+    width: 48%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: lightgray;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.card-header .icon {
+    margin-right: 10px;
+}
+
+.card form {
+    display: none;
+    padding: 20px;
+}
+
+.card form.active {
+    display: block;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 180px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -90px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* List and Dropdown Styles */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-item-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.list-item-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.list-item-buttons .btn-orange {
+    background-color: #ff9500;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.list-item-buttons .btn-orange:hover {
+    background-color: #e08600;
+}
+
+.dropdown-content {
+    display: none;
+    padding: 10px 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.dropdown-content.nested {
+    margin-left: 20px;
+}
+
+.dropdown-content .lesson-page-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.page-buttons .btn-orange {
+    padding: 3px 7px;
+    font-size: 12px;
+}
+
+/* Button Container */
+.button-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.btn-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff9500;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-link:hover {
+    background-color: #e08600;
+}
+
+/* Bottom Row Styling */
+.bottom-row {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.bottom-row .card {
+    width: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: var(--bg-darker);
+    padding: 20px;
+    height: 100vh; /* Ensure sidebar takes full height */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    flex-shrink: 0;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex; /* Added */
+    flex-direction: column; /* Added */
+    height: 100vh; /* Ensure main content takes full height */
+    overflow: hidden; /* Prevent scrolling on the container */
+}
+
+.content-page {
+    display: none;
+    height: 100%;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.content-page.active {
+    display: flex; /* Changed from block to flex */
+    flex-direction: column; /* Ensure child elements stack vertically */
+}
+
+/* Specific styling for the content page */
+#content.content-page {
+    background-color: var(--bg-dark); /* Maintain dark theme */
+    color: var(--text-light);
+}
+
+#content .container-contentpage {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Ensure proper nesting of elements inside #content */
+#content .main-content {
+    height: auto; /* Remove fixed height */
+    overflow: visible; /* Allow content to flow naturally */
+}
+
+/* Adjust creation-section layout */
+#content .creation-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#content .top-row,
+#content .bottom-row {
+    display: flex;
+    gap: 20px;
+}
+
+/* Ensure cards take up full width in their container */
+#content .card {
+    width: 100%;
+    background-color: var(--bg-darker);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Adjust lists-section to fit properly */
+#content .lists-section {
+    margin-top: 40px;
+}
+
+#content .list-container {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.content-page#content.active ~ .main-content {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Adjust the content page to take full width when active */
+.content-page#content.active {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Ensure the container allows the content to take full width */
+.container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+}
+
+/* Existing .main-content styles */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    transition: width 0.3s ease, padding 0.3s ease; /* Smooth transition for width change */
+}
+
+/* Existing .content-page styles */
+.content-page {
+    display: none;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.content-page.active {
+    display: block;
+}
+
+form {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-light);
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: var(--bg-darker);
+    border: 1px solid orange;
+    border-color: orange;
+    border-radius: 8px;
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form textarea:focus,
+form select:focus {
+    outline: none;
+    border-color: var(--accent-orange);
+    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.2);
+}
+
+form button[type="submit"] {
+    background-color: var(--accent-orange);
+    color: var(--text-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #ff8c00;
+}
+
+/* Card styles */
+.card {
+    background-color: var(--bg-darker);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: rgba(255, 107, 0, 0.1);
+    padding: 15px 20px;
+    cursor: pointer;
+}
+
+.card-header h2 {
+    margin: 0;
+    color: var(--accent-orange);
+}
+
+/* Tooltip styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: var(--text-dim);
+    margin-left: 10px;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* List styles */
+.list-container {
+    background-color: var(--bg-darker);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.list-container h2 {
+    color: var(--accent-orange);
+    margin-bottom: 20px;
+}
+
+.list-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-container li {
+    background-color: var(--input-bg);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-item-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.list-item-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-orange {
+    background-color: var(--accent-orange);
+    color: var(--text-light);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+.btn-orange:hover {
+    background-color: #ff8c00;
+}
+
+/* Dropdown styles */
+.dropdown-content {
+    display: none;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.dropdown-content.active {
+    display: block;
+}
+
+.lesson-page-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--bg-darker);
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+.page-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-small {
+    font-size: 0.8em;
+    padding: 5px 10px;
+}

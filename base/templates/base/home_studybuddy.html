@@ -1,0 +1,174 @@
+{% include 'main_3.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Need a hand?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .need-a-hand-wrapper {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+        .need-a-hand-wrapper .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+        .need-a-hand-wrapper h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #ff8c00;
+        }
+        .need-a-hand-wrapper h2 {
+            font-size: 2em;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            color: #ff8c00;
+        }
+        .need-a-hand-wrapper .search-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .need-a-hand-wrapper .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 25px;
+            background-color: #2d2d2d;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        .need-a-hand-wrapper .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff8c00;
+        }
+        .need-a-hand-wrapper .people-searching {
+            font-size: 0.9em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .need-a-hand-wrapper .people-searching a {
+            color: #ff8c00;
+            text-decoration: none;
+            margin: 0 5px;
+            transition: color 0.3s;
+        }
+        .need-a-hand-wrapper .people-searching a:hover {
+            color: #ffa500;
+        }
+        .need-a-hand-wrapper .quick-links {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .need-a-hand-wrapper .quick-link {
+            text-align: center;
+            color: #e0e0e0;
+            text-decoration: none;
+            flex-basis: calc(20% - 20px);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .need-a-hand-wrapper .quick-link:hover {
+            transform: translateY(-5px);
+        }
+        .need-a-hand-wrapper .quick-link-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #ff8c00;
+        }
+        .need-a-hand-wrapper .button {
+            background-color: #ff8c00;
+            color: #1e1e1e;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        .need-a-hand-wrapper .button:hover {
+            background-color: #ffa500;
+            transform: translateY(-2px);
+        }
+        .need-a-hand-wrapper .section-content {
+            background-color: #2d2d2d;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Assume navbar is here -->
+    
+    <div class="need-a-hand-wrapper">
+        <div class="container">
+            <h1>Need a hand?</h1>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for help...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <div class="people-searching">
+                People are searching:
+                <a href="#">What are conditionals?</a> 
+                <a href="#">How to use loops?</a> 
+                <a href="#">JavaScript basics</a> 
+                <a href="#">Python vs Java</a>
+            </div>
+            <div class="quick-links">
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon"><i class="fas fa-code"></i></div>
+                    <div>Code Snippets</div>
+                </a>
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon"><i class="fas fa-book"></i></div>
+                    <div>Tutorials</div>
+                </a>
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon"><i class="fas fa-question-circle"></i></div>
+                    <div>FAQ's</div>
+                </a>
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon"><i class="fas fa-users"></i></div>
+                    <div>Join Community</div>
+                </a>
+                <a href="#" class="quick-link">
+                    <div class="quick-link-icon"><i class="fas fa-headset"></i></div>
+                    <div>Contact Support</div>
+                </a>
+            </div>
+
+            <h2>Join Our Community</h2>
+            <div class="section-content">
+                <p>Connect with fellow developers, share your projects, and get help from our vibrant community. Expand your network and accelerate your learning journey.</p>
+                <a href="#" class="button">Join Now <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <h2>Contact Support</h2>
+            <div class="section-content">
+                <p>Need personalized assistance? Our expert support team is here to help you with any questions or issues you may encounter. We're committed to your success.</p>
+                <a href="#" class="button">Get Support <i class="fas fa-headset"></i></a>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
+{% endblock content %}

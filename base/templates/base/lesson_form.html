@@ -1,0 +1,119 @@
+  <h2>Create Lesson</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Lesson</button>
+  </form>
+
+  <style>
+    /* General body styling */
+    body {
+        background-color: #1e1e1e;
+    }
+    body.form-body {
+      background-color: #1e1e1e; /* Dark background */
+      color: #ffffff; /* White text */
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+      margin: 0;
+    }
+
+    /* Heading styling */
+    h2 {
+      color: #ff9900; /* Orange accent */
+      text-align: center;
+      margin-top: 20px;
+      font-size: 2.5rem; /* Responsive font size */
+      letter-spacing: 1px;
+    }
+    label {
+        color: white;
+    }
+
+    /* Form container */
+    form {
+      background-color: #2c2c2c; /* Lighter dark for contrast */
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 100%;
+      max-width: 600px; /* Ensures responsiveness */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+    }
+
+    /* Input fields, select, and textarea styling */
+    form input[type="text"],
+    form input[type="password"],
+    form select,
+    form textarea {
+      background-color: #1e1e1e; /* Match body background */
+      color: #ffffff;
+      border: 1px solid #ff9900; /* Orange border */
+      border-radius: 4px;
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    /* Placeholder color styling */
+    form input::placeholder,
+    form textarea::placeholder {
+      color: #ff9900; /* Orange placeholder text */
+      opacity: 0.7;
+    }
+
+    /* Input hover and focus states */
+    form input:focus,
+    form textarea:focus {
+      border-color: #cc7a00; /* Darker orange on focus */
+    }
+
+    /* Submit button styling */
+    form button[type="submit"] {
+      background-color: #ff9900; /* Orange background */
+      color: #1e1e1e; /* Dark text */
+      border: none;
+      border-radius: 4px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* Button hover state */
+    form button[type="submit"]:hover {
+      background-color: #cc7a00; /* Darker orange */
+    }
+
+    /* Footer styling */
+    footer {
+      color: #ff9900; /* Orange text */
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+
+    /* Mobile-friendly adjustments */
+    @media (max-width: 600px) {
+      form {
+        width: 90%;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      form button[type="submit"] {
+        max-width: 100%;
+        padding: 10px;
+      }
+    }
+  </style>

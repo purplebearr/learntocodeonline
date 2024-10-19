@@ -1,0 +1,593 @@
+<!--
+    const originalConsoleLog = console.log;
+  const consoleOutput = [];
+
+  console.log = function (...args) {
+    consoleOutput.push(args.join(" "));
+    originalConsoleLog.apply(console, args);
+  };
+
+  function updateReplOutput() {
+    const replOutputDiv = document.querySelector(".repl-output-from-console");
+    if (replOutputDiv) {
+      replOutputDiv.textContent = consoleOutput.join("\n");
+    }
+  }
+
+  function clearReplOutput() {
+    const replOutputDiv = document.querySelector(".repl-output-from-console");
+    if (replOutputDiv) {
+      replOutputDiv.textContent = "";
+    }
+    consoleOutput.length = 0;
+  }
+
+  setInterval(function () {
+    updateReplOutput();
+  }, 100);
+-->
+
+<!--
+      const runButton = document.querySelector(".external-run-button");
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Function to move the py-repl-output div to the compiler-content div
+    function moveDiv() {
+      const pyReplOutput = document.getElementById("py-internal-0-repl-output");
+      const compilerContent = document.querySelector(".compiler-content");
+
+      // Check if both elements exist
+      if (pyReplOutput && compilerContent) {
+        // Append the py-repl-output div to the compiler-content div
+        compilerContent.appendChild(pyReplOutput);
+      } else {
+        // If one or both elements don't exist, check again after 500 milliseconds
+        setTimeout(moveDiv, 500);
+      }
+    }
+
+    // Call the moveDiv function
+    moveDiv();
+  });
+
+-->
+<!--
+<style>
+  body {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "header header header"
+      "aside main .";
+    gap: 20px;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  header {
+    grid-area: header;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+  }
+
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  nav li {
+    margin: 0 10px;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .lesson-title {
+    font-weight: bold;
+  }
+
+  .prev-lesson,
+  .next-lesson {
+    font-size: 20px;
+  }
+
+  main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .lesson-content {
+    flex: 1 1 50%;
+    height: 50vh;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+    overflow-y: auto;
+  }
+
+  .workspace {
+    flex: 1 1 50%;
+    height: 50vh;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    overflow-y: auto;
+  }
+
+  .workspace-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .compiler-embed {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+  }
+
+  .resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    cursor: nwse-resize;
+  }
+
+  aside {
+    grid-area: aside;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .support-video-container,
+  .tips-section {
+    margin-bottom: 20px;
+  }
+
+  .support-video-container iframe,
+  .compiler-embed iframe {
+    width: 100%;
+    height: 400px;
+  }
+
+  .tips-section h2 {
+    margin-top: 0;
+  }
+
+  .resize-handle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+
+  .resize-handle-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 3px;
+    cursor: row-resize;
+  }
+
+  .complete-lesson-form {
+    margin: 0;
+  }
+
+  .back-button123 {
+    position: absolute;
+    left: 0;
+  }
+
+  nav {
+    position: relative;
+  }
+
+  .repl-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .repl-output {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    visibility: hidden;
+  }
+</> -->
+{% endblock content %}
+
+<!--
+  const runButton = document.querySelector(".external-run-button");
+    let selectedCodeBlock = null;
+
+    function selectActiveCodeBlock() {
+      const pyReplElements = document.querySelectorAll("py-repl");
+      selectedCodeBlock = null;
+      for (const pyReplElement of pyReplElements) {
+        if (pyReplElement.editor && pyReplElement.editor.state.focused) {
+          selectedCodeBlock = pyReplElement;
+          break;
+        }
+      }
+    }
+
+    function getCodeFromActiveRepl() {
+      if (!selectedCodeBlock) {
+        console.log("No active REPL found.");
+        return null;
+      }
+      const activeEditor = selectedCodeBlock.editor;
+      const code = activeEditor.getValue();
+      return code;
+    }
+
+    runButton.addEventListener("click", () => {
+      selectActiveCodeBlock();
+      const code = getCodeFromActiveRepl();
+      if (code) {
+        console.log("User code:", code);
+        // You can also log the code to the browser console
+        // or perform any other desired action with the code
+      }
+    });
+-->
+
+<!--
+  @output="appendOutput" @run="executeScript"
+    const replOutputDiv = document.getElementById("repl-output");
+  const pyReplElement = document.querySelector("py-repl");
+  const externalRunButton = document.querySelector(".external-run-button");
+  const outputareaElement = document.querySelector(
+    ".outout-repl-external .outputarea"
+  );
+  const runButton = document.querySelector(".external-run-button");
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Function to move the py-repl-output div to the compiler-content div
+    function moveDiv() {
+      // Select the py-repl-output div and the compiler-content div
+      const pyReplOutput = document.getElementById("py-internal-0-repl-output");
+      const compilerContent = document.querySelector(".compiler-content");
+
+      // Check if both elements exist
+      if (pyReplOutput && compilerContent) {
+        // Append the py-repl-output div to the compiler-content div
+        compilerContent.appendChild(pyReplOutput);
+      } else {
+        // If one or both elements don't exist, check again after 500 milliseconds
+        setTimeout(moveDiv, 500);
+      }
+    }
+
+    // Call the moveDiv function
+    moveDiv();
+  });
+
+  externalRunButton.addEventListener("click", () => {
+    // Trigger the .py-repl-run-button click event
+    const pyReplRunButton = document.querySelector(".py-repl-run-button");
+    if (pyReplRunButton) {
+      pyReplRunButton.click();
+
+      // Wait for the DOM to fully load before running the code
+      // Set a timeout to run the code after a short delay
+    }
+    const runButton = document.querySelector(".external-run-button");
+    let selectedCodeBlock = null;
+
+    function selectActiveCodeBlock() {
+      const pyReplElements = document.querySelectorAll("py-repl");
+      selectedCodeBlock = null;
+
+      for (const pyReplElement of pyReplElements) {
+        if (pyReplElement.editor && pyReplElement.editor.state.focused) {
+          selectedCodeBlock = pyReplElement;
+          break;
+        }
+      }
+    }
+
+    function getCodeFromActiveRepl() {
+      if (!selectedCodeBlock) {
+        console.log("No active REPL found.");
+        return null;
+      }
+
+      const activeEditor = selectedCodeBlock.editor;
+      const code = activeEditor.getValue();
+      return code;
+    }
+
+    runButton.addEventListener("click", () => {
+      selectActiveCodeBlock();
+      const code = getCodeFromActiveRepl();
+      if (code) {
+        console.log("User code:", code);
+        // You can also log the code to the browser console
+        // or perform any other desired action with the code
+      }
+    });
+
+    // Save the user's code to the database
+    const csrfToken = document.querySelector(
+      'input[name="csrfmiddlewaretoken"]'
+    ).value;
+    const lessonId = document.querySelector(".lesson-title").dataset.lessonId;
+    fetch('{% url "save_compiler_code" %}', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken,
+      },
+      body: JSON.stringify({
+        code: "edrfg",
+        lesson_id: lessonId,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Compiler code saved successfully");
+        } else {
+          console.error("Error saving compiler code");
+        }
+      })
+      .catch((error) => {
+        console.error("Error saving compiler code:", error);
+      });
+  });
+-->
+
+<!--
+    const pyTerminalElement = document.querySelector("py-terminal-docked");
+
+  // Set up a MutationObserver to watch for changes to the DOM
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === "childList") {
+        // If the py-terminal-docked element is present, remove it
+        if (pyTerminalElement) {
+          pyTerminalElement.remove();
+        }
+      }
+    });
+  });
+
+    function executeScript(event) {
+    replOutputDiv.innerHTML = ""; // Clear the output div
+    pyReplElement.implementation.run_cell(event.detail.code);
+
+    // Remove the py-terminal element after the py-repl has finished rendering
+    setTimeout(() => {
+      const pyTerminalElement = document.querySelector("py-terminal-docked");
+      if (pyTerminalElement) {
+        pyTerminalElement.remove();
+      }
+    }, 100);
+  }
+
+  // Start observing the document body
+  observer.observe(document.body, { childList: true });
+
+  function appendOutput(event) {
+    const outputDiv = document.createElement("div");
+    outputDiv.textContent = event.detail.output;
+    replOutputDiv.appendChild(outputDiv);
+
+    // Update the outputarea element with the text "code is run"
+    console.log("code is run");
+  }
+-->
+/* while (true) { function getCode() { const pyReplOutput =
+document.getElementById(".cm-activeLine"); const compilerContent =
+document.querySelector(".cm-line"); // Check if both elements exist if
+(pyReplOutput && compilerContent) { // Append the py-repl-output div to the
+compiler-content div compilerContent.appendChild(pyReplOutput);
+console.log("existence!!!"); } else { // If one or both elements don't exist,
+check again after 500 milliseconds setTimeout(moveDiv, 500); console.log("no
+existence"); } } // Call the moveDiv function getCode(); } */
+
+<!--
+  const runButton = document.querySelector(".external-run-button");
+    let selectedCodeBlock = null;
+
+    function selectActiveCodeBlock() {
+      const pyReplElements = document.querySelectorAll("py-repl");
+      selectedCodeBlock = null;
+      for (const pyReplElement of pyReplElements) {
+        if (pyReplElement.editor && pyReplElement.editor.state.focused) {
+          selectedCodeBlock = pyReplElement;
+          break;
+        }
+      }
+    }
+
+    function getCodeFromActiveRepl() {
+      if (!selectedCodeBlock) {
+        console.log("No active REPL found.");
+        return null;
+      }
+      const activeEditor = selectedCodeBlock.editor;
+      const code = activeEditor.getValue();
+      return code;
+    }
+
+    runButton.addEventListener("click", () => {
+      selectActiveCodeBlock();
+      const code = getCodeFromActiveRepl();
+      if (code) {
+        console.log("User code:", code);
+        // You can also log the code to the browser console
+        // or perform any other desired action with the code
+      }
+    });
+-->
+
+<!--
+  @output="appendOutput" @run="executeScript"
+    const replOutputDiv = document.getElementById("repl-output");
+  const pyReplElement = document.querySelector("py-repl");
+  const externalRunButton = document.querySelector(".external-run-button");
+  const outputareaElement = document.querySelector(
+    ".outout-repl-external .outputarea"
+  );
+  const runButton = document.querySelector(".external-run-button");
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Function to move the py-repl-output div to the compiler-content div
+    function moveDiv() {
+      // Select the py-repl-output div and the compiler-content div
+      const pyReplOutput = document.getElementById("py-internal-0-repl-output");
+      const compilerContent = document.querySelector(".compiler-content");
+
+      // Check if both elements exist
+      if (pyReplOutput && compilerContent) {
+        // Append the py-repl-output div to the compiler-content div
+        compilerContent.appendChild(pyReplOutput);
+      } else {
+        // If one or both elements don't exist, check again after 500 milliseconds
+        setTimeout(moveDiv, 500);
+      }
+    }
+
+    // Call the moveDiv function
+    moveDiv();
+  });
+
+  externalRunButton.addEventListener("click", () => {
+    // Trigger the .py-repl-run-button click event
+    const pyReplRunButton = document.querySelector(".py-repl-run-button");
+    if (pyReplRunButton) {
+      pyReplRunButton.click();
+
+      // Wait for the DOM to fully load before running the code
+      // Set a timeout to run the code after a short delay
+    }
+    const runButton = document.querySelector(".external-run-button");
+    let selectedCodeBlock = null;
+
+    function selectActiveCodeBlock() {
+      const pyReplElements = document.querySelectorAll("py-repl");
+      selectedCodeBlock = null;
+
+      for (const pyReplElement of pyReplElements) {
+        if (pyReplElement.editor && pyReplElement.editor.state.focused) {
+          selectedCodeBlock = pyReplElement;
+          break;
+        }
+      }
+    }
+
+    function getCodeFromActiveRepl() {
+      if (!selectedCodeBlock) {
+        console.log("No active REPL found.");
+        return null;
+      }
+
+      const activeEditor = selectedCodeBlock.editor;
+      const code = activeEditor.getValue();
+      return code;
+    }
+
+    runButton.addEventListener("click", () => {
+      selectActiveCodeBlock();
+      const code = getCodeFromActiveRepl();
+      if (code) {
+        console.log("User code:", code);
+        // You can also log the code to the browser console
+        // or perform any other desired action with the code
+      }
+    });
+
+    // Save the user's code to the database
+    const csrfToken = document.querySelector(
+      'input[name="csrfmiddlewaretoken"]'
+    ).value;
+    const lessonId = document.querySelector(".lesson-title").dataset.lessonId;
+    fetch('{% url "save_compiler_code" %}', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken,
+      },
+      body: JSON.stringify({
+        code: "edrfg",
+        lesson_id: lessonId,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Compiler code saved successfully");
+        } else {
+          console.error("Error saving compiler code");
+        }
+      })
+      .catch((error) => {
+        console.error("Error saving compiler code:", error);
+      });
+  });
+-->
+
+<!--
+    const pyTerminalElement = document.querySelector("py-terminal-docked");
+
+  // Set up a MutationObserver to watch for changes to the DOM
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === "childList") {
+        // If the py-terminal-docked element is present, remove it
+        if (pyTerminalElement) {
+          pyTerminalElement.remove();
+        }
+      }
+    });
+  });
+
+    function executeScript(event) {
+    replOutputDiv.innerHTML = ""; // Clear the output div
+    pyReplElement.implementation.run_cell(event.detail.code);
+
+    // Remove the py-terminal element after the py-repl has finished rendering
+    setTimeout(() => {
+      const pyTerminalElement = document.querySelector("py-terminal-docked");
+      if (pyTerminalElement) {
+        pyTerminalElement.remove();
+      }
+    }, 100);
+  }
+
+  // Start observing the document body
+  observer.observe(document.body, { childList: true });
+
+  function appendOutput(event) {
+    const outputDiv = document.createElement("div");
+    outputDiv.textContent = event.detail.output;
+    replOutputDiv.appendChild(outputDiv);
+
+    // Update the outputarea element with the text "code is run"
+    console.log("code is run");
+  }
+-->

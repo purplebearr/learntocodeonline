@@ -1,0 +1,238 @@
+{% load static %}
+{% include 'main_3.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{lesson.title}}e</title>
+    <link rel="shortcut icon" href="{% static 'images/faviconlogo.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --card-hover: #252525;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            color: var(--accent);
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .lesson-details {
+            background-color: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-details h2 {
+            color: var(--accent);
+            font-size: 2em;
+            margin-top: 0;
+        }
+
+        .progress {
+            background-color: var(--bg-dark);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            background-color: var(--accent);
+            width: 70%; /* This could be dynamic based on actual progress */
+            height: 20px;
+            border-radius: 8px;
+            transition: width 0.3s ease;
+        }
+
+        .lesson-pages {
+            margin-top: 20px;
+        }
+
+        .lesson-page {
+            background-color: var(--bg-card);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .lesson-page:hover {
+            background-color: var(--card-hover);
+        }
+
+        .lesson-page h3 {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .lesson-page a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        .lesson-page a:hover {
+            color: var(--accent-hover);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--bg-card);
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .btn-back:hover {
+            background-color: var(--card-hover);
+        }
+
+        .btn-continue {
+            background-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .btn-continue:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .star-button {
+            background-color: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .star-button:hover, .star-button.active {
+            color: gold;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Lesson: {{ lesson.title }}</h1>
+</header>
+
+<div class="container">
+    <div class="action-buttons">
+        <a href="{% url 'dashboard' %}" class="btn btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <a href="{% url 'user_lesson_lesson_page_view' lesson.id lesson.lesson_pages.first.id %}" class="btn btn-continue">
+            {% if user_progress %}Continue{% else %}Start{% endif %} <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <div class="lesson-details">
+        <h2>Lesson Details</h2>
+        <p><strong>Author:</strong> {{ lesson.author.username }}</p>
+        <p><strong>Category:</strong> {{ lesson.category }}</p>
+        <p><strong>Last Updated:</strong> {{ lesson.last_updated }}</p>
+        
+        <div class="progress">
+            <strong>Progress:</strong>
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <div class="lesson-pages">
+        <h2>Lesson Pages</h2>
+        {% for page in lesson.lesson_pages.all|dictsort:"order" %}
+        <div class="lesson-page">
+            <h3>{{ page.title }}</h3>
+            <a href="{% url 'user_lesson_lesson_page_view' lesson.id page.id %}">Go to Page <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function toggleStar() {
+        const starButton = document.getElementById('starButton');
+        const starIcon = starButton.querySelector('i');
+        
+        if (starIcon.classList.contains('far')) {
+            starIcon.classList.remove('far');
+            starIcon.classList.add('fas');
+            starButton.classList.add('active');
+        } else {
+            starIcon.classList.remove('fas');
+            starIcon.classList.add('far');
+            starButton.classList.remove('active');
+        }
+    }
+</script>
+</body>
+</html>

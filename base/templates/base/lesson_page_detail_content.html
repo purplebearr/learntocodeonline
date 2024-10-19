@@ -1,0 +1,45 @@
+{% load static %} {% block content %}
+<link rel="stylesheet" href="{% static 'styles/lesson_page_detail.css' %}" />
+<style>
+  /* SVG styles */
+  .svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  .svg-container img {
+    max-width: 60%;
+    max-height: 60%;
+  }
+</style>
+
+<body>
+  <div class="navbar">
+    <a href="{% url 'dashboard' %}" class="back-link">
+        <svg class="svg-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+        </svg>
+        Back
+    </a>
+    <div class="navlink">
+        {% if prev_lesson_page %}
+        <a href="{% url 'lesson_page_detail' lesson.id prev_lesson_page.id %}">Previous</a>
+        {% endif %}
+        <span>{{ lesson_page.title }}</span>
+
+        {% if next_url %}
+        <a href="{{ next_url }}" class="btn-complete">Next</a>
+        {% endif %}
+    </div>
+</div>
+
+  <div class="svg-container">
+    {% if lesson_page.svg_file %}
+    <img src="{{ lesson_page.svg_file.url }}" alt="SVG File" />
+    {% endif %}
+  </div>
+</body>
+
+{% endblock content %}

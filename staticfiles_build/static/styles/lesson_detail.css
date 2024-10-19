@@ -1,0 +1,79 @@
+/* Reset some default styling */
+.main {
+   background-image: url("/static/images/aaabstract.png");
+}
+
+
+body, h1, p {
+    margin:0;
+    padding:0;
+    background-color: green;
+ }
+
+ body {
+   background-color: green; /* Replace with your desired color code */  
+ }
+
+ /* Style for the header if needed */
+ .header {
+   background-color: green; /* Replace with your desired color code */
+   padding: 20px;
+   text-align: center;
+ }
+ 
+ .lesson-container {
+    font-family: Arial, sans-serif;
+    text-align: center; /* Center the title and iframes */
+    background-image: url("/static/images/aaabstract.png");
+ }
+ 
+ .header {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Align items to the center-left and right */
+    align-items: center; /* Vertically align items to the center */
+    color: white;
+    padding: 10px;
+  }
+  
+ 
+ .header button {
+    background-color:#fff;
+    color:#6c63ff;
+    border:none;
+    padding:5px 10px;
+    float: left; /* Align the button to the left */
+ }
+ 
+ .slideshow, .compiler {
+    background-color: #eee; 
+    margin-top: px; 
+    position: relative; 
+    display: block; /* Change from inline-block to block */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+    max-width: 800px; /* Define a maximum width */
+    width: 100%; /* Use full width */
+}
+ 
+ .complete-lesson-form button {
+       display:block;  
+       width:max-content;  
+       margin:auto;  
+       margin-top:20px;   
+       padding :10px ;   
+       background-color :#6c63ff ;   
+       color:white ;   
+ }
+
+ .back-link {
+    text-decoration: none; /* Remove underline from link */
+    color: white; /* Set text color */
+    padding: 5px 10px; /* Add padding for spacing */
+    margin-right: auto; /* Push the link to the center-left */
+  }
+  
+  .back-link:hover {
+    background-color: #5555ff; /* Darken color on hover */
+  }
+
+  

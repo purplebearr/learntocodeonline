@@ -1,0 +1,304 @@
+{% include 'main_3.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --card-hover: #252525;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem;
+        }
+
+        .top-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 6rem;
+            align-items: center;
+            min-height: 600px;
+        }
+
+        .text-box {
+            padding: 3rem;
+        }
+
+        .content-heading {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #4f46e5, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .box p {
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-size: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 0.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-3px);
+        }
+
+        .terminal {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            overflow: hidden;
+            height: 450px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .terminal::before {
+            content: '● ● ●';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: #2a2a2a;
+            color: #666;
+            letter-spacing: 8px;
+            font-size: 1.2rem;
+        }
+
+        .terminal-content {
+            margin-top: 60px;
+            animation: typing 4s steps(60, end) infinite;
+            font-size: 1.4rem;
+        }
+
+        @keyframes typing {
+            0% { width: 0 }
+            50% { width: 100% }
+            90% { width: 100% }
+            100% { width: 0 }
+        }
+
+        .terminal-text {
+            color: #00ff00;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #00ff00;
+            animation: blink-caret 0.75s step-end infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #00ff00 }
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 4rem 0;
+        }
+
+        .bottom-section {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .bottom-section h2 {
+            margin-bottom: 3rem;
+            font-size: 3rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .section {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+            min-height: 300px;
+        }
+
+        .section:hover {
+            background: var(--card-hover);
+            transform: translateY(-8px);
+        }
+
+        .section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .section a {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .section p {
+            font-size: 1.3rem;
+            line-height: 1.7;
+        }
+
+        .section i {
+            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .section:hover i {
+            transform: translateX(8px);
+        }
+
+        @media (max-width: 1024px) {
+            .top-section {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            
+            .content-heading {
+                font-size: 3rem;
+                text-align: center;
+            }
+            
+            .button-group {
+                justify-content: center;
+            }
+            
+            .terminal {
+                height: 400px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .content-heading {
+                font-size: 2.5rem;
+            }
+            
+            .box p {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+            
+            .terminal-content {
+                font-size: 1.2rem;
+            }
+            
+            .bottom-section h2 {
+                font-size: 2.5rem;
+            }
+            
+            .section h3 {
+                font-size: 1.5rem;
+            }
+            
+            .section p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-section">
+            <div class="box text-box">
+                <h1 class="content-heading">Coding education for everyone, for free</h1>
+                <p>Our platform provides a place to learn or teach code with custom lessons - for free.</p>
+                <div class="button-group">
+                    <a href="{% if user.is_teacher %}dashboard{% else %}dashboard{% endif %}" class="btn">{% if user.is_authenticated %}Dashboard{% else %}For Individuals{% endif %}</a>
+                    <a href="{% if user.is_teacher %}teacherpage{% else %}teachers_page{% endif %}" class="btn">{% if user.is_authenticated %}Teacher Dashboard{% else %}For Teachers{% endif %}</a>
+                </div>
+            </div>
+            <div class="box terminal">
+                <div class="terminal-content">
+                    <div class="terminal-text">> Welcome to coding education</div>
+                    <div class="terminal-text">> Installing knowledge...</div>
+                    <div class="terminal-text">> Learning in progress...</div>
+                    <div class="terminal-text">> Success! Ready to code!</div>
+                </div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="bottom-section">
+            <h2>Get started on our platform!</h2>
+            <div class="content-grid">
+                <div class="section">
+                    <h3><a href="{% url 'dashboard' %}">{% if user.is_authenticated %}Dashboard{% else %}Learn on our platform{% endif %} <i class="fas fa-arrow-right"></i></a></h3>
+                    <p>Our platform provides basic coding education for multiple highly popular programming languages, at no charge.</p>
+                </div>
+                <div class="section">
+                    <h3><a href="{% if user.is_teacher %}{% url 'teacherpage' %}{% else %}{% url 'teachers_page' %}{% endif %}">{% if user.is_authenticated %}Teacher Dashboard{% else %}Teach on our platform!{% endif %} <i class="fas fa-arrow-right"></i></a></h3>
+                    <p>Our platform provides advanced teaching tools for teaching programming, whatever your use case may be.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock content %}

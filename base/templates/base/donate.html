@@ -1,0 +1,254 @@
+{% include 'main_3.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate & Support</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            color: #ff6600;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #ff6600;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: url('/api/placeholder/1200/800') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            background-color: rgba(18, 18, 18, 0.8);
+            padding: 3rem;
+            border-radius: 10px;
+            max-width: 1200px;
+            width: 90%;
+        }
+
+        .hero-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #ff6600;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff8533;
+        }
+
+        .supporters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .supporter-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .supporter-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .supporter-logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        .paypal-banner {
+            background-color: #003087;
+            color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .paypal-banner h2 {
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .text-small {
+            font-size: 1.5rem;
+            color: #ccc;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section id="commitment" class="section fade-in">
+            <h2><i class="fas fa-globe"></i> Our Commitment to Worldwide Education</h2>
+            <p>At 404 Found Code, we believe that quality coding education should be accessible to everyone, regardless of their location or background. We are constantly working to break down barriers and bring coding skills to learners around the globe.</p>
+            <h3>Why support us?</h3>
+            <p>With your support, we can have access to better resources, host more events, and support our community better. Additionally, we are a registered 501(c)(3) organization, EIN: 99-0964124</p>
+        </section>
+
+        <div class="paypal-banner fade-in">
+            <h2><i class="fab fa-paypal"></i> Support Our Mission</h2>
+            <p>Your donation helps us continue our important work. Thank you for your generosity!</p>
+            <div id="paypal-button-container"></div>
+            <p class="text-small">Need an invoice? Leave a message on PayPal, or email us at management@404foundcode.org</p>
+            <a href="https://www.paypal.com/donate/?hosted_button_id=KBANHEAAMUHH6" class="btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-paypal"></i> Donate! <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="card fade-in">
+            <h2><i class="fas fa-hands-helping"></i> Other Ways to Support Us</h2>
+            <ul style="list-style: none;">
+                <li><i class="fas fa-clock"></i> Volunteer your time</li>
+                <li><i class="fas fa-share-alt"></i> Spread awareness on social media</li>
+                <li><i class="fas fa-gift"></i> Donate goods or services</li>
+                <li><i class="fas fa-building"></i> Become a corporate sponsor</li>
+            </ul>
+            <a href="https://docs.google.com/document/d/1SKCdNAagHAykwnrfmoPYTvaCDxko-MLcghoQJq4IIqQ/edit?usp=sharing" class="btn" target="_blank" rel="noopener noreferrer">Learn More About How You Can Help</a>
+        </div>
+
+        <div style="text-align: center;" class="fade-in">
+            <a href="https://docs.google.com/document/d/1HGpEyiEmg7K34uDf_K4tOMJ2bdcN3DvDMO8OLpg1s5s/edit?usp=sharing" class="btn" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-alt"></i> View Our Prospectus</a>
+        </div>
+
+        <section id="supporters" class="section fade-in" style="border-bottom: none;">
+            <h2><i class="fas fa-heart"></i> Our Valued Supporters</h2>
+            <p class="supporters-intro">We're grateful for the support of these amazing organizations that help make our mission possible:</p>
+            <div class="supporters-grid">
+                <div class="supporter-card">
+                    <img src="https://cdn.worldvectorlogo.com/logos/digitalocean-2.svg" alt="DigitalOcean logo" class="supporter-logo" style="height: 58.67px;">
+                    <h3>DigitalOcean</h3>
+                    <p></p>
+                </div>
+                <div class="supporter-card">
+                    <img src="https://cdn.worldvectorlogo.com/logos/linode.svg" alt="Linode logo" class="supporter-logo">
+                    <h3>Linode</h3>
+                    <p></p>
+                </div>
+                <div class="supporter-card">
+                    <img src="https://cdn.worldvectorlogo.com/logos/akamai-4.svg" alt="Akamai logo" class="supporter-logo">
+                    <h3>Akamai</h3>
+                    <p></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>

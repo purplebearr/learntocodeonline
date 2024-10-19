@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/static/images/faviconlogo.ico" type="image/x-icon">
+    <title>{{lesson_page.title}}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/mode-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/theme-dracula.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/theme-monokai.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.0/theme-github.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <style>
+      html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+h1, h2 {
+    color: #ff9800;
+    margin: 0 0 10px 0;
+}
+
+.editor-container {
+    display: flex;
+    flex: 1;
+    min-height: 200px;
+}
+
+#instructions {
+    flex: 0 0 30%;
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 10px;
+    overflow-y: auto;
+}
+
+#editor {
+    flex: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#console {
+    height: 30%;
+    min-height: 100px;
+    max-height: 30vh;
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 5px;
+    overflow-y: auto;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 10px;
+}
+
+button {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #4338ca;
+}
+
+#run-button {
+    width: 100%;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#back-button {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+#theme-select {
+    padding: 5px;
+    font-size: 14px;
+    background-color: #2d2d2d;
+    color: #f0f0f0;
+    border: 1px solid #444;
+    border-radius: 5px;
+}
+
+.theme-container {
+    display: flex;
+    align-items: center;
+}
+
+.theme-label {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+@media (min-width: 1920px) {
+    .container {
+        width: 70%;
+    }
+}
+
+@media (max-height: 480px) {
+    h1 {
+        font-size: 18px;
+    }
+    h2 {
+        font-size: 16px;
+    }
+    #editor {
+        min-height: 150px;
+    }
+    #console {
+        min-height: 80px;
+    }
+    button {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+    #run-button {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+    .theme-label, #theme-select {
+        font-size: 12px;
+    }
+}
+
+@media (max-height: 600px) {
+    .container {
+        height: calc(100vh - 20px);
+        overflow-y: auto;
+    }
+    
+    #editor, #console {
+        max-height: 40vh;
+    }
+}
+.navigation {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .center-nav {
+            display: flex;
+            gap: 10px;
+        }
+        #backButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1100; /* Increase the z-index to ensure it's clickable */
+        }
+        button:hover {
+            background-color: #4338ca;
+        }
+
+  </style>
+</head>
+<body>
+    <a href="{% url 'user_course_lesson_view' course.id lesson_id %}"><button id="backButton">← Back</button></a>
+        <div class="navigation">
+            <div class="center-nav">
+                <a href="{{prev_url}}"><button id="prevButton">Previous</button></a>
+                <a href="{{next_url}}"><button id="nextButton">Next</button></a>
+            </div>
+        </div>
+    <div class="container">
+        <h1>{{lesson_page.title}}</h1>
+        <div class="button-container">
+            <div class="theme-container">
+                <span class="theme-label">Theme:</span>
+                <select id="theme-select">
+                    <option value="ace/theme/monokai">Monokai</option>
+                    <option value="ace/theme/dracula">Dracula</option>
+                    <option value="ace/theme/ambiance">Ambiance</option>
+                    <option value="ace/theme/chaos">Chaos</option>
+                    <option value="ace/theme/chrome">Chrome</option>
+                    <option value="ace/theme/clouds">Clouds</option>
+                    <option value="ace/theme/clouds_midnight">Clouds Midnight</option>
+                    <option value="ace/theme/cobalt">Cobalt</option>
+                    <option value="ace/theme/gob">Gob</option>
+                    <option value="ace/theme/gruvbox">Gruvbox</option>
+                    <option value="ace/theme/idle_fingers">Idle Fingers</option>
+                    <option value="ace/theme/kr_theme">KR Theme</option>
+                    <option value="ace/theme/merbivore">Merbivore</option>
+                    <option value="ace/theme/merbivore_soft">Merbivore Soft</option>
+                    <option value="ace/theme/mono_industrial">Mono Industrial</option>
+                    <option value="ace/theme/pastel_on_dark">Pastel on Dark</option>
+                    <option value="ace/theme/solarized_dark">Solarized Dark</option>
+                    <option value="ace/theme/solarized_light">Solarized Light</option>
+                    <option value="ace/theme/sqlserver">SQL Server</option>
+                    <option value="ace/theme/terminal">Terminal</option>
+                    <option value="ace/theme/tomorrow_night">Tomorrow Night</option>
+                    <option value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue</option>
+                    <option value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright</option>
+                    <option value="ace/theme/tomorrow_night_eighties">Tomorrow Night Eighties</option>
+                    <option value="ace/theme/twilight">Twilight</option>
+                    <option value="ace/theme/vibrant_ink">Vibrant Ink</option>
+                    <option value="ace/theme/xcode">Xcode</option>
+                  </select>
+            </div>
+        </div>
+        <div class="editor-container">
+            <div id="instructions">
+                <h2>Instructions</h2>
+                <div>{{ lesson_page.content|safe }}</div>
+            </div>
+            <div id="editor"></div>
+        </div>
+        <button id="run-button">Run Code</button>
+        <h2>Console Output</h2>
+        <div id="console"></div>
+    </div>
+    <script>
+        // Initialize ACE editor
+        window.onload = function () {
+            const editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/python");
+            var initialCode = "{{saved_compiler_code|escapejs}}";
+            editor.setValue(initialCode);
+            editor.setShowPrintMargin(false);
+            editor.on("change", handleTyping);
+
+            // Initialize Pyodide
+            let pyodide;
+            async function initPyodide() {
+                pyodide = await loadPyodide();
+                console.log("Pyodide loaded");
+            }
+            initPyodide();
+
+            // Function to run Python code
+            async function runPythonCode() {
+                if (!pyodide) {
+                    console.log("Pyodide is not loaded yet");
+                    return;
+                }
+
+                const code = editor.getValue();
+                const consoleElement = document.getElementById("console");
+                consoleElement.innerHTML = ''; // Clear previous output
+
+                try {
+                    // Redirect stdout to our custom console
+                    pyodide.runPython(`
+                        import sys
+                        import io
+
+                        class Console:
+                            def __init__(self):
+                                self.buffer = io.StringIO()
+
+                            def write(self, text):
+                                self.buffer.write(text)
+
+                            def flush(self):
+                                pass
+
+                        sys.stdout = Console()
+                        sys.stderr = Console()
+                    `);
+
+                    // Run the user's code
+                    await pyodide.runPythonAsync(code);
+
+                    // Get the output from our custom console
+                    const output = pyodide.runPython("sys.stdout.buffer.getvalue()");
+                    consoleElement.innerHTML += `<pre>${output}</pre>`;
+                } catch (error) {
+                    consoleElement.innerHTML += `<pre style="color: #ff6b6b;">${error}</pre>`;
+                }
+
+                // Scroll to the bottom of the console
+                consoleElement.scrollTop = consoleElement.scrollHeight;
+            }
+
+            // Add event listener to the Run button
+            document.getElementById("run-button").addEventListener("click", runPythonCode);
+
+            // Add event listener to the Back button
+            
+
+            // Add event listener to the theme select
+            document.getElementById("theme-select").addEventListener("change", function(e) {
+                editor.setTheme(e.target.value);
+            });
+
+            const csrfToken = "{{ csrf_token }}";
+            const lessonId = "{{ lesson_id_json|safe }}";
+            const userId = "{{ user_id_json|safe }}";
+            
+            let typingTimer;
+            
+            function handleTyping() {
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(saveCodeToServer, 1000);
+            }
+            
+            function saveCodeToServer() {
+                const code = editor.getValue();
+                
+                const data = {
+                    lesson: lessonId,
+                    saved_compiler_code: code,
+                };
+                
+                fetch("{% url 'save_code' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrfToken,
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Failed to save code");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.status === 'success') {
+                        console.log("Code saved successfully");
+                    } else {
+                        console.error("Error saving code:", data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+            }
+
+            // Ensure the editor is properly initialized before attaching the event listener
+            editor.on("load", function() {
+                console.log("Editor loaded, attaching change event listener");
+                editor.on("change", handleTyping);
+            });
+        }
+    </script>
+</body>
+</html>

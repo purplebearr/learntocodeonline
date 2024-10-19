@@ -1,0 +1,60 @@
+{% block content %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'styles/lesson_detail.css' %}" />
+    <title>{{ lesson.title }}</title>
+  </head>
+</html>
+<div class="main">
+  <div class="lesson-container">
+    <div class="header">
+      <!-- Center-left position for the Back link -->
+      <a href="{% url 'lessons_page' %}" class="back-link">Back</a>
+      <h1>{{ lesson.title }}</h1>
+    </div>
+    <!-- ... rest of your content ... -->
+  </div>
+  <div class="slideshow">
+  <iframe
+    src="{{ lesson.google_slide_embed_url }}"
+    width="800"
+    height="600"
+  ></iframe>
+</div>
+<!-- Python Compiler Embed -->
+<div class="compiler">
+  <iframe
+    src="{{ lesson.python_compiler_embed_url }}"
+    width="800"
+    height="400"
+  ></iframe>
+</div>
+ <!-- Forme to mark lesson as completed -->
+ <form
+ method="post"
+ action="{% url 'complete_lesson' lesson.id %}"
+ class="complete-lesson-form"
+>
+ {% csrf_token %}
+ <button type="submit">Completed</button>
+</form>
+</div>
+
+{% endblock content %}
+
+</div>
+
+
+
+
+
+
+
+
+ 
